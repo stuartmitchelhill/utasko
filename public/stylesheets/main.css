@@ -1,0 +1,663 @@
+/* ==========================================================================
+   Less StyleSheets
+   ========================================================================== */
+h1 {
+  font-family: 'HelveticaNeue-CondensedBlack', Helvetica, Arial, sans-serif;
+  font-size: 38px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 800;
+  line-height: 160%;
+}
+h2 {
+  font-family: 'HelveticaNeue-CondensedBlack', Helvetica, Arial, sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 800;
+  line-height: 160%;
+}
+h3 {
+  font-family: 'HelveticaNeue-CondensedBlack', Helvetica, Arial, sans-serif;
+  font-size: 26px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 800;
+  line-height: 160%;
+}
+h4 {
+  font-family: 'HelveticaNeue-CondensedBlack', Helvetica, Arial, sans-serif;
+  font-size: 22px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 800;
+  line-height: 160%;
+}
+h5 {
+  font-family: 'HelveticaNeue-CondensedBlack', Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 800;
+  line-height: 160%;
+}
+h6 {
+  font-family: 'HelveticaNeue-CondensedBlack', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 800;
+  line-height: 160%;
+}
+p {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 300;
+  line-height: 160%;
+  color: #ffffff;
+}
+p.disabled {
+  color: #505050;
+}
+a {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 300;
+  line-height: 160%;
+  text-decoration: none;
+  color: #979797;
+  transition: 0.4s;
+}
+a:hover {
+  transition: 0.4s;
+}
+a.disabled {
+  color: #505050;
+}
+.col-1-1 {
+  width: 100%;
+}
+.col-1-2 {
+  width: 50%;
+  float: left;
+}
+.col-1-3 {
+  width: 33.3%;
+  float: left;
+}
+.col-1-4 {
+  width: 25%;
+  float: left;
+}
+.col-1-5 {
+  width: 20%;
+  float: left;
+}
+.col-1-6 {
+  width: calc(100% / 6);
+  float: left;
+}
+.col-1-7 {
+  width: calc(100% / 7);
+  float: left;
+}
+.col-1-8 {
+  width: calc(100% / 8);
+  float: left;
+}
+.col-1-9 {
+  width: calc(100% / 9);
+  float: left;
+}
+.col-1-10 {
+  width: 10%;
+  float: left;
+}
+.col-1-11 {
+  width: calc(100% / 11);
+  float: left;
+}
+.col-1-12 {
+  width: calc(100% / 12);
+  float: left;
+}
+.col-2-3 {
+  width: 66.6%;
+  float: left;
+}
+.clearfix {
+  clear: both;
+}
+html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100% !important;
+  height: 100%;
+}
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: auto;
+  background-color: #333333;
+  min-height: 100% !important;
+  height: 100%;
+}
+/***************
+	HEADER
+****************/
+.navbar {
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  background-color: #333333;
+  box-shadow: 0 5px 5px #292929;
+  z-index: 9999;
+}
+.navbar .navbar-menu-left {
+  position: absolute;
+  list-style-type: none;
+  padding: 5px 15px;
+}
+.navbar .navbar-menu-left img {
+  display: inline-block;
+  width: 66px;
+  height: 66px;
+}
+.navbar .navbar-menu-right {
+  list-style-type: none;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+.navbar .navbar-menu-right li {
+  display: inline-block;
+}
+.navbar .navbar-menu-right li.user-info {
+  padding-right: 25px;
+  color: #979797;
+  font-size: 18px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+}
+.navbar .navbar-menu-right li.user-info img {
+  display: inline-block;
+  width: 30px;
+  position: relative;
+  top: 8px;
+  padding-right: 10px;
+}
+.navbar .navbar-menu-right li.search.active {
+  background-color: #505050;
+}
+.navbar .navbar-menu-right li a {
+  color: #ffffff;
+  font-size: 28px;
+  padding: 15px 5px;
+  text-decoration: none;
+  transition: 0.4s;
+}
+.navbar .navbar-menu-right li a:hover {
+  color: #979797;
+  transition: 0.4s;
+}
+.navbar .navbar-menu-right li .search-container .search-bar {
+  position: relative;
+  bottom: 5px;
+  display: none;
+  width: 0;
+  transition: .5s;
+}
+.navbar .navbar-menu-right li .search-container .search-bar.active {
+  display: inline-block;
+  width: 250px;
+  transition: 0.5s;
+}
+.navbar .navbar-menu-right li .search-container .search-bar .search-box {
+  height: 42px;
+  width: 250px;
+  border-radius: 4px;
+  border: transparent;
+  padding: 0 0 2px 15px;
+  font-size: 16px;
+}
+.slide-menu {
+  position: fixed;
+  right: 0;
+  width: 30%;
+  height: 100%;
+  background-color: #333333;
+  z-index: 99;
+  margin-top: 85px;
+  margin-right: -850px;
+  display: block;
+  transition: 0.6s;
+}
+.slide-menu.open {
+  transition: 0.6s;
+  margin-right: 0;
+}
+.slide-menu ul {
+  list-style-type: none;
+  padding: 0;
+  height: 100%;
+}
+.slide-menu ul li {
+  color: #ffffff;
+  display: block;
+  padding: 20px 0;
+  border-bottom: 1px solid #979797;
+}
+.slide-menu ul li a {
+  font-size: 18px;
+}
+.slide-menu ul li a i {
+  font-size: 22px;
+  padding: 0 25px 0 50px;
+}
+/***************
+	FOOTER
+****************/
+/*********************
+	CONTENT/WRAPPERS
+**********************/
+.content-main {
+  box-sizing: border-box;
+  box-sizing: inherit;
+  padding-top: 100px;
+  height: 100%;
+  overflow: hidden;
+}
+.container {
+  overflow: auto;
+}
+.wrapper {
+  width: 100%;
+  margin: 0;
+}
+/*************************
+	PLACEHOLDER STYLES
+*************************/
+.green {
+  background-color: #b8ee66;
+}
+.blue {
+  background-color: #66afee;
+}
+.pink {
+  background-color: #ee6666;
+}
+.orange {
+  background-color: #ffa946;
+}
+.purple {
+  background-color: #9566ee;
+}
+.turquoise {
+  background-color: #50e3c2;
+}
+.red {
+  background-color: #f35252;
+}
+.yellow {
+  background-color: #fff363;
+}
+/***************
+	LOGIN
+****************/
+.login-form {
+  width: 250px;
+  padding: 250px;
+  margin: 0 auto;
+}
+.login-form .login-form-inner {
+  width: 100%;
+  padding: 35px 50px;
+  border: 1px solid #979797;
+  border-radius: 6px;
+}
+.login-form .login-form-inner h3 {
+  margin-top: 0;
+  color: #ffffff;
+}
+.login-form .login-form-inner form input {
+  width: 100%;
+  padding: 15px 25px;
+  display: block;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #979797;
+  font-size: 14px;
+}
+.login-form .login-form-inner form .submit-btn {
+  color: #ffffff;
+  padding: 15px 0;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 14px;
+  background: transparent;
+  border: 1px solid #979797;
+  transition: 0.4s;
+  cursor: pointer;
+}
+.login-form .login-form-inner form .submit-btn:hover {
+  background: #ffffff;
+  color: #333333;
+  transition: 0.4s;
+}
+.login-form .login-form-inner .password-link {
+  margin-bottom: 5px;
+}
+.login-form .login-form-inner .password-link a {
+  font-size: 12px;
+}
+.login-form .login-form-inner .password-link a:hover {
+  color: #ffffff;
+  transition: 0.4s;
+}
+.login-form .login-form-inner .signup-link a {
+  font-size: 12px;
+}
+.login-form .login-form-inner .signup-link a:hover {
+  color: #ffffff;
+  transition: 0.4s;
+}
+/*****************
+	SIGN UP
+*****************/
+.signup-form {
+  width: 250px;
+  padding: 250px;
+  margin: 0 auto;
+}
+.signup-form .signup-form-inner {
+  width: 100%;
+  padding: 35px 50px;
+  border: 1px solid #979797;
+  border-radius: 6px;
+}
+.signup-form .signup-form-inner h3 {
+  margin-top: 0;
+  color: #ffffff;
+}
+.signup-form .signup-form-inner form input {
+  width: 100%;
+  padding: 15px 25px;
+  display: block;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #979797;
+  font-size: 14px;
+}
+.signup-form .signup-form-inner form .submit-btn {
+  color: #ffffff;
+  padding: 15px 0;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 14px;
+  background: transparent;
+  border: 1px solid #979797;
+  transition: 0.4s;
+  cursor: pointer;
+}
+.signup-form .signup-form-inner form .submit-btn:hover {
+  background: #ffffff;
+  color: #333333;
+  transition: 0.4s;
+}
+/***************
+	HOME
+****************/
+.top-bar {
+  width: 100%;
+  background-color: #505050;
+  overflow: auto;
+}
+.top-bar .add-project {
+  float: right;
+  color: #ffffff;
+  padding: 0 35px;
+}
+.top-bar .add-project a {
+  text-decoration: none;
+  color: #ffffff;
+  transition: 0.4s;
+}
+.top-bar .add-project a h3 {
+  display: inline-block;
+  text-transform: uppercase;
+}
+.top-bar .add-project a i {
+  font-size: 28px;
+}
+.top-bar .add-project a:hover {
+  color: #979797;
+  transition: 0.4s;
+}
+.project-list .project-link {
+  color: #ffffff;
+  text-align: center;
+  text-transform: uppercase;
+}
+.project-list .project-link .project-block h3 {
+  margin: 150px 0;
+  display: inline-block;
+  position: relative;
+  padding-bottom: 5px;
+}
+.project-list .project-link .project-block h3:after {
+  content: '';
+  display: block;
+  margin: auto;
+  height: 3px;
+  width: 0px;
+  background: transparent;
+  transition: width 0.5s ease, background-color 0.5s ease;
+}
+.project-list .project-link:hover .project-block h3:after {
+  background: #ffffff;
+  width: 100%;
+}
+/**********************
+	 PROJECT VIEW
+**********************/
+.top-bar {
+  width: 100%;
+  background-color: #505050;
+  overflow: auto;
+}
+.top-bar .project-bar {
+  float: right;
+  color: #ffffff;
+  padding: 0 35px;
+}
+.top-bar .project-bar a {
+  text-decoration: none;
+  color: #ffffff;
+  transition: 0.4s;
+  padding-right: 25px;
+}
+.top-bar .project-bar a:last-child {
+  padding-right: 0;
+}
+.top-bar .project-bar a h3 {
+  display: inline-block;
+  font-weight: 300;
+}
+.top-bar .project-bar a i {
+  font-size: 28px;
+}
+.top-bar .project-bar a:hover {
+  color: #979797;
+  transition: 0.4s;
+}
+/*************
+	TASKS
+**************/
+.tasks {
+  border-right: 1px solid #979797;
+  box-sizing: border-box;
+  box-sizing: inherit;
+  overflow: scroll;
+  height: 100%;
+}
+.tasks .task {
+  padding: 20px 150px;
+  border-bottom: 1px solid #979797;
+}
+.tasks .task .task-header .task-title {
+  font-size: 18px;
+  display: inline-block;
+  padding-right: 500px;
+}
+.tasks .task .task-header a {
+  display: inline-block;
+}
+.tasks .task .task-header a i {
+  font-size: 24px;
+}
+/****************
+    MESSAGES
+*****************/
+.conversation .message-stream {
+  height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.conversation .message-stream .message-date {
+  border-bottom: 1px solid #979797;
+}
+.conversation .message-stream .message-date h5 {
+  color: #ffffff;
+  text-align: center;
+}
+.conversation .message-stream .message {
+  padding: 15px 0 0;
+  border-bottom: 1px solid #979797;
+}
+.conversation .message-stream .message .message-info {
+  padding: 0 75px;
+}
+.conversation .message-stream .message .message-info p {
+  display: inline-block;
+  color: #505050;
+  margin: 0;
+}
+.conversation .message-stream .message .message-info p.user-name {
+  padding-right: 15px;
+  margin: 0;
+}
+.conversation .message-stream .message .message-body {
+  padding: 0 75px;
+}
+.conversation .message-bar {
+  width: 100%;
+  height: 40px;
+  position: fixed;
+  bottom: 0;
+  background: #333333;
+  border-top: 1px solid #979797;
+  padding: 15px 0;
+}
+.conversation .message-bar i {
+  display: inline-block;
+  color: #ffffff;
+  font-size: 24px;
+  position: relative;
+  top: 3px;
+}
+.conversation .message-bar input {
+  display: inline-block;
+  width: 30%;
+  height: 35px;
+  border-radius: 6px;
+  margin-right: 15px;
+}
+/***************************
+		CONVERSATIONS
+***************************/
+.conversations .conversation-list {
+  height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.conversations .conversation-list .add-convo-bar {
+  background: #333333;
+  width: 100%;
+  height: 50px;
+  box-shadow: 0 5px 5px #292929;
+}
+.conversations .conversation-list .add-convo-bar i {
+  color: #ffffff;
+  font-size: 24px;
+  display: inline-block;
+  margin: 12px 0 0 25px;
+}
+.conversations .conversation-list .add-convo-bar p {
+  display: inline-block;
+  float: right;
+  margin: 0;
+  margin: 12px 25px 0 0;
+}
+.conversations .conversation-list .convo {
+  border-bottom: 1px solid #979797;
+}
+.conversations .conversation-list .convo .conversation-info {
+  padding: 0 75px;
+}
+.conversations .conversation-list .convo .conversation-info img {
+  display: inline-block;
+  position: relative;
+  top: 15px;
+  padding-right: 25px;
+}
+.conversations .conversation-list .convo .conversation-info p {
+  display: inline-block;
+  color: #ffffff;
+  margin: 0;
+}
+.conversations .conversation-list .convo .message-truncated {
+  padding: 0 75px;
+}
+/**********************
+		FILES
+**********************/
+.files {
+  border-right: 1px solid #979797;
+}
+.files .file-block {
+  overflow: auto;
+  border-bottom: 1px solid #979797;
+  padding-bottom: 28px;
+}
+.files .file-block .file {
+  padding: 25px 200px;
+}
+.files .file-block .file i {
+  font-size: 36px;
+  color: #ffffff;
+  display: block;
+  float: left;
+  margin: 15px 25px 0 0;
+}
+.files .file-block .file i.ut-download-cloud {
+  font-size: 18px;
+  margin: 15px 0 0 175px;
+  color: #b8ee66;
+}
+.files .file-block .file .file-info {
+  display: block;
+  float: left;
+}
+.files .file-block .file .file-info p {
+  display: block;
+  margin: 0;
+}
+.files .file-block .file .file-info p.file-name {
+  font-size: 24px;
+}
