@@ -288,6 +288,9 @@ body {
   box-sizing: border-box;
   box-sizing: inherit;
 }
+.wrapper.small {
+  padding-bottom: 70px;
+}
 /*************************
 	PLACEHOLDER STYLES
 *************************/
@@ -428,6 +431,7 @@ body {
   background-color: #505050;
   overflow: auto;
   position: absolute;
+  z-index: 99;
 }
 .top-bar .add-project {
   float: right;
@@ -449,6 +453,11 @@ body {
 .top-bar .add-project a:hover {
   color: #979797;
   transition: 0.4s;
+}
+.project-list {
+  height: 100%;
+  overflow: scroll;
+  padding-top: 93px;
 }
 .project-list .project-link {
   color: #ffffff;
@@ -521,16 +530,24 @@ body {
   padding: 20px 150px;
   border-bottom: 1px solid #979797;
 }
+.tasks .task .task-header {
+  cursor: pointer;
+}
 .tasks .task .task-header .task-title {
   font-size: 18px;
   display: inline-block;
-  padding-right: 500px;
 }
-.tasks .task .task-header a {
+.tasks .task .task-header .task-toggle {
   display: inline-block;
+  position: relative;
+  left: 75%;
 }
-.tasks .task .task-header a i {
+.tasks .task .task-header .task-toggle i {
   font-size: 24px;
+}
+.tasks .task .task-header:hover i {
+  color: #ffffff;
+  transition: 0.4s;
 }
 /****************
     MESSAGES
@@ -573,21 +590,22 @@ body {
   bottom: 0;
   background: #333333;
   border-top: 1px solid #979797;
-  padding: 15px 0;
+  padding: 10px 0 20px;
 }
 .conversation .message-bar i {
   display: inline-block;
   color: #ffffff;
-  font-size: 24px;
+  font-size: 30px;
   position: relative;
-  top: 3px;
+  top: 8px;
+  left: 15px;
 }
 .conversation .message-bar input {
   display: inline-block;
-  width: 30%;
+  width: 25%;
   height: 35px;
   border-radius: 6px;
-  margin-right: 15px;
+  margin-left: 1.5%;
 }
 /***************************
 		CONVERSATIONS

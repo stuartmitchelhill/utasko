@@ -133,6 +133,7 @@
 	background-color: @grey5;
 	overflow: auto;
 	position: absolute;
+	z-index: 99;
 
 	.add-project {
 		float: right;
@@ -161,6 +162,9 @@
 }
 
 .project-list {
+	height: 100%;
+	overflow: scroll;
+	padding-top: 93px;
 	.project-link {
 		color: @white;
 		text-align: center;
@@ -257,18 +261,27 @@
 		padding: 20px 150px;
 		border-bottom: 1px solid @grey9;
 		.task-header {
+			cursor: pointer;
 			.task-title {
 				font-size: 18px;
 				display: inline-block;
-				padding-right: 500px
 
 			}
 
-			a {
+			.task-toggle {
 				display: inline-block;
+				position: relative;
+				left: 75%;
 
 				i {
 					font-size: 24px;
+				}
+			}
+
+			&:hover {
+				i {
+					color: @white;
+					transition: 0.4s;
 				}
 			}
 		}
@@ -322,22 +335,24 @@
 		bottom: 0;
 		background: @main_colour;
 		border-top: 1px solid @grey9;
-		padding: 15px 0;
+		padding: 10px 0 20px;
 
 		i {
 			display: inline-block;
 			color: @white;
-			font-size: 24px;
+			font-size: 30px;
 			position: relative;
-			top: 3px;
+			top: 8px;
+			left: 15px;
 		}
 
 		input {
 			display: inline-block;
-			width: 30%;
+			width: 25%;
 			height: 35px;
 			border-radius: 6px;
-			margin-right: 15px;
+			margin-left: 1.5%;
+
 		}
 	}
 }
