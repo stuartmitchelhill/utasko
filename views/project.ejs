@@ -1,0 +1,42 @@
+<!-- views/project.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include partials/head %>
+</head>
+	<body>
+
+	    <% include partials/header %>
+	    
+	    <div class="content-main">
+			<div class="top-bar">
+				<div class="project-bar">
+					<a href="#">
+						<h3>View Repo</h3>
+						<i class="ut-github-circled"></i>
+					</a>
+					<a href="file_view.php">
+						<h3>View Files</h3>
+						<i class="ut-docs"></i>
+					</a>
+					<a href="file_view.php">
+						<h3>View Converations</h3>
+						<i class="ut-chat-empty"></i>
+					</a>
+				</div>
+			</div>
+
+		    <div class="container">
+		    	<% include layouts/task_view %>
+
+		    	<% include layouts/messages_view %>
+			</div>
+
+		</div> <!-- Close Content Main -->
+
+		<footer>
+	    	<% include partials/footer %>
+	    </footer>
+	    
+	</body>
+</html>
