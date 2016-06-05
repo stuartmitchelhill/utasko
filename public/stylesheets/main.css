@@ -157,7 +157,7 @@ body {
   height: 100px;
   background-color: #333333;
   box-shadow: 0 5px 5px #292929;
-  z-index: 9999;
+  z-index: 999999;
 }
 .navbar .navbar-menu-left {
   position: absolute;
@@ -220,10 +220,10 @@ body {
 }
 .navbar .navbar-menu-right li .search-container .search-bar .search-box {
   height: 42px;
-  width: 250px;
+  width: 225px;
   border-radius: 4px;
   border: transparent;
-  padding: 0 0 2px 15px;
+  padding-left: 15px;
   font-size: 16px;
 }
 .slide-menu {
@@ -232,7 +232,7 @@ body {
   width: 30%;
   height: 100%;
   background-color: #333333;
-  z-index: 99;
+  z-index: 9999;
   margin-top: 85px;
   margin-right: -850px;
   display: block;
