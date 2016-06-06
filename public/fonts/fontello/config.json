@@ -335,6 +335,12 @@
       "css": "docs",
       "code": 59438,
       "src": "fontawesome"
+    },
+    {
+      "uid": "27531040afb54140f4d449321c9cec3a",
+      "css": "check",
+      "code": 59439,
+      "src": "typicons"
     }
   ]
 }

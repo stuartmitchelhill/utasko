@@ -82,19 +82,19 @@ a.disabled {
   width: 100%;
 }
 .col-1-2 {
-  width: 50%;
+  width: calc(100% / 2);
   float: left;
 }
 .col-1-3 {
-  width: 33.3%;
+  width: calc(100% / 3);
   float: left;
 }
 .col-1-4 {
-  width: 25%;
+  width: calc(100% / 4);
   float: left;
 }
 .col-1-5 {
-  width: 20%;
+  width: calc(100% / 5);
   float: left;
 }
 .col-1-6 {
@@ -114,7 +114,7 @@ a.disabled {
   float: left;
 }
 .col-1-10 {
-  width: 10%;
+  width: calc(100% / 10);
   float: left;
 }
 .col-1-11 {
@@ -126,7 +126,7 @@ a.disabled {
   float: left;
 }
 .col-2-3 {
-  width: 66.6%;
+  width: calc(100% * 2/3);
   float: left;
 }
 .clearfix {
@@ -536,18 +536,70 @@ body {
 .tasks .task .task-header .task-title {
   font-size: 18px;
   display: inline-block;
+  transition: 0.4s;
+  margin-bottom: 5px;
 }
 .tasks .task .task-header .task-toggle {
   display: inline-block;
+  float: right;
   position: relative;
-  left: 75%;
+  top: 28px;
 }
 .tasks .task .task-header .task-toggle i {
   font-size: 24px;
+  transition: 0.4s;
+}
+.tasks .task .task-header .task-quick-info p {
+  display: inline-block;
+  color: #cccccc;
+  font-size: 14px;
+  margin-top: 0;
+}
+.tasks .task .task-header .task-quick-info.disabled {
+  display: none;
 }
 .tasks .task .task-header:hover i {
   color: #ffffff;
   transition: 0.4s;
+}
+.tasks .task .task-header:hover .task-title {
+  color: #b8ee66;
+  transition: 0.4s;
+}
+.tasks .task.open .task-title {
+  color: #b8ee66;
+}
+.tasks .task .task-info {
+  display: none;
+}
+.tasks .task .task-info .due-date {
+  color: #cccccc;
+  font-size: 14px;
+  margin-top: 0;
+}
+.tasks .task .task-info .task-requirments {
+  display: inline-block;
+  width: 70%;
+  margin-right: 5%;
+}
+.tasks .task .task-info .task-requirments .task-requirment {
+  cursor: pointer;
+}
+.tasks .task .task-info .task-requirments .task-requirment i {
+  padding-right: 10px;
+}
+.tasks .task .task-info .task-requirments .task-requirment.complete {
+  text-decoration: line-through;
+  color: #979797;
+}
+.tasks .task .task-info .task-requirments .task-requirment:hover {
+  color: #979797;
+  transition: 0.4s;
+}
+.tasks .task .task-info .task-users {
+  display: inline-block;
+  border-left: 1px solid #979797;
+  padding-left: 15px;
 }
 /****************
     MESSAGES

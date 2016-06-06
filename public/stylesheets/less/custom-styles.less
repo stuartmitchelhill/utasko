@@ -265,16 +265,33 @@
 			.task-title {
 				font-size: 18px;
 				display: inline-block;
+				transition: 0.4s;
+				margin-bottom: 5px;
 
 			}
 
 			.task-toggle {
 				display: inline-block;
+				float: right;
 				position: relative;
-				left: 75%;
+				top: 28px;
 
 				i {
 					font-size: 24px;
+					transition: 0.4s;
+				}
+			}
+
+			.task-quick-info {
+				p {
+					display: inline-block;
+					color: @greyC;
+					font-size: 14px;
+					margin-top: 0;
+				}
+
+				&.disabled {
+					display: none;
 				}
 			}
 
@@ -283,6 +300,55 @@
 					color: @white;
 					transition: 0.4s;
 				}
+
+				.task-title {
+					color: @utasko_green;
+					transition: 0.4s;
+				}
+			}
+		}
+
+		&.open {
+			.task-title {
+				color: @utasko_green;
+			}
+		}
+
+		.task-info {
+			display: none;
+
+			.due-date {
+				color: @greyC;
+				font-size: 14px;
+				margin-top: 0;
+			}
+			.task-requirments {
+				display: inline-block;
+				width: 70%;
+				margin-right: 5%;
+
+				.task-requirment {
+					cursor: pointer;
+					i {
+						padding-right: 10px;
+					}
+
+					&.complete {
+						text-decoration: line-through;
+						color: @grey9;
+					}
+
+					&:hover {
+						color: @grey9;
+						transition: 0.4s;
+					}
+				}
+			}
+
+			.task-users {
+				display: inline-block;
+				border-left: 1px solid @grey9;
+				padding-left: 15px;
 			}
 		}
 	}

@@ -10,3 +10,21 @@ $(function() {
         });
     });
 });
+
+$(function(){
+
+	$('.task .task-header').click(function(){
+		var $header = $(this),
+			$task = $header.closest('.task'),
+			$taskExpand = $task.find('.task-info'),
+      		$icon = $header.find('.task-toggle i');
+      		$info = $header.find('.task-quick-info');
+      
+        
+		$icon.toggleClass("ut-plus ut-minus"),
+		$taskExpand.slideToggle();
+		$task.toggleClass('open');
+		$info.slideToggle('disabled');
+	});
+	
+});
