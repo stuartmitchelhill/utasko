@@ -25,6 +25,14 @@ router.get('/sign_up', function(req, res, next) {
   	});
 });
 
+/* GET Profile page. */
+router.get('/profile', function(req, res, next) {
+  res.render('profile', 
+    { 
+      title: 'Utasko | My Profile' 
+    });
+});
+
 /* GET Project page. */
 router.get('/project', function(req, res, next) {
   res.render('project', 
@@ -32,5 +40,15 @@ router.get('/project', function(req, res, next) {
   		title: 'Utasko | Project Name' 
   	});
 });
+
+/* GET Add_Project page. */
+router.get('/add_project', function(req, res, next) {
+  res.render('add_project', 
+    { 
+      title: 'Utasko | New Project' 
+    });
+});
+
+
 
 module.exports = router;

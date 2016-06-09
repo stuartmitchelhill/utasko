@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'utasko';
-  src: url('../font/utasko.eot?71525460');
-  src: url('../font/utasko.eot?71525460#iefix') format('embedded-opentype'),
-       url('../font/utasko.woff2?71525460') format('woff2'),
-       url('../font/utasko.woff?71525460') format('woff'),
-       url('../font/utasko.ttf?71525460') format('truetype'),
-       url('../font/utasko.svg?71525460#utasko') format('svg');
+  src: url('../font/utasko.eot?23500819');
+  src: url('../font/utasko.eot?23500819#iefix') format('embedded-opentype'),
+       url('../font/utasko.woff2?23500819') format('woff2'),
+       url('../font/utasko.woff?23500819') format('woff'),
+       url('../font/utasko.ttf?23500819') format('truetype'),
+       url('../font/utasko.svg?23500819#utasko') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'utasko';
-    src: url('../font/utasko.svg?71525460#utasko') format('svg');
+    src: url('../font/utasko.svg?23500819#utasko') format('svg');
   }
 }
 */
@@ -56,7 +56,6 @@
 }
  
 .ut-download-cloud:before { content: '\e800'; } /* '' */
-.ut-chat-empty:before { content: '\e801'; } /* '' */
 .ut-file-pdf:before { content: '\e802'; } /* '' */
 .ut-file-word:before { content: '\e803'; } /* '' */
 .ut-file-excel:before { content: '\e804'; } /* '' */
@@ -68,8 +67,8 @@
 .ut-file-code:before { content: '\e80a'; } /* '' */
 .ut-doc-text:before { content: '\e80b'; } /* '' */
 .ut-clock:before { content: '\e80c'; } /* '' */
-.ut-user-plus:before { content: '\e80d'; } /* '' */
-.ut-user:before { content: '\e80e'; } /* '' */
+.ut-pencil:before { content: '\e80d'; } /* '' */
+.ut-trash:before { content: '\e80e'; } /* '' */
 .ut-ok-circled:before { content: '\e80f'; } /* '' */
 .ut-circle-thin:before { content: '\e810'; } /* '' */
 .ut-list-numbered:before { content: '\e811'; } /* '' */
@@ -78,7 +77,7 @@
 .ut-search:before { content: '\e814'; } /* '' */
 .ut-more-vert:before { content: '\e815'; } /* '' */
 .ut-close:before { content: '\e816'; } /* '' */
-.ut-github-circled:before { content: '\e817'; } /* '' */
+.ut-chat:before { content: '\e817'; } /* '' */
 .ut-minus:before { content: '\e818'; } /* '' */
 .ut-plus:before { content: '\e819'; } /* '' */
 .ut-emo-happy:before { content: '\e81a'; } /* '' */
@@ -100,6 +99,9 @@
 .ut-emo-squint:before { content: '\e82a'; } /* '' */
 .ut-emo-laugh:before { content: '\e82b'; } /* '' */
 .ut-emo-wink2:before { content: '\e82c'; } /* '' */
-.ut-power:before { content: '\e82d'; } /* '' */
+.ut-github:before { content: '\e82d'; } /* '' */
 .ut-docs:before { content: '\e82e'; } /* '' */
 .ut-check:before { content: '\e82f'; } /* '' */
+.ut-user:before { content: '\e830'; } /* '' */
+.ut-user-plus:before { content: '\e831'; } /* '' */
+.ut-power:before { content: '\e832'; } /* '' */

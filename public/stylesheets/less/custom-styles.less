@@ -316,6 +316,7 @@
 
 		.task-info {
 			display: none;
+			position: relative;
 
 			.due-date {
 				color: @greyC;
@@ -327,20 +328,38 @@
 				width: 70%;
 				margin-right: 5%;
 
-				.task-requirment {
-					cursor: pointer;
-					i {
-						padding-right: 10px;
-					}
+				ul {
+					list-style-type: none;
+					padding-left: 25px;
+					.task-requirment {
+						cursor: pointer;
+						margin-bottom: 15px;
 
-					&.complete {
-						text-decoration: line-through;
-						color: @grey9;
-					}
+						&:last-child {
+							margin-bottom: 0;
+						}
+						&:before {
+							content:'\e810';
+							font-family: 'utasko';
+							color: @white;
+							position: absolute;
+							margin-left: -25px;
+						}
 
-					&:hover {
-						color: @grey9;
-						transition: 0.4s;
+						&.complete {
+							text-decoration: line-through;
+							color: @grey9;
+
+							&:before {
+								content:'\e80f';
+								font-family: 'utasko';
+							}
+						}
+
+						&:hover {
+							color: @grey9;
+							transition: 0.4s;
+						}
 					}
 				}
 			}
@@ -349,6 +368,7 @@
 				display: inline-block;
 				border-left: 1px solid @grey9;
 				padding-left: 15px;
+				vertical-align: top;
 			}
 		}
 	}

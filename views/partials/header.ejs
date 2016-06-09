@@ -1,29 +1,45 @@
-<header>
-	<nav class="navbar">
-		<ul class="navbar-menu-left">
-			<li><a href="/"><img src="images/utasko_logo.png"></a></li>
-		</ul>
-		<ul class="navbar-menu-right">
-			<li class="user-info"><img src="images/user_icon.png"> Logged in  as Tasky McTaskFace</li>
-			<li>
-				<div class="search-container">
-					 <div class="search-bar">
-				        <input name="search-box" type="text" id="search-box" class="search-box" value="Search" onfocus="this.value=''">                   
-				    </div>
-				    <a href="javascript:void(0)" class="search-trigger"><i class="ut-search"></i></a>	
-				</div>
-			</li>
-			<li><a class="menu-trigger" href="javascript:void(0)"><i class="ut-more-vert"></i></li></a>
-		</ul>
-	</nav>
-	<div class="slide-menu">
-			<ul>
-				<li><a href="#"><i class="ut-user-plus"></i>Add User</a></li>
-				<li><a href="#"><i class="ut-shuffle"></i>Switch Projects</a></li>
-				<li><a href="#"><i class="ut-plus"></i>Add Project</a></li>
-				<li><a href="#"><i class="ut-home"></i>My Account</a></li>
-				<li><a href="#"><i class="ut-power"></i>Sign Out</a></li>
-			</ul>
-		</div>
+<!-- partials/header.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title><%= title %></title>
+	<meta name="description" content=" ">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="favicon" href="images/favicon.ico">
+	<link rel="stylesheet" href="/stylesheets/main.css" type="text/css" />
+	<link rel="stylesheet" href="/fonts/fontello/css/utasko.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="/javascripts/general.js"></script>
+</head>
+	<body>
 
+<header>
+    <nav class="navbar">
+        <ul class="navbar-menu-left">
+            <li><a href="/"><img src="images/utasko_logo.png"></a></li>
+        </ul>
+        <ul class="navbar-menu-right">
+            <li class="user-info"><img src="images/user_icon.png"> Logged in  as Tasky McTaskFace</li>
+            <!--<li>
+                <div class="search-container">
+                     <div class="search-bar">
+                        <input name="search-box" type="text" id="search-box" class="search-box" value="Search" onfocus="this.value=''">                   
+                    </div>
+                    <a href="javascript:void(0)" class="search-trigger"><i class="ut-search"></i></a>	
+                </div>
+            </li>-->
+            <li><a class="menu-trigger" href="javascript:void(0)"><i class="ut-more-vert"></i></li></a>
+        </ul>
+    </nav>
+    <div class="slide-menu">
+        <ul>
+            <li><a href="#"><i class="ut-user-plus"></i>Add User</a></li>
+            <li><a href="/"><i class="ut-shuffle"></i>Switch Projects</a></li>
+            <li><a href="/add_project"><i class="ut-plus"></i>Add Project</a></li>
+            <li><a href="/profile"><i class="ut-home"></i>My Account</a></li>
+            <li><a href="#"><i class="ut-power"></i>Sign Out</a></li>
+        </ul>
+    </div>
 </header>

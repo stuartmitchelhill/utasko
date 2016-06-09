@@ -1,18 +1,10 @@
-<!-- views/pages/index.ejs -->
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <% include partials/head %>
-</head>
-<body>
-
-    <% include partials/header %>
+<!-- views/index.ejs -->
+<% include partials/header %>
 
     <div class="content-main">
 		<div class="top-bar">
 			<div class="add-project">
-				<a href="#">
+				<a href="/add_project">
 				<h3>Add Project</h3>
 				<i class="ut-plus"></i>
 				</a>
@@ -70,9 +62,4 @@
 		</div>
 	</div>
 
-    <footer>
-        <% include partials/footer %>
-    </footer>
-    
-</body>
-</html>
+<% include partials/footer %>

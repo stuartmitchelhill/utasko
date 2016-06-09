@@ -78,6 +78,15 @@ a:hover {
 a.disabled {
   color: #505050;
 }
+ul li {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 300;
+  line-height: 160%;
+  color: #ffffff;
+}
 .col-1-1 {
   width: 100%;
 }
@@ -571,6 +580,7 @@ body {
 }
 .tasks .task .task-info {
   display: none;
+  position: relative;
 }
 .tasks .task .task-info .due-date {
   color: #cccccc;
@@ -582,17 +592,33 @@ body {
   width: 70%;
   margin-right: 5%;
 }
-.tasks .task .task-info .task-requirments .task-requirment {
+.tasks .task .task-info .task-requirments ul {
+  list-style-type: none;
+  padding-left: 25px;
+}
+.tasks .task .task-info .task-requirments ul .task-requirment {
   cursor: pointer;
+  margin-bottom: 15px;
 }
-.tasks .task .task-info .task-requirments .task-requirment i {
-  padding-right: 10px;
+.tasks .task .task-info .task-requirments ul .task-requirment:last-child {
+  margin-bottom: 0;
 }
-.tasks .task .task-info .task-requirments .task-requirment.complete {
+.tasks .task .task-info .task-requirments ul .task-requirment:before {
+  content: '\e810';
+  font-family: 'utasko';
+  color: #ffffff;
+  position: absolute;
+  margin-left: -25px;
+}
+.tasks .task .task-info .task-requirments ul .task-requirment.complete {
   text-decoration: line-through;
   color: #979797;
 }
-.tasks .task .task-info .task-requirments .task-requirment:hover {
+.tasks .task .task-info .task-requirments ul .task-requirment.complete:before {
+  content: '\e80f';
+  font-family: 'utasko';
+}
+.tasks .task .task-info .task-requirments ul .task-requirment:hover {
   color: #979797;
   transition: 0.4s;
 }
@@ -600,6 +626,7 @@ body {
   display: inline-block;
   border-left: 1px solid #979797;
   padding-left: 15px;
+  vertical-align: top;
 }
 /****************
     MESSAGES
