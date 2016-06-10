@@ -1,16 +1,16 @@
 <% include partials/header %>
 
 	<div class="container">
-		<div class="col-1-1">
+		<div class="col col-1-1">
 			<div class="wrapper">
 				<div class="signup-form">
 					<div class="signup-form-inner">
 						<h3>Sign Up</h3>
-						<form>
-							<input type="text" name="username" placeholder="Username"></input>
-							<input type="email" name="email_address" placeholder="Email Address"></input>
-							<input type="text" name="password" placeholder="Password"></input>
-							<input type="submit" name="submit" class="submit-btn" value="Create Account"></input>
+						<form action="/sign_up" method="post">
+							<input type="text" name="name" placeholder="Name"></input>
+							<input type="email" name="email" placeholder="Email Address"></input>
+							<input type="password" name="password" placeholder="Password"></input>
+							<input type="submit" name="submit" class="submit-btn" value="Sign Up"></input>
 						</form>
 					</div>
 				</div>

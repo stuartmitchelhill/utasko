@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var app = express();
+var passport = require('passport');
+var Strategy = require('passport-local').Strategy;
 
-/* GET home page. */
+/* GET Landing page. */
 router.get('/', function(req, res, next) {
   res.render('index', 
   	{ 
@@ -9,19 +12,12 @@ router.get('/', function(req, res, next) {
   	});
 });
 
-/* GET login page. */
-router.get('/login', function(req, res, next) {
-  res.render('login', 
-  	{ 
-  		title: 'Utasko | Login' 
-  	});
-});
 
-/* GET Sign Up page. */
-router.get('/sign_up', function(req, res, next) {
-  res.render('sign_up', 
+/* GET home page. */
+router.get('/home', function(req, res, next) {
+  res.render('home', 
   	{ 
-  		title: 'Utasko | Sign Up' 
+  		title: 'Utasko | Home' 
   	});
 });
 
@@ -49,6 +45,31 @@ router.get('/add_project', function(req, res, next) {
     });
 });
 
+/* GET Sign Up page. */
+router.get('/sign_up', function(req, res, next) {
+  res.render('sign_up', 
+    { 
+      title: 'Utasko | Sign Up' 
+    });
+});
+
+/* GET Login page. */
+router.get('/login', function(req, res, next) {
+  res.render('login', 
+    { 
+      title: 'Utasko | login' 
+    });
+});
+
+/* POST Login */
+router.post('/login',
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res){
+    res.render('login', 
+  	{ 
+  		title: 'Utasko | Login' 
+  	});
+  });
 
 
 module.exports = router;
