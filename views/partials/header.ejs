@@ -21,10 +21,7 @@
             <li><a href="/"><img src="images/utasko_logo.png"></a></li>
         </ul>
         <ul class="navbar-menu-right">
-            <% if (!user) { %>
-            <% } else { %>
-            <li class="user-info"><img src="images/user_icon.png"> Logged in  as <%= user.name %></li>
-            <% } %>
+            <li class="user-info"><img src="images/user_icon.png"></li>
             <!--<li>
                 <div class="search-container">
                      <div class="search-bar">
@@ -46,3 +43,4 @@
         </ul>
     </div>
 </header>
+    <div class="overlay"></div>

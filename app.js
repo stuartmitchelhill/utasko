@@ -144,7 +144,6 @@ app.use(passport.session());
 app.get('/', function(req, res, next) {
   res.render('index', 
   	{ 
-        user: req.body.name, 
   		title: 'Utasko' 
   	});
 });
@@ -153,8 +152,7 @@ app.get('/', function(req, res, next) {
 /* GET home page. */
 app.get('/home', function(req, res) {
   res.render('home',
-  	{ 
-        user: req.body.name,     
+  	{    
   		title: 'Utasko | Home' 
   	});
 });
@@ -188,7 +186,6 @@ app.get('/sign_up',
     console.log('Geting to sign up');
     res.render('sign_up',
     {
-        user: name,
         title: 'Utasko | Sign Up'   
     });
   });
@@ -202,7 +199,6 @@ app.get('/login',
   function(req, res){
     console.log('Login check');
     res.render('login', {
-        user: req.body.name,
         title: 'Utasko | Login'   
     });
   });

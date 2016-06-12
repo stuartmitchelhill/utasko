@@ -1,14 +1,16 @@
 $(function() {
     $( ".menu-trigger" ).click(function() {
   		$( ".slide-menu" ).toggleClass("open");
+        $(this).find("i").toggleClass("ut-more-vert ut-close");
+        $(".overlay").toggleClass('cover');
   	});
 
-  	$('.search-container .search-trigger').click(function() {
+  	/*$('.search-container .search-trigger').click(function() {
         $(this).closest('active');
         $('.search-bar').toggleClass('active', function(){
             $(this).find('input')[0].focus(); 
         });
-    });
+    });*/
 });
 
 $(function(){

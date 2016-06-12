@@ -1,29 +1,31 @@
 <% include partials/header %>
 	    
 	    <div class="content-main">
-			<div class="top-bar">
-				<div class="project-bar">
-					<a href="#">
-						<h3>View Repo</h3>
-						<i class="ut-github"></i>
-					</a>
-					<a href="file_view.php">
-						<h3>View Files</h3>
-						<i class="ut-docs"></i>
-					</a>
-					<a href="file_view.php">
-						<h3>View Converations</h3>
-						<i class="ut-chat"></i>
-					</a>
-				</div>
-			</div>
+                <div class="project-title">
+                    <h2>Project Name</h2>
+                </div>
+                <div class="top-bar">
+                    <div class="project-bar">
+                        <a href="#">
+                            <h3>View Repo</h3>
+                            <i class="ut-github"></i>
+                        </a>
+                        <a href="file_view.php">
+                            <h3>View Files</h3>
+                            <i class="ut-folder"></i>
+                        </a>
+                        <a href="file_view.php">
+                            <h3>View Converations</h3>
+                            <i class="ut-chat"></i>
+                        </a>
+                    </div>
+                </div>
 
-		    <div class="container">
-		    	<% include layouts/task_view %>
+                <div class="container">
+                    <% include layouts/task_view %>
 
-		    	<% include layouts/messages_view %>
-			</div>
-
+                    <% include layouts/messages_view %>
+                </div>
 		</div> <!-- Close Content Main -->
 
 <% include partials/footer %>

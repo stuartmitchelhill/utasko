@@ -284,10 +284,15 @@ body {
 }
 .slide-menu ul li a {
   font-size: 18px;
+  transition: 0.4s;
 }
 .slide-menu ul li a i {
   font-size: 22px;
   padding: 0 25px 0 50px;
+}
+.slide-menu ul li a:hover {
+  color: #ffffff;
+  transition: 0.4s;
 }
 /***************
 	FOOTER
@@ -298,9 +303,12 @@ body {
 .content-main {
   box-sizing: border-box;
   box-sizing: inherit;
-  padding-top: 100px;
+  padding-top: 255px;
   height: 100%;
   overflow: hidden;
+}
+.content-main.project-list {
+  padding-top: 100px;
 }
 .container {
   height: 100%;
@@ -318,6 +326,23 @@ body {
 }
 .wrapper.small {
   padding-bottom: 70px;
+}
+.overlay {
+  visibility: hidden;
+  width: 100%;
+  height: 0%;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: 0.4s;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.overlay.cover {
+  width: 100%;
+  height: 100%;
+  visibility: visible;
+  transition: 0.4s;
 }
 /*************************
 	PLACEHOLDER STYLES
@@ -515,9 +540,116 @@ body {
   background: #ffffff;
   width: 100%;
 }
+/*****************
+	ADD PROJECT
+*****************/
+.add-project-form {
+  width: 700px;
+  padding: 100px;
+  margin: 0 auto;
+}
+.add-project-form .add-project-form-inner {
+  width: 100%;
+  padding: 35px 50px;
+  border: 1px solid #979797;
+  border-radius: 6px;
+}
+.add-project-form .add-project-form-inner h3 {
+  margin-top: 0;
+  color: #ffffff;
+}
+.add-project-form .add-project-form-inner form ::-webkit-calendar-picker-indicator {
+  display: none;
+}
+.add-project-form .add-project-form-inner form input {
+  width: 100%;
+  padding: 15px 25px;
+  display: block;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #979797;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+.add-project-form .add-project-form-inner form .custom-select {
+  width: 100%;
+  padding: 0;
+  margin-bottom: 15px;
+  display: block;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  position: relative;
+}
+.add-project-form .add-project-form-inner form .custom-select:after {
+  content: '';
+  width: 0;
+  height: 0;
+  position: absolute;
+  border-top: 5px solid #333333;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  bottom: 20px;
+  left: 95%;
+}
+.add-project-form .add-project-form-inner form .custom-select select {
+  padding: 15px 25px;
+  width: 100%;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  background-image: none;
+  font-size: 14px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.add-project-form .add-project-form-inner form textarea {
+  width: 100%;
+  display: block;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  border: 1px solid #979797;
+  font-size: 14px;
+  box-sizing: border-box;
+  height: 250px;
+  resize: none;
+  padding: 15px 25px;
+}
+.add-project-form .add-project-form-inner form .submit-btn {
+  color: #ffffff;
+  padding: 15px 0;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 14px;
+  background: transparent;
+  border: 1px solid #979797;
+  transition: 0.4s;
+  cursor: pointer;
+}
+.add-project-form .add-project-form-inner form .submit-btn:hover {
+  background: #ffffff;
+  color: #333333;
+  transition: 0.4s;
+}
 /**********************
 	 PROJECT VIEW
 **********************/
+.project-title {
+  width: 100%;
+  background-color: #b8ee66;
+  overflow: auto;
+  position: absolute;
+  text-align: center;
+  top: 100px;
+}
+.project-title h2 {
+  text-transform: uppercase;
+  padding: 25px 0;
+  color: #ffffff;
+}
 .top-bar {
   width: 100%;
   background-color: #505050;
@@ -627,7 +759,7 @@ body {
   margin-bottom: 0;
 }
 .tasks .task .task-info .task-requirments ul .task-requirment:before {
-  content: '\e810';
+  content: '\e80d';
   font-family: 'utasko';
   color: #ffffff;
   position: absolute;
@@ -638,7 +770,7 @@ body {
   color: #979797;
 }
 .tasks .task .task-info .task-requirments ul .task-requirment.complete:before {
-  content: '\e80f';
+  content: '\e80c';
   font-family: 'utasko';
 }
 .tasks .task .task-info .task-requirments ul .task-requirment:hover {

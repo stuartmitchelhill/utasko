@@ -142,11 +142,17 @@ body {
 
 			a {
 				font-size: 18px;
+                transition: 0.4s;
 
 				i {
 					font-size: 22px;
 					padding: 0 25px 0 50px;
 				}
+                
+                &:hover {
+                    color: @white;
+                    transition: 0.4s;
+                }
 			}
 		}
 	}
@@ -166,9 +172,13 @@ body {
 .content-main {
 	box-sizing: border-box;
 	box-sizing: inherit;
-	padding-top: 100px;
+	padding-top: 255px;
 	height: 100%;
 	overflow: hidden;
+    
+    &.project-list {
+        padding-top:100px;
+    }
 }
 
 .container {
@@ -191,6 +201,24 @@ body {
 	}
 }
 
+.overlay {
+    visibility: hidden;
+    width: 100%;
+    height: 0%;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: 0.4s;
+    position:absolute;
+    top:0;
+    left:0;
+    
+    &.cover {
+        width: 100%;
+        height: 100%;
+        visibility: visible;
+        transition: 0.4s;
+    }
+}
 
 
 /*************************

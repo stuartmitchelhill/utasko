@@ -1,11 +1,29 @@
 <% include partials/header %>
-	    
-	    <div class="content-main">
 
-		    <div class="container">
-		    	
+	<div class="container">
+		<div class="col col-1-1">
+			<div class="wrapper">
+				<div class="add-project-form">
+					<div class="add-project-form-inner">
+						<h3>Add Project</h3>
+						<form action="/add_project" method="post">
+							<input type="text" name="project-title" placeholder="Enter Project Title"></input>
+							<input type="date" name="end-date" placeholder="Enter Project End Date"></input>
+                            <div class="custom-select">
+                                <select>
+                                    <option disabled="disabled" selected="selected">Add Project Users</option>
+                                    <option>User 1</option>
+                                    <option>User 2</option>
+                                    <option>User 3</option>
+                                </select>
+                            </div>
+                            <textarea name="projecct-description" placeholder="Enter Project Description"></textarea>
+							<input type="submit" name="submit" class="submit-btn" value="Add Project"></input>
+						</form>
+					</div>
+				</div>
 			</div>
-
-		</div> <!-- Close Content Main -->
+		</div>
+	</div>
 
 <% include partials/footer %>
