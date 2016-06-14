@@ -8,6 +8,7 @@ h1 {
   font-variant: normal;
   font-weight: 800;
   line-height: 160%;
+  color: #ffffff;
 }
 h2 {
   font-family: 'HelveticaNeue-CondensedBlack', Helvetica, Arial, sans-serif;
@@ -94,6 +95,10 @@ a.btn:hover {
   background: #ffffff;
   color: #333333;
   transition: 0.4s;
+}
+a.btn.danger:hover {
+  background-color: #f35252;
+  border: 1px solid transparent;
 }
 ul li {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -303,12 +308,12 @@ body {
 .content-main {
   box-sizing: border-box;
   box-sizing: inherit;
-  padding-top: 255px;
+  padding-top: 100px;
   height: 100%;
   overflow: hidden;
 }
-.content-main.project-list {
-  padding-top: 100px;
+.content-main.padded-top {
+  padding-top: 255px;
 }
 .container {
   height: 100%;
@@ -327,6 +332,10 @@ body {
 .wrapper.small {
   padding-bottom: 70px;
 }
+.wrapper.padded {
+  padding: 0 300px;
+  width: auto;
+}
 .overlay {
   visibility: hidden;
   width: 100%;
@@ -343,6 +352,21 @@ body {
   height: 100%;
   visibility: visible;
   transition: 0.4s;
+}
+/*************************
+	   404 STYLES
+*************************/
+.page-not-found {
+  padding: 150px ;
+  margin: 0 auto;
+  text-align: center;
+}
+.page-not-found h1 {
+  color: #ffffff;
+  font-size: 60px;
+}
+.page-not-found h2 {
+  color: #ffffff;
 }
 /*************************
 	PLACEHOLDER STYLES
@@ -541,6 +565,20 @@ body {
   width: 100%;
 }
 /*****************
+     PROFILE
+*****************/
+.profile-image {
+  text-align: center;
+}
+.profile-image img {
+  display: block;
+  width: 200px;
+  margin: 0 auto;
+}
+.profile-info {
+  width: 100%;
+}
+/*****************
 	ADD PROJECT
 *****************/
 .add-project-form {
@@ -722,7 +760,7 @@ body {
 .tasks .task .task-header .task-quick-info.disabled {
   display: none;
 }
-.tasks .task .task-header:hover i {
+.tasks .task .task-header:hover .task-toggle {
   color: #ffffff;
   transition: 0.4s;
 }
@@ -744,8 +782,9 @@ body {
 }
 .tasks .task .task-info .task-requirments {
   display: inline-block;
-  width: 70%;
+  width: 100%;
   margin-right: 5%;
+  margin-bottom: 15px;
 }
 .tasks .task .task-info .task-requirments ul {
   list-style-type: none;
@@ -772,16 +811,60 @@ body {
 .tasks .task .task-info .task-requirments ul .task-requirment.complete:before {
   content: '\e80c';
   font-family: 'utasko';
+  color: #979797;
 }
 .tasks .task .task-info .task-requirments ul .task-requirment:hover {
-  color: #979797;
+  color: #e0e0e0;
   transition: 0.4s;
 }
+.tasks .task .task-info .task-requirments ul .task-requirment:hover:before {
+  content: '\e80c';
+  font-family: 'utasko';
+  color: #e0e0e0;
+}
 .tasks .task .task-info .task-users {
+  display: block;
+  border-bottom: 1px solid #505050;
+  border-top: 1px solid #505050;
+  padding: 15px 0;
+}
+.tasks .task .task-info .task-users ul {
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+.tasks .task .task-info .task-users ul li {
   display: inline-block;
-  border-left: 1px solid #979797;
-  padding-left: 15px;
-  vertical-align: top;
+  padding-right: 15px;
+}
+.tasks .task .task-info .task-users ul li:last-child {
+  padding-right: none;
+}
+.tasks .task .task-info .task-options {
+  display: block;
+  float: right;
+  transition: 0.4s;
+  bottom: 30px;
+  right: 5px;
+  position: relative;
+  font-size: 18px;
+}
+.tasks .task .task-info .task-options:hover {
+  color: #ffffff;
+  transition: 0.4s;
+}
+.tasks .task .task-info .task-options-expanded {
+  padding: 25px 15px;
+  border-top: 1px solid #505050;
+  display: none;
+}
+.tasks .task .task-info .task-options-expanded .btn {
+  margin-right: 15px;
+  display: inline-block;
+}
+.tasks .task .task-info .task-options-expanded .btn:last-child {
+  margin-right: 0;
+  float: right;
 }
 /****************
     MESSAGES

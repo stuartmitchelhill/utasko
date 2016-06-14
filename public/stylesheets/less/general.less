@@ -172,12 +172,12 @@ body {
 .content-main {
 	box-sizing: border-box;
 	box-sizing: inherit;
-	padding-top: 255px;
+	padding-top: 100px;
 	height: 100%;
 	overflow: hidden;
     
-    &.project-list {
-        padding-top:100px;
+    &.padded-top {
+        padding-top:255px;
     }
 }
 
@@ -199,6 +199,11 @@ body {
 	&.small {
 		padding-bottom: 70px;
 	}
+    
+    &.padded {
+        padding: 0 300px;
+        width: auto;
+    }
 }
 
 .overlay {
@@ -220,6 +225,25 @@ body {
     }
 }
 
+
+/*************************
+	   404 STYLES
+*************************/
+
+.page-not-found {
+    padding: 150px ;
+    margin: 0 auto;
+    text-align: center;
+    
+    h1 {
+        color: @white;
+        font-size: 60px;
+    }
+    
+    h2 {
+        color: @white;
+    }
+}
 
 /*************************
 	PLACEHOLDER STYLES

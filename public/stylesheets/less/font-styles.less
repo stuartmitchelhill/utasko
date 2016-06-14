@@ -5,6 +5,7 @@ h1 {
 	font-variant: normal;
 	font-weight: 800;
 	line-height: 160%;
+    color: @white;
 }
 
 h2 {
@@ -103,7 +104,14 @@ a {
             color: @main_colour;
             transition: 0.4s;
         }
-}
+        
+        &.danger {
+            &:hover {
+                background-color: @utasko_red;
+                border: 1px solid transparent;
+            }
+        }
+    }
 }
 
 ul {
