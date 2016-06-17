@@ -1,4 +1,4 @@
-<% include partials/header %>
+<% include partials/index-header %>
 
 	<div class="container">
 		<div class="col col-1-1">
@@ -7,11 +7,17 @@
 					<div class="signup-form-inner">
 						<h3>Sign Up</h3>
 						<form action="/sign_up" method="post">
-							<input type="text" name="name" placeholder="Name" />
+							<input type="text" name="name" placeholder="Username" />
+                            <span class="error">Please enter a username</span>
 							<input type="email" name="email" placeholder="Email Address" />
+                            <span class="error">Please enter a valid email address</span>
 							<input type="password" name="password" placeholder="Password" />
+                            <span class="error">Please enter a password</span>
 							<input type="submit" name="submit" class="submit-btn" value="Sign Up" />
 						</form>
+                        <div class="login-link">
+							<a href="/login">Already have an account? Log in here</a>
+						</div>
 					</div>
 				</div>
 			</div>

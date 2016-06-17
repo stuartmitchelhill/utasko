@@ -2,6 +2,7 @@ var express = require('express');
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var path = require('path');
+var validator = require('validator');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
@@ -190,7 +191,6 @@ app.post("/add_project", function (req, res) {
         project_colour: req.body.project.colour,
         start_date: utc,
         end_date: req.body.project.end_date
-        
     };
     var repo = req.body.project.repository;
     add_project = connection.query('INSERT INTO projects SET ?', project, function (err, result) {
@@ -205,7 +205,6 @@ app.post("/add_project", function (req, res) {
 /* GET Sign_Up page. */
 app.get('/sign_up',
   function(req, res){
-    console.log('Geting to sign up');
     res.render('sign_up',
     {
         title: 'Utasko | Sign Up'   
@@ -223,9 +222,9 @@ app.post('/sign_up', passport.authenticate('signup', {
 /* GET Login page. */
 app.get('/login',
   function(req, res){
-    console.log('Login check');
     res.render('login', {
-        title: 'Utasko | Login'   
+        title: 'Utasko | Login' ,
+        message: req.query.message
     });
   });
   

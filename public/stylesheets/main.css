@@ -72,6 +72,7 @@ a {
   text-decoration: none;
   color: #979797;
   transition: 0.4s;
+  cursor: pointer;
 }
 a:hover {
   transition: 0.4s;
@@ -108,6 +109,13 @@ ul li {
   font-weight: 300;
   line-height: 160%;
   color: #ffffff;
+}
+span {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 160%;
 }
 .col {
   height: 100%;
@@ -343,10 +351,9 @@ body {
 .overlay {
   visibility: hidden;
   width: 100%;
-  height: 0%;
+  height: 100%%;
   z-index: 100;
   background-color: rgba(0, 0, 0, 0.5);
-  transition: 0.4s;
   position: absolute;
   top: 0;
   left: 0;
@@ -355,7 +362,6 @@ body {
   width: 100%;
   height: 100%;
   visibility: visible;
-  transition: 0.4s;
 }
 /*************************
 	   404 STYLES
@@ -402,9 +408,40 @@ body {
 /***************
      INDEX
 ***************/
+.navbar-menu-right.index {
+  top: 20px;
+}
+.navbar-menu-right.index li a {
+  font-size: 16px;
+  padding: 15px 25px;
+}
 .landing-page {
   background: url('../images/utasko_banner.jpg');
   background-size: cover;
+  height: 100%;
+  text-align: center;
+  overflow: hidden;
+}
+.landing-page .info {
+  margin-top: 350px;
+  padding: 0 25%;
+}
+.landing-page .info .intro {
+  font-size: 22px;
+  margin-bottom: 75px;
+}
+.landing-page .info .cta {
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+.landing-page .info .signup-btn {
+  background-color: #333333;
+  border: 1px solid transparent;
+  padding: 15px 45px;
+}
+.landing-page .info .signup-btn:hover {
+  background-color: #ffffff;
+  color: #333333;
 }
 /***************
 	LOGIN
@@ -420,6 +457,12 @@ body {
   border: 1px solid #979797;
   border-radius: 6px;
 }
+.login-form .login-form-inner span.error {
+  color: #f35252;
+}
+.login-form .login-form-inner span.success {
+  color: #b8ee66;
+}
 .login-form .login-form-inner h3 {
   margin-top: 0;
   color: #ffffff;
@@ -428,7 +471,8 @@ body {
   width: 100%;
   padding: 15px 25px;
   display: block;
-  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-bottom: 5px;
   border-radius: 4px;
   border: 1px solid #979797;
   font-size: 14px;
@@ -444,6 +488,7 @@ body {
   border: 1px solid #979797;
   transition: 0.4s;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 .login-form .login-form-inner form .submit-btn:hover {
   background: #ffffff;
@@ -481,6 +526,11 @@ body {
   border: 1px solid #979797;
   border-radius: 6px;
 }
+.signup-form .signup-form-inner span.error {
+  display: none;
+  color: #f35252;
+  margin-bottom: 15px;
+}
 .signup-form .signup-form-inner h3 {
   margin-top: 0;
   color: #ffffff;
@@ -489,7 +539,8 @@ body {
   width: 100%;
   padding: 15px 25px;
   display: block;
-  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-bottom: 5px;
   border-radius: 4px;
   border: 1px solid #979797;
   font-size: 14px;
@@ -505,10 +556,21 @@ body {
   border: 1px solid #979797;
   transition: 0.4s;
   cursor: pointer;
+  margin-bottom: 20px;
 }
 .signup-form .signup-form-inner form .submit-btn:hover {
   background: #ffffff;
   color: #333333;
+  transition: 0.4s;
+}
+.signup-form .signup-form-inner .login-link {
+  margin-bottom: 5px;
+}
+.signup-form .signup-form-inner .login-link a {
+  font-size: 12px;
+}
+.signup-form .signup-form-inner .login-link a:hover {
+  color: #ffffff;
   transition: 0.4s;
 }
 /***************
@@ -574,16 +636,26 @@ body {
 /*****************
      PROFILE
 *****************/
-.profile-image {
-  text-align: center;
-}
 .profile-image img {
   display: block;
   width: 200px;
-  margin: 0 auto;
 }
 .profile-info {
-  width: 100%;
+  margin-top: 35px;
+}
+.profile-info ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.profile-info ul li h4 {
+  display: inline-block;
+  width: 125px;
+  margin: 0 0 15px;
+}
+.profile-info ul li span {
+  display: inline-block;
+  font-size: 18px;
 }
 /*****************
 	ADD PROJECT

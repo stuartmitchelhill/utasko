@@ -1,14 +1,21 @@
-<% include partials/header %>
+<% include partials/index-header %>
 
 	<div class="container">
 		<div class="col col-1-1">
 			<div class="wrapper no-scroll">
 				<div class="login-form">
 					<div class="login-form-inner">
-						<h3>Sign In</h3>
+						<h3>Log In</h3>
+                        <% if ( message == "success") { %>
+                        <span class="success">Your account has been created.<br/> Please log in below</span>    
+                        <% } %>
 						<form action="/login" method="post">
 							<input type="email" name="email" placeholder="Email Address" />
+                            <span class="error"></span>
 							<input type="password" name="password" placeholder="Password" />
+                             <% if ( message == "error") { %>
+                                <span class="error">Your email or password is incorrect. Please try again</span>    
+                            <% } %>
 							<input type="submit" name="submit" class="submit-btn" value="Login" />
 						</form>
 						<div class="password-link">
