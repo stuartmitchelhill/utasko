@@ -2,14 +2,14 @@
 
 	<div class="container">
 		<div class="col col-1-1">
-			<div class="wrapper">
+			<div class="wrapper no-scroll">
 				<div class="add-project-form">
 					<div class="add-project-form-inner">
 						<h3>Add Project</h3>
 						<form action="/add_project" method="post">
-							<input type="text" name="project-title" placeholder="Enter Project Title" />
-							<input type="date" name="end-date" placeholder="Enter Project End Date" />
-                            <input type="text" name="repository" placeholder="Enter Project Repository" />
+							<input type="text" name="project[title]" placeholder="Enter Project Title" />
+							<input type="date" name="project[end_date]" placeholder="Enter Project End Date" />
+                            <input type="text" name="project[repository]" placeholder="Enter Project Repository" />
                             <div class="custom-select">
                                 <select>
                                     <option disabled="disabled" selected="selected">Add Project Users</option>
@@ -18,7 +18,9 @@
                                     <option>User 3</option>
                                 </select>
                             </div>
-                            <textarea name="projecct-description" placeholder="Enter Project Description"></textarea>
+                            <textarea name="project[description]" placeholder="Enter Project Description"></textarea>
+                            <input type="hidden" name="project[status]" value="active">
+                            <input type="hidden" name="project[colour]" value="@utasko_green">
 							<input type="submit" name="submit" class="submit-btn" value="Add Project" />
 						</form>
 					</div>

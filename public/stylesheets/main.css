@@ -308,12 +308,13 @@ body {
 .content-main {
   box-sizing: border-box;
   box-sizing: inherit;
-  padding-top: 100px;
+  padding: 100px 0 78px;
   height: 100%;
   overflow: hidden;
 }
 .content-main.padded-top {
   padding-top: 255px;
+  padding-bottom: 0;
 }
 .container {
   height: 100%;
@@ -335,6 +336,9 @@ body {
 .wrapper.padded {
   padding: 0 300px;
   width: auto;
+}
+.wrapper.no-scroll {
+  overflow: hidden;
 }
 .overlay {
   visibility: hidden;
@@ -395,16 +399,19 @@ body {
 .yellow {
   background-color: #fff363;
 }
+/***************
+     INDEX
+***************/
 .landing-page {
-  padding: 250px 0;
-  text-align: center;
+  background: url('../images/utasko_banner.jpg');
+  background-size: cover;
 }
 /***************
 	LOGIN
 ****************/
 .login-form {
   width: 250px;
-  padding: 250px 0;
+  padding: 240px 0;
   margin: 0 auto;
 }
 .login-form .login-form-inner {
@@ -465,7 +472,7 @@ body {
 *****************/
 .signup-form {
   width: 250px;
-  padding: 250px;
+  padding: 230px;
   margin: 0 auto;
 }
 .signup-form .signup-form-inner {
@@ -583,7 +590,7 @@ body {
 *****************/
 .add-project-form {
   width: 700px;
-  padding: 100px;
+  padding: 70px;
   margin: 0 auto;
 }
 .add-project-form .add-project-form-inner {

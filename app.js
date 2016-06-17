@@ -2,6 +2,8 @@ var express = require('express');
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var path = require('path');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -46,8 +48,6 @@ if(!err) {
 		// find a user whose email is the same as the forms email
 		// we are checking to see if the user trying to login already exists
         connection.query("SELECT * FROM user WHERE email = '"+email+"'",function(err,rows){
-			console.log(rows);
-			console.log("above row object");
 			if (err)
                 return done(err);
 			 if (rows.length) {
@@ -63,7 +63,6 @@ if(!err) {
                 newUserMysql.password = password; // use the generateHash function in our user model
 			
 				var insertQuery = "INSERT INTO user (name, email, password ) values ('" + req.body.name +"','" + email +"','"+ password +"')";
-					console.log(insertQuery);
 				connection.query(insertQuery,function(err,rows){
 				newUserMysql.id = rows.insertId;
 				
@@ -103,7 +102,6 @@ if(!err) {
     }));
 
 
-
 /*************************
         Express
 *************************/
@@ -122,6 +120,7 @@ app.set('view engine', 'ejs');
 /*************************
       App Middleware
 *************************/
+
 app.use(require('cookie-parser')());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('body-parser').urlencoded({ extended: true }));
@@ -149,7 +148,7 @@ app.get('/', function(req, res, next) {
 });
 
 
-/* GET home page. */
+/* GET Home page. */
 app.get('/home', function(req, res) {
   res.render('home',
   	{    
@@ -181,6 +180,29 @@ app.get('/add_project', function(req, res) {
     });
 });
 
+/* GET Add_Project POST data. */
+app.post("/add_project", function (req, res) {
+    var utc = new Date().toJSON().slice(0,10);
+    var project = {
+        title: req.body.project.title,
+        description: req.body.project.description,
+        status: req.body.project.status,
+        project_colour: req.body.project.colour,
+        start_date: utc,
+        end_date: req.body.project.end_date
+        
+    };
+    var repo = req.body.project.repository;
+    add_project = connection.query('INSERT INTO projects SET ?', project, function (err, result) {
+        //insert project data into database
+    });
+    res.render('project', 
+    { 
+      title: 'Utasko | ' + project.title 
+    });
+});
+
+/* GET Sign_Up page. */
 app.get('/sign_up',
   function(req, res){
     console.log('Geting to sign up');
@@ -189,12 +211,16 @@ app.get('/sign_up',
         title: 'Utasko | Sign Up'   
     });
   });
-  
+
+
+/* GET Sign_Up POST data. */
 app.post('/sign_up', passport.authenticate('signup', {
     successRedirect: '/login?message=success',
     failureRedirect: '/sign_up?message=error'
 }));
 
+
+/* GET Login page. */
 app.get('/login',
   function(req, res){
     console.log('Login check');
@@ -203,12 +229,13 @@ app.get('/login',
     });
   });
   
+/* GET Login POST data. */
 app.post('/login', passport.authenticate('login', {
     successRedirect: '/home',
     failureRedirect: '/login?message=error'
 }));
 
-  
+/* GET Logout page. */  
 app.get('/logout',
   function(req, res){
     req.logout();
@@ -216,6 +243,8 @@ app.get('/logout',
   });
 
 
+
+/* GET 404 page. */ 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
