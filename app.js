@@ -95,12 +95,9 @@ if(!err) {
 			
             // all is well, return successful user
             return done(null, rows[0]);			
-		
 		});
-		
-
-
     }));
+     
 
 
 /*************************
@@ -148,60 +145,6 @@ app.get('/', function(req, res, next) {
   	});
 });
 
-
-/* GET Home page. */
-app.get('/home', function(req, res) {
-  res.render('home',
-  	{    
-  		title: 'Utasko | Home' 
-  	});
-});
-
-/* GET Profile page. */
-app.get('/profile', function(req, res) {
-  res.render('profile', 
-    { 
-      title: 'Utasko | My Profile' 
-    });
-});
-
-/* GET Project page. */
-app.get('/project', function(req, res) {
-  res.render('project', 
-  	{ 
-  		title: 'Utasko | Project Name' 
-  	});
-});
-
-/* GET Add_Project page. */
-app.get('/add_project', function(req, res) {
-  res.render('add_project', 
-    { 
-      title: 'Utasko | New Project' 
-    });
-});
-
-/* GET Add_Project POST data. */
-app.post("/add_project", function (req, res) {
-    var utc = new Date().toJSON().slice(0,10);
-    var project = {
-        title: req.body.project.title,
-        description: req.body.project.description,
-        status: req.body.project.status,
-        project_colour: req.body.project.colour,
-        start_date: utc,
-        end_date: req.body.project.end_date
-    };
-    var repo = req.body.project.repository;
-    add_project = connection.query('INSERT INTO projects SET ?', project, function (err, result) {
-        //insert project data into database
-    });
-    res.render('project', 
-    { 
-      title: 'Utasko | ' + project.title 
-    });
-});
-
 /* GET Sign_Up page. */
 app.get('/sign_up',
   function(req, res){
@@ -229,17 +172,190 @@ app.get('/login',
   });
   
 /* GET Login POST data. */
-app.post('/login', passport.authenticate('login', {
-    successRedirect: '/home',
-    failureRedirect: '/login?message=error'
-}));
+app.post('/login', passport.authenticate('login', {failureRedirect: '/login?message=error'}), function(req, res) {
+    res.redirect('/home?id=' + req.user.id);
+});
 
 /* GET Logout page. */  
 app.get('/logout',
   function(req, res){
     req.logout();
     res.redirect('/');
-  });
+});
+
+
+/* GET Home page. */
+app.get('/home', function(req, res) {
+    if (res.query != undefined && res.query.id != undefined) {
+        res.cookie('user_id', req.query.id);  
+        res.send(req.cookies.user_id);
+    };
+    var user_id = req.cookies.user_id;
+    var project = [];
+    retrieve_projects = connection.query('SELECT * FROM projects, project_users WHERE project_users.user_id = '+user_id+' AND project_users.project_id = projects.id' , user_id, function (err, result){
+        //console.log(result);
+        for (var i = 0; i <= result.length; i++) {
+            if (result[i] != undefined) {
+                //console.log(result[i]);
+                var tempProject ={
+                    project_id: result[i].id,
+                    project_title: result[i].title,
+                    description: result[i].description,
+                    start_date: result[i].start_date,
+                    end_date: result[i].end_date,
+                    status: result[i].status,
+                    project_colour: result[i].project_colour
+                }    
+                project.push(tempProject);
+            }
+        }
+        //console.log(project);
+        res.render('home',
+        {    
+            title: 'Utasko | Home',
+            project_data:project
+        });
+    });    
+});
+
+/* GET Profile page. */
+app.get('/profile', function(req, res) {
+    var user_id = req.cookies.user_id;
+    retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id+'' ,user_id, function (err, result){
+        //console.log(result);
+           var user ={
+               username: result[0].name,
+               user_email: result[0].email,
+               user_profile_image: result[0].profile_image
+            };
+        //console.log(user);
+            res.render('profile', 
+                { 
+                  title: 'Utasko | My Profile', 
+                  username: user.username,
+                  user_email: user.user_email,
+                  profile_image: user.user_profile_image
+                });
+        });
+});
+
+/* GET Project page.*/
+app.get('/project', function(req, res) {
+    var project_id = req.query.id;
+    console.log(req.query.id);
+    retrieve_project = connection.query('SELECT * FROM projects WHERE projects.id = '+project_id+'' ,project_id, function (err, result){
+        //console.log(result);
+           var project ={
+                project_id: result[0].id,
+                project_title: result[0].title,
+                description: result[0].description,
+                start_date: result[0].start_date,
+                end_date: result[0].end_date,
+                status: result[0].status,
+                project_colour: result[0].project_colour
+            };
+            console.log(project)
+            res.render('project', 
+                { 
+                  title: 'Utasko | Project', 
+                  project_title: project.project_title,
+                  project_description: project.description,
+                  project_start_date: project.start_date,
+                  project_end_date: project.end_date,
+                  project_status: project.status,
+                  project_colour: project.project_colour
+                });
+        });
+});
+
+/* GET Add_Project page. */
+app.get('/add_project', function(req, res) {
+  res.render('add_project', 
+    { 
+      title: 'Utasko | New Project' 
+    });
+});
+
+/* GET Add_Project POST data. */
+app.post("/add_project", function (req, res) {
+    var utc = new Date().toJSON().slice(0,10);
+    var project = {
+        project_title: req.body.project.title,
+        project_description: req.body.project.description,
+        project_status: req.body.project.status,
+        project_colour: req.body.project.colour,
+        project_start_date: utc,
+        project_end_date: req.body.project.end_date
+    };
+    var project_user = {
+        project_id: '',
+        user_id: req.cookies.user_id
+    };
+    var repo = req.body.project.repository;
+    add_project = connection.query('INSERT INTO projects SET ?', project, function (err, result) {
+        //insert project data into database
+        console.log(result.insertId)
+        project_user.project_id = result.insertId;
+        
+        user_project_link = connection.query('INSERT INTO project_users SET ?', project_user, function(err, result) {
+       //insert project_user link into database 
+        });
+    });
+    res.render('project', 
+    { 
+      title: 'Utasko | ' + project.project_title 
+    });
+});
+
+/* GET Edit_Project page. */
+app.get('/edit_project', function(req, res) {
+    var project_id = '8';
+    console.log(project_id);
+    retrieve_project = connection.query('SELECT * FROM projects WHERE projects.id = '+project_id+'' ,project_id, function (err, result){
+        //console.log(result);
+           var project ={
+                project_id: result[0].id,
+                project_title: result[0].title,
+                description: result[0].description,
+                start_date: result[0].start_date,
+                end_date: result[0].end_date,
+                status: result[0].status,
+                project_colour: result[0].project_colour
+            };
+            console.log(project)
+            res.render('edit_project', 
+                { 
+                  title: 'Utasko | Project', 
+                  project_title: project.project_title,
+                  project_description: project.description,
+                  project_start_date: project.start_date,
+                  project_end_date: project.end_date,
+                  project_status: project.status,
+                  project_colour: project.project_colour
+                });
+        });
+});
+/* GET Edit_Project POST data. */
+/*app.post("/edit_project", function (req, res) {
+    var utc = new Date().toJSON().slice(0,10);
+    var project = {
+        title: req.body.project.title,
+        description: req.body.project.description,
+        status: req.body.project.status,
+        project_colour: req.body.project.colour,
+        start_date: utc,
+        end_date: req.body.project.end_date
+    };
+    var repo = req.body.project.repository;
+    add_project = connection.query('UPDATE projects SET ? WHERE id = ?, project, function (err, result) {
+        //insert project data into database
+    });
+    res.render('project', 
+    { 
+      title: 'Utasko | ' + project.title 
+    });
+});*/
+
 
 
 

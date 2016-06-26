@@ -1,42 +1,16 @@
 <% include partials/header %>
-<script type="text/JavaScript">
-    $(document).ready(function () {
-
-    $('#add-project-form').validate({ // initialize the plugin
-        rules: {
-            "project[title]": {
-                required: true,
-                minLength: 6
-            },
-            "Project[end_date]": {
-                required: true,
-                date: true
-            },
-             "Project[repository]": {
-                required: true,
-                url: true
-            },
-             "Project[description]": {
-                required: true
-            }
-            
-        }
-    });
-
-});
-</script>
 	<div class="container">
 		<div class="col col-1-1">
 			<div class="wrapper no-scroll">
 				<div class="add-project-form">
 					<div class="add-project-form-inner">
-						<h3>Add Project</h3>
-						<form action="/add_project" method="post" id="add-project-form">
-							<input type="text" name="project[title]" id="project-title" placeholder="Enter Project Title" />
+						<h3>Edit Project</h3>
+						<form action="/edit_project" method="post" id="edit-project-form">
+							<input type="text" name="project[title]" id="project-title" value="<%= project_title %>" />
                             <span class="error">Please enter a title for your project</span>
-							<input type="text" name="project[end_date]" id="project-end-date" placeholder="Project End Date" />
+							<input type="text" name="project[end_date]" id="project-end-date" value="<%= project_end_date %>" />
                             <span class="error">Please enter an end date for your project</span>
-                            <input type="text" name="project[repository]" id="preoject-repo" placeholder="Enter Project Repository" />
+                            <input type="text" name="project[repository]" id="preoject-repo" placeholder="Project Repository" />
                             <span class="error">Please enter a repository for you project</span>
                             <div class="custom-select">
                                 <select name="project[users]">
@@ -48,7 +22,7 @@
                             </div>
                             <div class="project-colour">
                                 <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="#B8EE66">
+                                    <input type="radio" name="project[colour]" value="#B8EE66" checked="checked">
                                 </div>
                                 <div class="custom-checkbox">
                                     <input type="radio" name="project[colour]" value="#66AFEE">
@@ -72,10 +46,10 @@
                                     <input type="radio" name="project[colour]" value="#F35252">
                                 </div>
                             </div>
-                            <textarea name="project[description]" id="project-description" placeholder="Enter Project Description"></textarea>
+                            <textarea name="project[description]" id="project-description" value="<%= project_description %>"></textarea>
                             <span class="error">Please enter a description for your project</span>
                             <input type="hidden" name="project[status]" value="active">
-							<input type="submit" name="submit" class="submit-btn" value="Add Project" />
+							<input type="submit" name="submit" class="submit-btn" value="Save Project" />
 						</form>
 					</div>
 				</div>
