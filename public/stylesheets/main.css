@@ -832,6 +832,7 @@ body {
 }
 .tasks .task-list {
   margin-top: 55px;
+  padding-bottom: 55px;
 }
 .tasks .add-task-bar {
   background: #333333;

@@ -1,10 +1,10 @@
 var express = require('express');
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
-var path = require('path');
-var validator = require('validator');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var validator = require('validator');
+var path = require('path');
 var mysql = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -145,55 +145,20 @@ app.get('/', function(req, res, next) {
   	});
 });
 
-/* GET Sign_Up page. */
-app.get('/sign_up',
-  function(req, res){
-    res.render('sign_up',
-    {
-        title: 'Utasko | Sign Up'   
-    });
-  });
-
-
-/* GET Sign_Up POST data. */
-app.post('/sign_up', passport.authenticate('signup', {
-    successRedirect: '/login?message=success',
-    failureRedirect: '/sign_up?message=error'
-}));
-
-
-/* GET Login page. */
-app.get('/login',
-  function(req, res){
-    res.render('login', {
-        title: 'Utasko | Login' ,
-        message: req.query.message
-    });
-  });
-  
-/* GET Login POST data. */
-app.post('/login', passport.authenticate('login', {failureRedirect: '/login?message=error'}), function(req, res) {
-    res.redirect('/home?id=' + req.user.id);
-});
-
-/* GET Logout page. */  
-app.get('/logout',
-  function(req, res){
-    req.logout();
-    res.redirect('/');
-});
-
-
 /* GET Home page. */
 app.get('/home', function(req, res) {
-    if (res.query != undefined && res.query.id != undefined) {
-        res.cookie('user_id', req.query.id);  
+    console.log(req.query.id);
+    if (req.query != undefined && req.query.id != undefined) {
+        res.cookie('user_id', req.query.id);
         res.send(req.cookies.user_id);
     };
+    console.log(req.cookies.user_id);
     var user_id = req.cookies.user_id;
+    console.log(user_id);
     var project = [];
     retrieve_projects = connection.query('SELECT * FROM projects, project_users WHERE project_users.user_id = '+user_id+' AND project_users.project_id = projects.id' , user_id, function (err, result){
-        //console.log(result);
+        console.log(result);
+        //throw err;
         for (var i = 0; i <= result.length; i++) {
             if (result[i] != undefined) {
                 //console.log(result[i]);
@@ -248,21 +213,13 @@ app.get('/project', function(req, res) {
            var project ={
                 project_id: result[0].id,
                 project_title: result[0].title,
-                description: result[0].description,
-                start_date: result[0].start_date,
-                end_date: result[0].end_date,
-                status: result[0].status,
                 project_colour: result[0].project_colour
             };
             console.log(project)
             res.render('project', 
                 { 
-                  title: 'Utasko | Project', 
+                  title: 'Utasko |' +project.project_title, 
                   project_title: project.project_title,
-                  project_description: project.description,
-                  project_start_date: project.start_date,
-                  project_end_date: project.end_date,
-                  project_status: project.status,
                   project_colour: project.project_colour
                 });
         });
@@ -355,6 +312,44 @@ app.get('/edit_project', function(req, res) {
       title: 'Utasko | ' + project.title 
     });
 });*/
+
+/* GET Sign_Up page. */
+app.get('/sign_up',
+  function(req, res){
+    res.render('sign_up',
+    {
+        title: 'Utasko | Sign Up'   
+    });
+  });
+
+
+/* GET Sign_Up POST data. */
+app.post('/sign_up', passport.authenticate('signup', {
+    successRedirect: '/login?message=success',
+    failureRedirect: '/sign_up?message=error'
+}));
+
+
+/* GET Login page. */
+app.get('/login',
+  function(req, res){
+    res.render('login', {
+        title: 'Utasko | Login' ,
+        message: req.query.message
+    });
+  });
+  
+/* GET Login POST data. */
+app.post('/login', passport.authenticate('login', {failureRedirect: '/login?message=error'}), function(req, res) {
+    res.redirect('/home?id=' + req.user.id);
+});
+
+/* GET Logout page. */  
+app.get('/logout',
+  function(req, res){
+    req.logout();
+    res.redirect('/');
+});
 
 
 
