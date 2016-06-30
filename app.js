@@ -313,6 +313,15 @@ app.get('/edit_project', function(req, res) {
     });
 });*/
 
+/* GET add_task page. */
+app.get('/add_task',
+  function(req, res){
+    res.render('add_task',
+    {
+        title: 'Utasko | Add Task'   
+    });
+  });
+
 /* GET Sign_Up page. */
 app.get('/sign_up',
   function(req, res){

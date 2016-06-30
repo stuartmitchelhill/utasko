@@ -1,0 +1,35 @@
+<% include partials/header %>
+	<div class="container">
+		<div class="col col-1-1">
+			<div class="wrapper no-scroll">
+				<div class="add-task-form">
+					<div class="add-task-form-inner">
+						<h3>Add Task</h3>
+						<form action="/add_task" method="post" id="add-task-form">
+							<input type="text" name="task[title]" id="task-title" placeholder="Enter Task Name" />
+                            <span class="error">Please enter a name for your task</span>
+							<input type="text" name="task[end_date]" id="task-end-date" placeholder="Task End Date" />
+                            <span class="error">Please enter an end date for your task</span>
+                            <textarea name="task[description]" id="task-description" placeholder="Enter Task Description"></textarea>
+                            <span class="error">Please enter a description for your task</span>
+                            <div class="custom-select">
+                                <select name="task[users]">
+                                    <option disabled="disabled" selected="selected">Assign Task Users</option>
+                                    <option>User 1</option>
+                                    <option>User 2</option>
+                                    <option>User 3</option>
+                                </select>
+                            </div>
+                            <input type="text" name="task[requriment]" id="task-requirment" placeholder="Enter Task Requirement (optional)" />
+                            <div class="add-requirment-btn">
+                                <a href="javascript:void(0)" class="btn add-task-requirment-btn"><i class="ut-plus"></i> Requirment</a>
+                            </div>
+							<input type="submit" name="submit" class="submit-btn" value="Create Task" />
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<% include partials/footer %>
