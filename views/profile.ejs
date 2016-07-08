@@ -12,19 +12,45 @@
 
 		    <div class="container">
                 <div class="col-1-1">
-                    <div class="wrapper padded no-scroll">
-                        <h1 class="profile-title">My Profile</h1>
-                        <div class="profile-image">
-                            <img src="<%= profile_image %>">
+                    <div class="wrapper padded">
+                      <h1 class="profile-title">My Profile</h1>  
+                        <div class="col-1-3">
+                            <div class="profile-image">
+                                <img src="<%= profile_image %>">
+                            </div>
+                            <div class="profile-info">
+                                <ul>
+                                    <li><h4>Username:</h4> <span><%= username %></span></li>
+                                    <li><h4>Email:</h4> <span><%= user_email %></span></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="profile-info">
-                            <ul>
-                                <li><h4>Username:</h4> <span><%= username %></span></li>
-                                <li><h4>Email:</h4> <span><%= user_email %></span></li>
-                            </ul>
+                        <div class="col-1-3">
+                            <div class="list-projects active-project-list">
+                                <h4>Active Projects</h4>
+                                <ul>
+                                    <li>Active Project 1</li>
+                                    <li>Active Project 2</li>
+                                    <li>Active Project 3</li>
+                                    <li>Active Project 4</li>
+                                    <li>Active Project 5</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-1-3">
+                            <div class="list-projects archived-project-list">
+                                <h4>Archived Projects</h4>
+                                <ul>
+                                    <li>Archived Project 1</li>
+                                    <li>Archived Project 2</li>
+                                    <li>Archived Project 3</li>
+                                    <li>Archived Project 4</li>
+                                    <li>Archived Project 5</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
+                 </div>
 			</div>
 
 		</div> <!-- Close Content Main -->

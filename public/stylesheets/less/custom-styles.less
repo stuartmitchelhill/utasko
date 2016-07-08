@@ -296,9 +296,6 @@
      PROFILE
 *****************/
 
-.profile-title {
-    text-align: center;
-}
 
 .profile-image {
     padding-bottom: 50px;
@@ -306,16 +303,13 @@
     img {
         display: block;
         width: 200px;
-        margin: 0 auto;
     }
 }
 
 .profile-info {
-    display: table;
-    margin: 0 auto;
     ul {
         list-style-type: none;
-        padding-left: 75px;
+        padding: 0;
         
         li {
             h4 {
@@ -327,6 +321,26 @@
             span {
                 display: inline-block;
                 font-size: 18px;
+            }
+        }
+    }
+}
+
+.list-projects {
+    margin-bottom: 25px;
+    h4 {
+        color: @white;
+        margin: 0 0 15px;
+    }
+    
+    ul {
+        padding: 0;
+        list-style-type: none;
+        li {
+            padding: 15px 10px 15px;
+            
+            &:nth-child(even){
+                background-color: @grey5;
             }
         }
     }

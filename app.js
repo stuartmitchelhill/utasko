@@ -3,6 +3,7 @@ var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var validator = require('validator');
 var path = require('path');
 var mysql = require('mysql');
@@ -30,7 +31,7 @@ if(!err) {
 
     // used to deserialize the user
     passport.deserializeUser(function(id, done) {
-		connection.query("select * from user where id = "+id,function(err,rows){	
+		connection.query("SELECT * FROM user where id = "+id,function(err,rows){	
 			done(err, rows[0]);
 		});
     });
@@ -44,7 +45,6 @@ if(!err) {
         passReqToCallback : true
     },
     function(req, email, password, done) {
-        console.log('Firing Sign Up!');
         console.log(req.body);
 		// find a user whose email is the same as the forms email
 		// we are checking to see if the user trying to login already exists
@@ -82,21 +82,27 @@ if(!err) {
         passReqToCallback : true 
     },
     function(req, email, password, done) {
-         connection.query("SELECT * FROM `user` WHERE `email` = '" + email + "'",function(err,rows){
-			if (err)
+        console.log('firing login!');
+         connection.query("SELECT * FROM user WHERE email = '" + email + "'",function(err,rows){
+			 if (err) {
                 return done(err);
-			 if (!rows.length) {
+             }
+             if (!rows.length) {
                 return done(null, false);
-            } 
+            }
 			
 			// if the user is found but the password is wrong
-            if (!( rows[0].password == password))
-                return done(null, false);
+            if (!( rows[0].password == password)) {
+                return done(null, false);                
+            }
+                
 			
             // all is well, return successful user
-            return done(null, rows[0]);			
+            console.log('done');
+            return done(null, rows[0]);
 		});
     }));
+    
      
 
 
@@ -124,7 +130,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('body-parser').urlencoded({ extended: true }));
 
 
-
 /*************************
     Initialize Passport
 *************************/
@@ -146,22 +151,12 @@ app.get('/', function(req, res, next) {
 });
 
 /* GET Home page. */
-app.get('/home', function(req, res) {
-    console.log(req.query.id);
-    if (req.query != undefined && req.query.id != undefined) {
-        res.cookie('user_id', req.query.id);
-        res.send(req.cookies.user_id);
-    };
-    console.log(req.cookies.user_id);
+app.get('/home', function(req, res) {  
     var user_id = req.cookies.user_id;
-    console.log(user_id);
     var project = [];
     retrieve_projects = connection.query('SELECT * FROM projects, project_users WHERE project_users.user_id = '+user_id+' AND project_users.project_id = projects.id' , user_id, function (err, result){
-        console.log(result);
-        //throw err;
         for (var i = 0; i <= result.length; i++) {
             if (result[i] != undefined) {
-                //console.log(result[i]);
                 var tempProject ={
                     project_id: result[i].id,
                     project_title: result[i].title,
@@ -174,13 +169,12 @@ app.get('/home', function(req, res) {
                 project.push(tempProject);
             }
         }
-        //console.log(project);
         res.render('home',
         {    
             title: 'Utasko | Home',
             project_data:project
         });
-    });    
+    }); 
 });
 
 /* GET Profile page. */
@@ -207,7 +201,6 @@ app.get('/profile', function(req, res) {
 /* GET Project page.*/
 app.get('/project', function(req, res) {
     var project_id = req.query.id;
-    console.log(req.query.id);
     retrieve_project = connection.query('SELECT * FROM projects WHERE projects.id = '+project_id+'' ,project_id, function (err, result){
         //console.log(result);
            var project ={
@@ -215,13 +208,39 @@ app.get('/project', function(req, res) {
                 project_title: result[0].title,
                 project_colour: result[0].project_colour
             };
-            console.log(project)
-            res.render('project', 
+            console.log(project);
+            // another query
+            console.log('getting task');
+            console.log(project_id);
+            var task = [];
+            retrieve_tasks = connection.query('SELECT * FROM tasks, tasks_project WHERE tasks_project.project_id = '+project_id+' AND tasks_project.task_id = tasks.id', project_id, function (err, result){
+                //throw err;
+                console.log(result);
+                for (var i = 0; i <= result.length; i++) {
+                    if (result[i] != undefined) {
+                        var tempTask ={
+                            task_id: result[i].id,
+                            task_title: result[i].title,
+                            description: result[i].description,
+                            start_date: result[i].start_date,
+                            end_date: result[i].end_date,
+                            completed: result[i].completed,
+                            status: result[i].status,
+                            author: result[i].author
+                        }    
+                        task.push(tempTask);
+                    }
+                }
+                console.log(task),
+                res.render('project', 
                 { 
                   title: 'Utasko |' +project.project_title, 
                   project_title: project.project_title,
-                  project_colour: project.project_colour
+                  project_id: project.project_id,
+                  project_colour: project.project_colour,
+                  task_data: task    
                 });
+            });
         });
 });
 
@@ -249,13 +268,13 @@ app.post("/add_project", function (req, res) {
         user_id: req.cookies.user_id
     };
     var repo = req.body.project.repository;
+    //insert project data into database
     add_project = connection.query('INSERT INTO projects SET ?', project, function (err, result) {
-        //insert project data into database
         console.log(result.insertId)
         project_user.project_id = result.insertId;
         
-        user_project_link = connection.query('INSERT INTO project_users SET ?', project_user, function(err, result) {
-       //insert project_user link into database 
+        //insert project_user link into database
+        user_project_link = connection.query('INSERT INTO project_users SET ?', project_user, function(err, result) { 
         });
     });
     res.render('project', 
@@ -318,9 +337,50 @@ app.get('/add_task',
   function(req, res){
     res.render('add_task',
     {
-        title: 'Utasko | Add Task'   
+        title: 'Utasko | Add Task',
+        project_id: req.query.project_id,
+        project_title: req.query.project_title
     });
-  });
+});
+
+/* GET Add_Task POST data. */
+app.post("/add_task", function (req, res) {
+    var project = {
+        project_id: req.query.project_id,
+    }
+    console.log(req.query);
+    var utc = new Date().toJSON().slice(0,10);
+    var task = {
+        title: req.body.task.title,
+        description: req.body.task.description,
+        status: req.body.task.status,
+        start_date: utc,
+        end_date: req.body.task.end_date
+        
+    };
+    var task_project = {
+        task_id: '',
+        project_id: project.project_id
+    };
+    var requirement = req.body.task.requirement;
+    console.log('adding_tasks');
+    
+    add_task = connection.query('INSERT INTO tasks SET ?', task, function (err, result) {
+        //insert task data into database
+        console.log(result.insertId);
+        task_project.task_id = result.insertId;
+        console.log(task_project);
+        task_project_link = connection.query('INSERT INTO tasks_project SET ?', task_project, function(err, result) {
+            console.log(result);
+            console.log(err);
+           //insert task_project_link into database 
+            console.log(task),
+            res.redirect('/project?id='+req.query.project_id);
+            
+        });
+    });
+    
+});
 
 /* GET Sign_Up page. */
 app.get('/sign_up',
@@ -350,7 +410,8 @@ app.get('/login',
   
 /* GET Login POST data. */
 app.post('/login', passport.authenticate('login', {failureRedirect: '/login?message=error'}), function(req, res) {
-    res.redirect('/home?id=' + req.user.id);
+    res.cookie('user_id', req.user.id);
+    res.redirect('/home');
 });
 
 /* GET Logout page. */  

@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'utasko';
-  src: url('../font/utasko.eot?49322365');
-  src: url('../font/utasko.eot?49322365#iefix') format('embedded-opentype'),
-       url('../font/utasko.woff2?49322365') format('woff2'),
-       url('../font/utasko.woff?49322365') format('woff'),
-       url('../font/utasko.ttf?49322365') format('truetype'),
-       url('../font/utasko.svg?49322365#utasko') format('svg');
+  src: url('../font/utasko.eot?22301112');
+  src: url('../font/utasko.eot?22301112#iefix') format('embedded-opentype'),
+       url('../font/utasko.woff2?22301112') format('woff2'),
+       url('../font/utasko.woff?22301112') format('woff'),
+       url('../font/utasko.ttf?22301112') format('truetype'),
+       url('../font/utasko.svg?22301112#utasko') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'utasko';
-    src: url('../font/utasko.svg?49322365#utasko') format('svg');
+    src: url('../font/utasko.svg?22301112#utasko') format('svg');
   }
 }
 */
@@ -106,3 +106,4 @@
 .ut-github:before { content: '\e830'; } /* '' */
 .ut-close:before { content: '\e831'; } /* '' */
 .ut-more:before { content: '\e832'; } /* '' */
+.ut-cog:before { content: '\e833'; } /* '' */

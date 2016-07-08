@@ -10,7 +10,6 @@
 			</div>
 		</div>
 		<div class="project-list">
-			<!-- Green Block -->
             <% for(var i=0; i<project_data.length; i++) { %>
 			<a class="project-link" href="/project?id=<%= project_data[i].project_id %>">
 				<div class="col-1-2 project-block" style="background-color:<%= project_data[i].project_colour %>">
@@ -18,48 +17,6 @@
 				</div>
 			</a>
             <% } %>
-			<!-- Blue Block
-			<a class="project-link" href="/project">
-				<div class="col-1-2 blue project-block">
-					<h3>Project Name</h3>
-				</div>
-			</a> -->
-			<!-- Pink Block 
-			<a class="project-link" href="/project">
-				<div class="col-1-2 pink project-block">
-					<h3>Project Name</h3>
-				</div>
-			</a>-->
-			<!-- Orange Block 
-			<a class="project-link" href="/project">
-				<div class="col-1-2 orange project-block">
-					<h3>Project Name</h3>
-				</div>
-			</a>-->
-			<!-- Purple Block 
-			<a class="project-link" href="/project">
-				<div class="col-1-2 purple project-block">
-					<h3>Project Name</h3>
-				</div>
-			</a>-->
-			<!-- Turquoise Block
-			<a class="project-link" href="/project">
-				<div class="col-1-2 turquoise project-block">
-					<h3>Project Name</h3>
-				</div>
-			</a> -->
-			<!-- Red Block 
-			<a class="project-link" href="/project">
-				<div class="col-1-2 red project-block">
-					<h3>Project Name</h3>
-				</div>
-			</a>-->
-			<!-- Yellow Block 
-			<a class="project-link" href="/project">
-				<div class="col-1-2 yellow project-block">
-					<h3>Project Name</h3>
-				</div>
-			</a>-->
 		</div>
 	</div>
 <% include partials/footer %>
