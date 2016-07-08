@@ -190,6 +190,10 @@ body {
   min-height: 100% !important;
   height: 100%;
 }
+::-webkit-scrollbar {
+  background-color: #333333;
+  width: 0;
+}
 /***************
 	HEADER
 ****************/
@@ -1145,22 +1149,24 @@ body {
   bottom: 0;
   background: #333333;
   border-top: 1px solid #979797;
-  padding: 10px 0 20px;
+  padding: 15px 0 15px;
 }
-.conversation .message-bar i {
-  display: inline-block;
-  color: #ffffff;
-  font-size: 30px;
-  position: relative;
-  top: 8px;
-  left: 15px;
+.conversation .message-bar .new-message {
+  display: block;
+  margin: 0 auto;
+  padding: 0 35px;
 }
 .conversation .message-bar input {
+  font-size: 14px;
   display: inline-block;
-  width: 25%;
+  width: 375px;
   height: 35px;
   border-radius: 6px;
-  margin-left: 1.5%;
+}
+.conversation .message-bar .message-btn {
+  display: inline-block;
+  padding: 10px 25px;
+  margin-left: 10px;
 }
 /***************************
 		CONVERSATIONS

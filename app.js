@@ -22,6 +22,9 @@ if(!err) {
 }
 });
 
+
+
+
 /*********************
     Passport Login 
 *********************/
@@ -82,7 +85,6 @@ if(!err) {
         passReqToCallback : true 
     },
     function(req, email, password, done) {
-        console.log('firing login!');
          connection.query("SELECT * FROM user WHERE email = '" + email + "'",function(err,rows){
 			 if (err) {
                 return done(err);
@@ -98,7 +100,6 @@ if(!err) {
                 
 			
             // all is well, return successful user
-            console.log('done');
             return done(null, rows[0]);
 		});
     }));
@@ -111,6 +112,23 @@ if(!err) {
 *************************/
 var app = express();
 
+
+/*********************
+    Socket.IO
+*********************/
+
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
+io.on('connection', function(socket){
+    console.log('a user connected');
+    socket.on('chat message', function(msg){
+    console.log('message: ' + msg);
+  });
+    socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+});
 
 
 /*************************
@@ -208,14 +226,11 @@ app.get('/project', function(req, res) {
                 project_title: result[0].title,
                 project_colour: result[0].project_colour
             };
-            console.log(project);
             // another query
-            console.log('getting task');
-            console.log(project_id);
             var task = [];
             retrieve_tasks = connection.query('SELECT * FROM tasks, tasks_project WHERE tasks_project.project_id = '+project_id+' AND tasks_project.task_id = tasks.id', project_id, function (err, result){
                 //throw err;
-                console.log(result);
+                //console.log(result);
                 for (var i = 0; i <= result.length; i++) {
                     if (result[i] != undefined) {
                         var tempTask ={
@@ -231,10 +246,10 @@ app.get('/project', function(req, res) {
                         task.push(tempTask);
                     }
                 }
-                console.log(task),
+                //console.log(task),
                 res.render('project', 
                 { 
-                  title: 'Utasko |' +project.project_title, 
+                  title: 'Utasko | ' +project.project_title, 
                   project_title: project.project_title,
                   project_id: project.project_id,
                   project_colour: project.project_colour,
@@ -270,7 +285,7 @@ app.post("/add_project", function (req, res) {
     var repo = req.body.project.repository;
     //insert project data into database
     add_project = connection.query('INSERT INTO projects SET ?', project, function (err, result) {
-        console.log(result.insertId)
+        //console.log(result.insertId)
         project_user.project_id = result.insertId;
         
         //insert project_user link into database
@@ -298,10 +313,10 @@ app.get('/edit_project', function(req, res) {
                 status: result[0].status,
                 project_colour: result[0].project_colour
             };
-            console.log(project)
+            //console.log(project)
             res.render('edit_project', 
                 { 
-                  title: 'Utasko | Project', 
+                  title: 'Utasko | '+project.project_title, 
                   project_title: project.project_title,
                   project_description: project.description,
                   project_start_date: project.start_date,
@@ -348,7 +363,7 @@ app.post("/add_task", function (req, res) {
     var project = {
         project_id: req.query.project_id,
     }
-    console.log(req.query);
+
     var utc = new Date().toJSON().slice(0,10);
     var task = {
         title: req.body.task.title,
@@ -363,18 +378,12 @@ app.post("/add_task", function (req, res) {
         project_id: project.project_id
     };
     var requirement = req.body.task.requirement;
-    console.log('adding_tasks');
     
     add_task = connection.query('INSERT INTO tasks SET ?', task, function (err, result) {
         //insert task data into database
-        console.log(result.insertId);
         task_project.task_id = result.insertId;
-        console.log(task_project);
         task_project_link = connection.query('INSERT INTO tasks_project SET ?', task_project, function(err, result) {
-            console.log(result);
-            console.log(err);
            //insert task_project_link into database 
-            console.log(task),
             res.redirect('/project?id='+req.query.project_id);
             
         });
@@ -458,4 +467,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.listen(3000);
+server.listen(3000);

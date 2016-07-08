@@ -85,11 +85,31 @@
 			</div>
 
 		</div>
-		<div class="message-bar">
-			<div class="new-message">
-				<i class="ut-plus"></i>
-				<input type="text" name="message" class="message-input"></input>
-			</div>
-		</div>
+        <div class="message-bar">
+            <div class="new-message">
+                <input type="text" name="message" class="message-input" />
+                <a id="message-button" class="btn message-btn">Send</a>
+            </div>
+        </div>
+        <script>
+            function sendMessage(value) {
+                // Save current time and add to socket emit
+                // Send user data?
+                socket.emit('chat message', value);
+                $('.message-input').val('');
+                // Append to current chat tab
+                // Set timeout to be reset when you hear from the server
+                    // If timeout happens show error
+            }
+            
+            $('#message-button').on('touch click', function(){
+                sendMessage($('.message-input').val());
+            });
+            $(".message-input").keyup(function (e) {
+                if (e.keyCode == 13) {
+                    sendMessage($('.message-input').val());
+                }
+            });
+        </script>
 	</div>
 </div>
