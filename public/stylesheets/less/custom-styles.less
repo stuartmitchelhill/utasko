@@ -604,25 +604,101 @@
 					display: none;
 				}
 			}
+            
+            &:hover {
+                .task-toggle {
+                    color: @white;
+                    transition: 0.4s;
+                }
+            }
+            
+            &.pinkA{
 
-			&:hover {
-				.task-toggle {
-					color: @white;
-					transition: 0.4s;
-				}
+                &:hover {
 
-				.task-title {
-					color: @utasko_green;
-					transition: 0.4s;
-				}
-			}
+                    .task-title {
+                        color: @pinkA;
+                        transition: 0.4s;
+                    }
+                }
+                
+                &.open {
+                    .task-title {
+                        color: @pinkA;
+                    }
+                }
+            }
+            
+            &.pinkB{
+
+                &:hover {
+
+                    .task-title {
+                        color: @pinkB;
+                        transition: 0.4s;
+                    }
+                }
+                
+                &.open {
+                    .task-title {
+                        color: @pinkB;
+                    }
+                }
+            }
+            
+            &.pinkC{
+
+                &:hover {
+
+                    .task-title {
+                        color: @pinkC;
+                        transition: 0.4s;
+                    }
+                }
+                
+                &.open {
+                    .task-title {
+                        color: @pinkC;
+                    }
+                }
+            }
+            
+            &.pinkD{
+
+                &:hover {
+
+                    .task-title {
+                        color: @pinkD;
+                        transition: 0.4s;
+                    }
+                }
+                
+                &.open {
+                    .task-title {
+                        color: @pinkD;
+                    }
+                }
+            }
+            
+            &.purple{
+
+                &:hover {
+
+                    .task-title {
+                        color: @purple;
+                        transition: 0.4s;
+                    }
+                }
+                
+                &.open {
+                    .task-title {
+                        color: @purple;
+                    }
+                }
+            }
 		}
 
-		&.open {
-			.task-title {
-				color: @utasko_green;
-			}
-		}
+		
 
 		.task-info {
 			display: none;

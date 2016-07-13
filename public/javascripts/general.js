@@ -1,6 +1,6 @@
 $(function() {
     
-    //* Slide Menu */
+    //* Slide Menu *//
     $( ".menu-trigger" ).click(function() {
   		$( ".slide-menu" ).toggleClass("open");
         $(this).find("i").toggleClass("ut-more-vert ut-close");
@@ -15,7 +15,18 @@ $(function() {
     });*/
     
     
-    
+    //* Date Picker *//
+    $('.pickadate').pickadate({
+        format: 'dd/mm/yy',
+        max: 100,
+        min: true,
+        selectYears: false,
+        selectMonths: false,
+        today: false,
+        clear: false,
+        close: false,
+        
+    });
     
     //* Task Expand *//
     
@@ -29,7 +40,7 @@ $(function() {
         
 		$icon.toggleClass("ut-plus ut-minus");
 		$taskExpand.slideToggle();
-		$task.toggleClass('open');
+        $header.toggleClass('open');
 		$info.slideToggle('disabled');
 	});
     
@@ -42,6 +53,25 @@ $(function() {
         
 		$optionsExpand.slideToggle();
 	});
+    
+    
+    var pinkA = '#A53695';
+    var pinkB = '#B73D97';
+    var pinkC = '#C34599';
+    var pinkD = '#DD54A1';
+    var purple = '#952B90';
+    
+    if($('.task').attr('data-value') == pinkA){
+        $(this).closest('.task-header').addClass('pinkA');
+    } else if ($('.task').attr('data-value') == pinkB){
+        $(this).closest('.task-header').addClass('pinkA');
+    } else if ($('.task').attr('data-value') == pinkC){
+        $(this).closest('.task-header').addClass('pinkA');
+    } else if ($('.task').attr('data-value') == pinkD) {
+        $(this).closest('.task-header').addClass('pinkA');
+    } else if($('.task').attr('data-value') == purple) {
+        $(this).closest('.task-header').addClass('pinkA');
+    }
     
     
 });

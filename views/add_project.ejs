@@ -8,7 +8,7 @@
 						<form action="/add_project" method="post" id="add-project-form">
 							<input type="text" name="project[title]" id="project-title" placeholder="Enter Project Title" />
                             <span class="error">Please enter a title for your project</span>
-							<input type="text" name="project[end_date]" id="project-end-date" placeholder="Project End Date" />
+							<input class="pickadate" type="text" name="project[end_date]" id="project-end-date" placeholder="Project End Date" />
                             <span class="error">Please enter an end date for your project</span>
                             <input type="text" name="project[repository]" id="preoject-repo" placeholder="Enter Project Repository" />
                             <span class="error">Please enter a repository for you project</span>
@@ -22,28 +22,19 @@
                             </div>
                             <div class="project-colour">
                                 <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="#B8EE66">
+                                    <input type="radio" name="project[colour]" value="#B73D97">
                                 </div>
                                 <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="#66AFEE">
+                                    <input type="radio" name="project[colour]" value="#A53695">
                                 </div>
                                 <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="#EE6666">
+                                    <input type="radio" name="project[colour]" value="#C34599">
                                 </div>
                                 <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="#FFA946">
+                                    <input type="radio" name="project[colour]" value="#DD54A1">
                                 </div>
                                 <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="#9566EE">
-                                </div>
-                                <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="#50E3C2">
-                                </div>
-                                <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="#FFF363">
-                                </div>
-                                <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="#F35252">
+                                    <input type="radio" name="project[colour]" value="#952B90">
                                 </div>
                             </div>
                             <textarea name="project[description]" id="project-description" placeholder="Enter Project Description"></textarea>

@@ -219,7 +219,7 @@ app.get('/profile', function(req, res) {
 /* GET Project page.*/
 app.get('/project', function(req, res) {
     var project_id = req.query.id;
-    retrieve_project = connection.query('SELECT * FROM projects WHERE projects.id = '+project_id+'' ,project_id, function (err, result){
+    retrieve_project = connection.query('SELECT * FROM projects WHERE projects.id = '+project_id+''  ,project_id, function (err, result){
         //console.log(result);
            var project ={
                 project_id: result[0].id,
@@ -271,31 +271,33 @@ app.get('/add_project', function(req, res) {
 app.post("/add_project", function (req, res) {
     var utc = new Date().toJSON().slice(0,10);
     var project = {
-        project_title: req.body.project.title,
-        project_description: req.body.project.description,
-        project_status: req.body.project.status,
+        title: req.body.project.title,
+        description: req.body.project.description,
+        status: req.body.project.status,
         project_colour: req.body.project.colour,
-        project_start_date: utc,
-        project_end_date: req.body.project.end_date
+        start_date: utc,
+        end_date: req.body.project.end_date
     };
     var project_user = {
         project_id: '',
         user_id: req.cookies.user_id
     };
+    console.log(project_user.user_id);
+    console.log(project);
+    console.log(project_user);
     var repo = req.body.project.repository;
     //insert project data into database
     add_project = connection.query('INSERT INTO projects SET ?', project, function (err, result) {
-        //console.log(result.insertId)
+        //throw err;
+        console.log(result);
+        console.log(result.insertId)
         project_user.project_id = result.insertId;
         
         //insert project_user link into database
         user_project_link = connection.query('INSERT INTO project_users SET ?', project_user, function(err, result) { 
         });
     });
-    res.render('project', 
-    { 
-      title: 'Utasko | ' + project.project_title 
-    });
+    res.redirect('/home');
 });
 
 /* GET Edit_Project page. */
@@ -363,7 +365,6 @@ app.post("/add_task", function (req, res) {
     var project = {
         project_id: req.query.project_id,
     }
-
     var utc = new Date().toJSON().slice(0,10);
     var task = {
         title: req.body.task.title,
@@ -380,10 +381,12 @@ app.post("/add_task", function (req, res) {
     var requirement = req.body.task.requirement;
     
     add_task = connection.query('INSERT INTO tasks SET ?', task, function (err, result) {
+        console.log('task created');
         //insert task data into database
         task_project.task_id = result.insertId;
         task_project_link = connection.query('INSERT INTO tasks_project SET ?', task_project, function(err, result) {
            //insert task_project_link into database 
+            console.log('task_project link created');
             res.redirect('/project?id='+req.query.project_id);
             
         });

@@ -8,7 +8,7 @@
     </a>
 	<div class="wrapper task-list">
         <% for(var i=0; i<task_data.length; i++) { %>
-		<div class="task">
+		<div class="task" data-value="<%= project_colour %>">
 			<div class="task-header">
 				<p class="task-title"><%= task_data[i].task_title %></p>
 				<a href="javascript:void(0)" class="task-toggle"><i class="ut-plus"></i></a>
