@@ -219,6 +219,7 @@ app.get('/profile', function(req, res) {
 /* GET Project page.*/
 app.get('/project', function(req, res) {
     var project_id = req.query.id;
+    var user_id = req.cookies.user_id;
     retrieve_project = connection.query('SELECT * FROM projects WHERE projects.id = '+project_id+''  ,project_id, function (err, result){
         //console.log(result);
            var project ={
@@ -245,15 +246,23 @@ app.get('/project', function(req, res) {
                         }    
                         task.push(tempTask);
                     }
-                }
-                //console.log(task),
-                res.render('project', 
-                { 
-                  title: 'Utasko | ' +project.project_title, 
-                  project_title: project.project_title,
-                  project_id: project.project_id,
-                  project_colour: project.project_colour,
-                  task_data: task    
+                };
+                retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id+'', user_id, function (err, result){
+                    var user = {
+                        user_id: result[0].id,
+                        name: result[0].name,
+                        email: result[0].email,
+                    }
+                     //console.log(task),
+                    res.render('project', 
+                    { 
+                      title: 'Utasko | ' +project.project_title, 
+                      project_title: project.project_title,
+                      project_id: project.project_id,
+                      project_colour: project.project_colour,
+                      task_data: task,
+                      username: user.name
+                    });
                 });
             });
         });
@@ -378,20 +387,34 @@ app.post("/add_task", function (req, res) {
         task_id: '',
         project_id: project.project_id
     };
-    var requirement = req.body.task.requirement;
+    var requirement = { 
+        description: req.body.task.requirement
+    };
     
+    var task_requirement = {
+        task_id: '',
+        requirement_id: ''
+    }
+    //insert task data into database
     add_task = connection.query('INSERT INTO tasks SET ?', task, function (err, result) {
-        console.log('task created');
-        //insert task data into database
         task_project.task_id = result.insertId;
+        //insert task_project_link into database
         task_project_link = connection.query('INSERT INTO tasks_project SET ?', task_project, function(err, result) {
-           //insert task_project_link into database 
-            console.log('task_project link created');
-            res.redirect('/project?id='+req.query.project_id);
-            
+            //insert requirments into database
+            add_task_requirements = connection.query('INSERT INTO requirement SET ?', requirement, function(err, result) {
+                console.log(result);
+                console.log('creating requirement');
+                console.log(task_project.task_id);
+                task_requirement.requirement_id = result.insertId;
+                task_requirement.task_id = task_project.task_id;
+                console.log(task_requirement);
+                //insert task_requirment_link into database
+                add_task_requirements = connection.query('INSERT INTO task_requirements SET ?', task_requirement, function(err, result) {
+                    res.redirect('/project?id='+req.query.project_id);
+                });
+            });
         });
     });
-    
 });
 
 /* GET Sign_Up page. */

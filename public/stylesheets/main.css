@@ -966,6 +966,12 @@ body {
   font-family: 'utasko';
   color: #979797;
 }
+.tasks .task .task-info .task-requirments ul .task-requirment.complete:hover {
+  color: #979797;
+}
+.tasks .task .task-info .task-requirments ul .task-requirment.complete:hover:before {
+  color: #979797;
+}
 .tasks .task .task-info .task-requirments ul .task-requirment:hover {
   color: #e0e0e0;
   transition: 0.4s;

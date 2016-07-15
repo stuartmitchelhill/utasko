@@ -8,7 +8,7 @@
 						<form action="/add_task?project_id=<%= project_id %>&project_title=<%= project_title %>" method="post" id="add-task-form">
 							<input type="text" name="task[title]" id="task-title" placeholder="Enter Task Name" />
                             <span class="error">Please enter a name for your task</span>
-							<input type="text" name="task[end_date]" id="task-end-date" placeholder="Task End Date" />
+							<input class="pickadate" type="text" name="task[end_date]" id="task-end-date" placeholder="Task End Date" />
                             <span class="error">Please enter an end date for your task</span>
                             <textarea name="task[description]" id="task-description" placeholder="Enter Task Description"></textarea>
                             <span class="error">Please enter a description for your task</span>
@@ -20,7 +20,7 @@
                                     <option>User 3</option>
                                 </select>
                             </div>
-                            <textarea type="text" name="task[requriment]" id="task-requirment" placeholder="Enter Task Requirement (optional)"></textarea>
+                            <textarea type="text" name="task[requirement]" id="task-requirement" placeholder="Enter Task Requirement (optional)"></textarea>
                             <input type="hidden" name="task[status]" value="active">
 							<input type="submit" name="submit" class="submit-btn" value="Create Task" />
 						</form>

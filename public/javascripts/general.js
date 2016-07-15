@@ -14,7 +14,6 @@ $(function() {
         });
     });*/
     
-    
     //* Date Picker *//
     $('.pickadate').pickadate({
         format: 'dd/mm/yy',
@@ -27,6 +26,14 @@ $(function() {
         close: false,
         
     });
+    
+    //* Fancy Box *//
+    //$(".fancybox").fancybox({
+    //  'overlayShow'	: false,
+    //    'transitionIn'	: 'elastic',
+    //    'transitionOut'	: 'elastic'
+    //});
+
     
     //* Task Expand *//
     
@@ -54,6 +61,7 @@ $(function() {
 		$optionsExpand.slideToggle();
 	});
     
+    //* Task Header Dynamic Colour *//
     
     var pinkA = '#A53695';
     var pinkB = '#B73D97';
@@ -73,5 +81,11 @@ $(function() {
         $(this).closest('.task-header').addClass('pinkA');
     }
     
+    
+    //* Task Requirments Complete *//
+    
+    $('.task-requirment').click(function(){
+       $(this).addClass('complete'); 
+    });
     
 });
