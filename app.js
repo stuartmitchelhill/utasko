@@ -247,22 +247,32 @@ app.get('/project', function(req, res) {
                         task.push(tempTask);
                     }
                 };
-                retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id+'', user_id, function (err, result){
-                    var user = {
-                        user_id: result[0].id,
-                        name: result[0].name,
-                        email: result[0].email,
-                    }
-                     //console.log(task),
-                    res.render('project', 
-                    { 
-                      title: 'Utasko | ' +project.project_title, 
-                      project_title: project.project_title,
-                      project_id: project.project_id,
-                      project_colour: project.project_colour,
-                      task_data: task,
-                      username: user.name
-                    });
+                console.log(task);
+                var task_id = '36';
+                retrieve_task_requirements = connection.query ('SELECT * FROM requirement, task_requirements WHERE task_requirements.task_id = '+task_id+' AND task_requirements.requirement_id = requirement.id', task_id, function (err, result){
+//                    //throw err;
+                    var requirement = {
+                        requirement_description: result[0].description,
+                        requirement_status: result[0].status
+                    };
+                    retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id+'', user_id, function (err, result){
+                        var user = {
+                            user_id: result[0].id,
+                            name: result[0].name,
+                            email: result[0].email,
+                        }
+                        res.render('project', 
+                        { 
+                          title: 'Utasko | ' +project.project_title, 
+                          project_title: project.project_title,
+                          project_id: project.project_id,
+                          project_colour: project.project_colour,
+                          task_data: task,
+                          requirement_description: requirement.requirement_description,
+                          requirement_status: requirement.requirment_status,
+                          username: user.name
+                        });
+                    }); 
                 });
             });
         });
@@ -291,15 +301,10 @@ app.post("/add_project", function (req, res) {
         project_id: '',
         user_id: req.cookies.user_id
     };
-    console.log(project_user.user_id);
-    console.log(project);
-    console.log(project_user);
     var repo = req.body.project.repository;
     //insert project data into database
     add_project = connection.query('INSERT INTO projects SET ?', project, function (err, result) {
         //throw err;
-        console.log(result);
-        console.log(result.insertId)
         project_user.project_id = result.insertId;
         
         //insert project_user link into database
@@ -402,14 +407,12 @@ app.post("/add_task", function (req, res) {
         task_project_link = connection.query('INSERT INTO tasks_project SET ?', task_project, function(err, result) {
             //insert requirments into database
             add_task_requirements = connection.query('INSERT INTO requirement SET ?', requirement, function(err, result) {
-                console.log(result);
-                console.log('creating requirement');
-                console.log(task_project.task_id);
                 task_requirement.requirement_id = result.insertId;
                 task_requirement.task_id = task_project.task_id;
                 console.log(task_requirement);
                 //insert task_requirment_link into database
                 add_task_requirements = connection.query('INSERT INTO task_requirements SET ?', task_requirement, function(err, result) {
+                    console.log('task requirment link created');
                     res.redirect('/project?id='+req.query.project_id);
                 });
             });

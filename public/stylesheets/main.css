@@ -241,9 +241,10 @@ body {
 .navbar .navbar-menu-right li.user-info img {
   display: inline-block;
   width: 30px;
+  height: 30px;
   position: relative;
   top: 8px;
-  padding-right: 10px;
+  border-radius: 15px;
 }
 .navbar .navbar-menu-right li.search.active {
   background-color: #505050;
@@ -631,11 +632,13 @@ body {
      PROFILE
 *****************/
 .profile-image {
-  padding-bottom: 50px;
+  padding-bottom: 15px;
 }
 .profile-image img {
   display: block;
   width: 200px;
+  height: 200px;
+  border-radius: 100px;
 }
 .profile-info ul {
   list-style-type: none;
@@ -652,6 +655,7 @@ body {
 }
 .list-projects {
   margin-bottom: 25px;
+  margin-right: 30px;
 }
 .list-projects h4 {
   color: #ffffff;
@@ -666,6 +670,19 @@ body {
 }
 .list-projects ul li:nth-child(even) {
   background-color: #505050;
+}
+.list-projects ul li a:hover {
+  color: #ffffff;
+  transition: 0.4s;
+}
+.list-projects ul li span {
+  float: right;
+}
+.list-projects ul li span a {
+  margin-right: 10px;
+}
+.list-projects ul li span a:last-child {
+  margin-right: 0;
 }
 /*****************
 	ADD PROJECT

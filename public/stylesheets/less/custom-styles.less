@@ -298,11 +298,13 @@
 
 
 .profile-image {
-    padding-bottom: 50px;
+    padding-bottom: 15px;
     
     img {
         display: block;
         width: 200px;
+        height: 200px;
+        border-radius: 100px;
     }
 }
 
@@ -328,6 +330,7 @@
 
 .list-projects {
     margin-bottom: 25px;
+    margin-right: 30px;
     h4 {
         color: @white;
         margin: 0 0 15px;
@@ -341,6 +344,25 @@
             
             &:nth-child(even){
                 background-color: @grey5;
+            }
+            
+            a {
+                &:hover {
+                    color: @white;
+                    transition: 0.4s;
+                }
+            }
+            
+            span {
+                float: right;
+                
+                a {
+                    margin-right: 10px;
+                    
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                }
             }
         }
     }
