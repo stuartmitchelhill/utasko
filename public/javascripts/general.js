@@ -28,11 +28,16 @@ $(function() {
     });
     
     //* Fancy Box *//
-    //$(".fancybox").fancybox({
-    //  'overlayShow'	: false,
-    //    'transitionIn'	: 'elastic',
-    //    'transitionOut'	: 'elastic'
-    //});
+    $(".fancybox").fancybox({
+      'closeBtn' : false,
+      'padding' : 0,
+      'transitionIn'	: 'elastic',
+      'transitionOut'	: 'elastic'
+    });
+    
+    $(".fancybox-popup .popup-close").click(function(){
+        $.fancybox.close();
+    });
 
     
     //* Task Expand *//
