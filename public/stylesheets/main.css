@@ -473,6 +473,10 @@ body {
 .navbar .navbar-menu-right li {
   display: inline-block;
 }
+.navbar .navbar-menu-right li.menu-button {
+  position: relative;
+  bottom: 12px;
+}
 .navbar .navbar-menu-right li.user-info {
   padding-right: 25px;
   color: #979797;
@@ -482,11 +486,10 @@ body {
 }
 .navbar .navbar-menu-right li.user-info img {
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   position: relative;
-  top: 8px;
-  border-radius: 15px;
+  border-radius: 20px;
 }
 .navbar .navbar-menu-right li.search.active {
   background-color: #505050;
@@ -525,7 +528,7 @@ body {
 .slide-menu {
   position: fixed;
   right: 0;
-  width: 30%;
+  width: 375px;
   height: 100%;
   background-color: #333333;
   z-index: 9999;

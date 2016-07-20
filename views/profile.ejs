@@ -29,11 +29,11 @@
                             <div class="list-projects active-project-list">
                                 <h4>Active Projects</h4>
                                 <ul>
-                                    <li><a href="#">Active Project 1</a> <span><a href="#"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
-                                    <li><a href="#">Active Project 2</a> <span><a href="#"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
-                                    <li><a href="#">Active Project 3</a> <span><a href="#"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
-                                    <li><a href="#">Active Project 4</a> <span><a href="#"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
-                                    <li><a href="#">Active Project 5</a> <span><a href="#"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
+                                    <li><a href="#">Active Project 1</a> <span><a href="#edit_project_project_id" class="fancybox"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
+                                    <li><a href="#">Active Project 2</a> <span><a href="#edit_project_project_id" class="fancybox"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
+                                    <li><a href="#">Active Project 3</a> <span><a href="#edit_project_project_id" class="fancybox"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
+                                    <li><a href="#">Active Project 4</a> <span><a href="#edit_project_project_id" class="fancybox"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
+                                    <li><a href="#">Active Project 5</a> <span><a href="#edit_project_project_id" class="fancybox"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
                                 </ul>
                             </div>
                         </div>
@@ -41,17 +41,79 @@
                             <div class="list-projects archived-project-list">
                                 <h4>Archived Projects</h4>
                                 <ul>
-                                    <li><a href="#">Archived Project 1</a> <span><a href="#"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
-                                    <li><a href="#">Archived Project 2</a> <span><a href="#"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
-                                    <li><a href="#">Archived Project 3</a> <span><a href="#"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
-                                    <li><a href="#">Archived Project 4</a> <span><a href="#"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
-                                    <li><a href="#">Archived Project 5</a> <span><a href="#"><i class="ut-pencil"></i></a> <a href="#"><i class="ut-trash"></i></a></span></li>
+                                    <li><a href="#">Archived Project 1</a> <span><a href="#"><i class="ut-trash"></i></a></span></li>
+                                    <li><a href="#">Archived Project 2</a> <span><a href="#"><i class="ut-trash"></i></a></span></li>
+                                    <li><a href="#">Archived Project 3</a> <span><a href="#"><i class="ut-trash"></i></a></span></li>
+                                    <li><a href="#">Archived Project 4</a> <span><a href="#"><i class="ut-trash"></i></a></span></li>
+                                    <li><a href="#">Archived Project 5</a> <span><a href="#"><i class="ut-trash"></i></a></span></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                  </div>
 			</div>
+            
+            <div id="edit_project_project_id" class="fancybox-popup">
+            <div class="popup-close">
+                <a href="javascript:void(0)"><i class="ut-close"></i></a>
+            </div>
+            <div class="popup-header">
+                <h3>Edit Project</h3>
+                <p class="subtitle">Subtitle</p>
+            </div>
+            <div class="popup-body">
+                <div class="form popup-form">
+					<div class="form-inner">
+						<form action="/edit_project" method="post" id="edit-project-form">
+							<input type="text" name="project[title]" id="project-title" value="Project Title" />
+                            <span class="error">Please enter a title for your project</span>
+							<input type="text" name="project[end_date]" id="project-end-date" value="Project End Date" />
+                            <span class="error">Please enter an end date for your project</span>
+                            <input type="text" name="project[repository]" id="preoject-repo" placeholder="Project Repository" />
+                            <span class="error">Please enter a repository for you project</span>
+                            <div class="custom-select">
+                                <select name="project[users]">
+                                    <option disabled="disabled" selected="selected">Add Project Users</option>
+                                    <option>User 1</option>
+                                    <option>User 2</option>
+                                    <option>User 3</option>
+                                </select>
+                            </div>
+                            <div class="project-colour">
+                                <div class="custom-checkbox">
+                                    <input type="radio" name="project[colour]" value="#B8EE66" checked="checked">
+                                </div>
+                                <div class="custom-checkbox">
+                                    <input type="radio" name="project[colour]" value="#66AFEE">
+                                </div>
+                                <div class="custom-checkbox">
+                                    <input type="radio" name="project[colour]" value="#EE6666">
+                                </div>
+                                <div class="custom-checkbox">
+                                    <input type="radio" name="project[colour]" value="#FFA946">
+                                </div>
+                                <div class="custom-checkbox">
+                                    <input type="radio" name="project[colour]" value="#9566EE">
+                                </div>
+                                <div class="custom-checkbox">
+                                    <input type="radio" name="project[colour]" value="#50E3C2">
+                                </div>
+                                <div class="custom-checkbox">
+                                    <input type="radio" name="project[colour]" value="#FFF363">
+                                </div>
+                                <div class="custom-checkbox">
+                                    <input type="radio" name="project[colour]" value="#F35252">
+                                </div>
+                            </div>
+                            <textarea name="project[description]" id="project-description">Project Description</textarea>
+                            <span class="error">Please enter a description for your project</span>
+                            <input type="hidden" name="project[status]" value="active">
+							<input type="submit" name="submit" class="submit-btn" value="Edit Project" />
+						</form>
+					</div>
+				</div>
+            </div>
+        </div> 
 
 		</div> <!-- Close Content Main -->
 

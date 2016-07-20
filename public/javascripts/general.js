@@ -16,7 +16,7 @@ $(function() {
     
     //* Date Picker *//
     $('.pickadate').pickadate({
-        format: 'dd/mm/yy',
+        format: 'dd mmm yyyy',
         max: 100,
         min: true,
         selectYears: false,

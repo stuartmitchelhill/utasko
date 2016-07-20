@@ -13,13 +13,13 @@
 				<p class="task-title"><%= task_data[i].task_title %></p>
 				<a href="javascript:void(0)" class="task-toggle"><i class="ut-plus"></i></a>
 				<div class="task-quick-info">
-					<p class="task-due-date"><i class="ut-clock"></i> Apr 10</p>
+					<p class="task-due-date"><i class="ut-clock"></i><%= task_data[i].end_date %></p>
 					<p class="task-to-do"><i class="ut-check"></i> 1/3</p>
 				</div>
 			</div>
 			<div class="task-info">
 				<div class="task-info-header">
-					<p class="due-date">Due Date: 10th April</p>
+					<p class="due-date">Due Date: <%= task_data[i].end_date %></p>
 					<p class="task-body"><%= task_data[i].description %></p>
                     <div class="task-users">
                         <ul>
@@ -27,9 +27,11 @@
                         </ul>
 					</div>
 					<div class="task-requirments">
+                        <% for(var i=0; i<requirement_data.length; i++) { %>
 						<ul>
-							<li class="task-requirment"><%= requirement_description %></li>
+							<li class="task-requirment"><%= requirement_data[i].requirement_description %></li>
                         </ul>
+                        <% } %>
 					</div>
                     <a href="javascript:void(0)" class="task-options"><i class="ut-more"></i></a>   
                     <div class="task-options-expanded">
@@ -55,7 +57,7 @@
                         <form action="/edit_task?project_id=<%= project_id %>&project_title=<%= project_title %>" method="post" id="edit-task-form">
                             <input type="text" name="task[title]" id="task-title" value="<%= task_data[i].task_title %>" />
                             <span class="error">Please enter a name for your task</span>
-                            <input class="pickadate" type="text" name="task[end_date]" id="task-end-date" placeholder="Task End Date" />
+                            <input class="pickadate" type="text" name="task[end_date]" id="task-end-date" value="<%= task_data[i].end_date %>" />
                             <span class="error">Please enter an end date for your task</span>
                             <textarea name="task[description]" id="task-description"><%= task_data[i].description %></textarea>
                             <span class="error">Please enter a description for your task</span>

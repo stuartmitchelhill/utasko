@@ -248,13 +248,20 @@ app.get('/project', function(req, res) {
                     }
                 };
                 console.log(task);
-                var task_id = '36';
+                var task_id = '38';
+                var requirement = [];
                 retrieve_task_requirements = connection.query ('SELECT * FROM requirement, task_requirements WHERE task_requirements.task_id = '+task_id+' AND task_requirements.requirement_id = requirement.id', task_id, function (err, result){
 //                    //throw err;
-                    var requirement = {
-                        requirement_description: result[0].description,
-                        requirement_status: result[0].status
+                    for (var i = 0; i <= result.length; i++) {
+                        if (result[i] != undefined) {
+                            var tempRequirement ={
+                                requirement_description: result[0].description,
+                                requirement_status: result[0].status
+                            }    
+                            requirement.push(tempRequirement);
+                        }
                     };
+                    console.log(requirement);
                     retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id+'', user_id, function (err, result){
                         var user = {
                             user_id: result[0].id,
@@ -268,8 +275,7 @@ app.get('/project', function(req, res) {
                           project_id: project.project_id,
                           project_colour: project.project_colour,
                           task_data: task,
-                          requirement_description: requirement.requirement_description,
-                          requirement_status: requirement.requirment_status,
+                          requirement_data: requirement,
                           username: user.name
                         });
                     }); 
@@ -342,6 +348,7 @@ app.get('/edit_project', function(req, res) {
                 });
         });
 });
+
 /* GET Edit_Project POST data. */
 /*app.post("/edit_project", function (req, res) {
     var utc = new Date().toJSON().slice(0,10);

@@ -61,6 +61,11 @@ body {
 
 		li {
 			display: inline-block;
+            
+            &.menu-button {
+                position: relative;
+                bottom: 12px;
+            }
 
 			&.user-info {
 				padding-right: 25px;
@@ -70,11 +75,10 @@ body {
 				font-weight: 300;
 				img {
 					display: inline-block;
-					width: 30px;
-                    height: 30px;
+					width: 40px;
+                    height: 40px;
 					position: relative;
-    				top: 8px;
-                    border-radius: 15px;
+                    border-radius: 20px;
 				}
 			}
 
@@ -130,7 +134,7 @@ body {
 .slide-menu {
 	position: fixed;
 	right: 0;
-	width: 30%;
+	width: 375px;
 	height: 100%;
 	background-color: @main_colour;
 	z-index: 9999;
