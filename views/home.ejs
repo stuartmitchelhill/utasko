@@ -79,7 +79,10 @@
                 </div>
             </div>
         </div>
-        
-        
+        <% if(add_project == 'active') { %>
+            <script> 
+                $(".fancybox").click();
+            </script>
+        <% } %>
 	</div>
 <% include partials/footer %>

@@ -16,7 +16,18 @@
 				<a href="javascript:void(0)" class="task-toggle"><i class="ut-plus"></i></a>
 				<div class="task-quick-info">
 					<p class="task-due-date"><i class="ut-clock"></i><%= task_data[prop].end_date %></p>
-					<p class="task-to-do"><i class="ut-check"></i> 1/3</p>
+					<p class="task-to-do"><i class="ut-check"></i> 
+                        <script>
+                            var counter = 0;
+                            var completeCounter = 0;
+                        <% Object.keys(task_data[prop].requirements).forEach(function(req_prop) { %>
+                                counter++;
+                                <% if (task_data[prop].requirements[req_prop].req_status == 'complete') { %>
+                                    completeCounter++;
+                                <% } %>
+                        <% });
+                        %>
+                        document.write(completeCounter + ' / ' + counter);</script></p>
 				</div>
 			</div>
 			<div class="task-info">
@@ -76,7 +87,7 @@
                             <% }); %>
                             <input type="hidden" name="task[status]" value="active">
                             <input type="hidden" name="task[id]" value="<%= task_data[prop].id %>">
-                            <input type="submit" name="submit" class="submit-btn" value="Edit Task" />
+                            <input type="submit" name="submit" class="submit-btn" value="Save Changes" />
                         </form>
                     </div>
                 </div>

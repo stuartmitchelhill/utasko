@@ -187,10 +187,15 @@ app.get('/home', function(req, res) {
                 project.push(tempProject);
             }
         }
+        var active = '';
+        if (req.query.project = 'active') {
+            active = 'active';
+        }
         res.render('home',
         {    
             title: 'Utasko | Home',
-            project_data:project
+            project_data:project,
+            add_project: active
         });
     }); 
 });
@@ -202,16 +207,17 @@ app.get('/profile', function(req, res) {
         //console.log(result);
            var user ={
                username: result[0].name,
-               user_email: result[0].email,
-               user_profile_image: result[0].profile_image
+               email: result[0].email,
+               profile_image: result[0].profile_image,
+               password: result[0].password
             };
         //console.log(user);
             res.render('profile', 
                 { 
                   title: 'Utasko | My Profile', 
                   username: user.username,
-                  user_email: user.user_email,
-                  profile_image: user.user_profile_image
+                  email: user.email,
+                  profile_image: user.profile_image
                 });
         });
 });

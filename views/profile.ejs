@@ -3,7 +3,7 @@
 	    <div class="content-main">
 			<div class="top-bar">
 				<div class="project-bar">
-					<a href="#">
+					<a href="#edit_profile" class="fancybox">
 						<h3>Edit Profile</h3>
 						<i class="ut-pencil"></i>
 					</a>
@@ -21,7 +21,7 @@
                             <div class="profile-info">
                                 <ul>
                                     <li><h4>Username:</h4> <span><%= username %></span></li>
-                                    <li><h4>Email:</h4> <span><%= user_email %></span></li>
+                                    <li><h4>Email:</h4> <span><%= email %></span></li>
                                 </ul>
                             </div>
                         </div>
@@ -52,6 +52,29 @@
                     </div>
                  </div>
 			</div>
+            
+            <div id="edit_profile" class="fancybox-popup">
+            <div class="popup-close">
+                <a href="javascript:void(0)"><i class="ut-close"></i></a>
+            </div>
+            <div class="popup-header">
+                <h3>Edit Profile</h3>
+            </div>
+            <div class="popup-body">
+                <div class="form popup-form">
+					<div class="form-inner">
+						<form action="/edit_profile" method="post" id="edit-profile-form">
+                            <input type="text" name="profile[username]" id="profile-username" value="<%= username %>" />
+                            <span class="error">Please enter a username</span>
+							<input type="text" name="profile[email]" id="project-end-date" value="<%= email %>" />
+                            <span class="error">Please enter a valid email address</span>
+                            <input type="password" name="profile[password]" id="profile-password" value="<%= password %>" />
+                            <span class="error">Please enter a password</span>
+                            <input type="submit" name="submit" class="submit-btn" value="Save Changes" />
+                        </form>
+					</div>
+				</div>
+            </div>
             
             <div id="edit_project_project_id" class="fancybox-popup">
             <div class="popup-close">

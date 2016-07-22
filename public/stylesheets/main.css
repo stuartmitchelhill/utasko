@@ -645,7 +645,7 @@ body {
 .fancybox-popup .popup-close {
   position: absolute;
   right: 30px;
-  top: 15px;
+  top: 26px;
 }
 .fancybox-popup .popup-close a {
   color: #979797;
@@ -1001,6 +1001,7 @@ body {
   color: #cccccc;
   font-size: 14px;
   margin-top: 0;
+  padding-right: 10px;
 }
 .tasks .task .task-header .task-quick-info.disabled {
   display: none;
