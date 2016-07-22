@@ -1,82 +1,124 @@
 <!--Tasks View -->
 <div class="col-2-3 tasks">
-    <a href="/add_task?project_id=<%= project_id %>&project_title=<%= project_title %>">
+    <a href="#add_task" class="fancybox">
+    <!--<a href="/add_task?project_id=<%= project_id %>&project_title=<%= project_title %>">-->
         <div class="add-task-bar">
             <i class="ut-plus"></i>
             <p>Add Task</p>
         </div>
     </a>
 	<div class="wrapper task-list">
-        <% for(var i=0; i<task_data.length; i++) { %>
+        
+        <% Object.keys(task_data).forEach(function(prop) { %>
 		<div class="task" data-value="<%= project_colour %>">
 			<div class="task-header">
-				<p class="task-title"><%= task_data[i].task_title %></p>
+				<p class="task-title"><%= task_data[prop].title %></p>
 				<a href="javascript:void(0)" class="task-toggle"><i class="ut-plus"></i></a>
 				<div class="task-quick-info">
-					<p class="task-due-date"><i class="ut-clock"></i><%= task_data[i].end_date %></p>
+					<p class="task-due-date"><i class="ut-clock"></i><%= task_data[prop].end_date %></p>
 					<p class="task-to-do"><i class="ut-check"></i> 1/3</p>
 				</div>
 			</div>
 			<div class="task-info">
 				<div class="task-info-header">
-					<p class="due-date">Due Date: <%= task_data[i].end_date %></p>
-					<p class="task-body"><%= task_data[i].description %></p>
+					<p class="due-date">Due Date: <%= task_data[prop].end_date %></p>
+					<p class="task-body"><%= task_data[prop].description %></p>
                     <div class="task-users">
                         <ul>
-						  <li><i class="ut-user"></i><%= username %></li>
+						  <li><i class="ut-user"></i>User</li>
                         </ul>
 					</div>
 					<div class="task-requirments">
-                        <% for(var i=0; i<requirement_data.length; i++) { %>
+                        <% Object.keys(task_data[prop].requirements).forEach(function(req_prop) {%>
 						<ul>
-							<li class="task-requirment"><%= requirement_data[i].requirement_description %></li>
+							<li class="task-requirment"><%= task_data[prop].requirements[req_prop].req_desc %></li>
                         </ul>
-                        <% } %>
+                        <% }); %>
 					</div>
                     <a href="javascript:void(0)" class="task-options"><i class="ut-more"></i></a>   
                     <div class="task-options-expanded">
-                        <a href="#edit_task_<%= task_data[i].task_id %>" class="btn fancybox">Edit Task</a>
+                        <a href="#edit_task_<%= task_data[prop].id %>" class="btn fancybox">Edit Task</a>
                         <a href="#" class="btn">Archive Task</a>
                         <a href="#" class="btn danger">Delete Task</a>
                     </div>
 				</div>
 			</div>
-		</div>
+        </div>
         
-        <div id="edit_task_<%= task_data[i].task_id %>" class="fancybox-popup">
+        <!--Edit Task-->
+        <div id="edit_task_<%= task_data[prop].id %>" class="fancybox-popup">
             <div class="popup-close">
                 <a href="javascript:void(0)"><i class="ut-close"></i></a>
             </div>
             <div class="popup-header">
                 <h3>Edit Task</h3>
-                <p class="subtitle"><%= task_data[i].task_title %></p>
+                <p class="subtitle"><%= task_data[prop].title %></p>
             </div>
             <div class="popup-body">
                 <div class="form popup-form">
                     <div class="form-inner">
                         <form action="/edit_task?project_id=<%= project_id %>&project_title=<%= project_title %>" method="post" id="edit-task-form">
-                            <input type="text" name="task[title]" id="task-title" value="<%= task_data[i].task_title %>" />
+                            <input type="text" name="task[title]" id="task-title" value="<%= task_data[prop].title %>" />
                             <span class="error">Please enter a name for your task</span>
-                            <input class="pickadate" type="text" name="task[end_date]" id="task-end-date" value="<%= task_data[i].end_date %>" />
+                            <input class="pickadate" type="text" name="task[end_date]" id="task-end-date" value="<%= task_data[prop].end_date %>" />
                             <span class="error">Please enter an end date for your task</span>
-                            <textarea name="task[description]" id="task-description"><%= task_data[i].description %></textarea>
+                            <textarea name="task[description]" id="task-description"><%= task_data[prop].description %></textarea>
                             <span class="error">Please enter a description for your task</span>
                             <div class="custom-select">
                                 <select name="task[users]">
                                     <option disabled="disabled" selected="selected">Edit Task Users</option>
-                                    <option><%= username %></option>
+                                    <option>User</option>
                                 </select>
                             </div>
-                            <textarea type="text" name="task[requirement]" id="task-requirement"><%= requirement_description %></textarea>
+                            <% Object.keys(task_data[prop].requirements).forEach(function(req_prop) {%>
+                                <textarea type="text" name="task[requirement][<%= req_prop %>]" id="task-requirement"><%= task_data[prop].requirements[req_prop].req_desc %></textarea>
+                            <% }); %>
                             <input type="hidden" name="task[status]" value="active">
+                            <input type="hidden" name="task[id]" value="<%= task_data[prop].id %>">
                             <input type="submit" name="submit" class="submit-btn" value="Edit Task" />
                         </form>
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
         
-        <% } %>
+        <% }); %>
 	</div>
 </div>
 
+
+<div id="add_task" class="fancybox-popup">
+    <div class="popup-close">
+        <a href="javascript:void(0)"><i class="ut-close"></i></a>
+    </div>
+    <div class="popup-header">
+        <h3>Create New Task</h3>
+        <p class="subtitle"><%= project_title %></p>
+    </div>
+    <div class="popup-body">
+        <div class="form popup-form">
+            <div class="form-inner">
+                <form action="/add_task?project_id=<%= project_id %>&project_title=<%= project_title %>" method="post" id="add-task-form">
+                    <input type="text" name="task[title]" id="task-title" placeholder="Enter Task Name" />
+                    <span class="error">Please enter a name for your task</span>
+                    <input class="pickadate" type="text" name="task[end_date]" id="task-end-date" placeholder="Task End Date" />
+                    <span class="error">Please enter an end date for your task</span>
+                    <textarea name="task[description]" id="task-description" placeholder="Enter Task Description"></textarea>
+                    <span class="error">Please enter a description for your task</span>
+                    <div class="custom-select">
+                        <select name="task[users]">
+                            <option disabled="disabled" selected="selected">Assign Task Users</option>
+                            <option>User 1</option>
+                            <option>User 2</option>
+                            <option>User 3</option>
+                        </select>
+                    </div>
+                    <textarea type="text" name="task[requirement][]" id="task-requirement" placeholder="Enter Task Requirement (optional)"></textarea>
+                    <textarea type="text" name="task[requirement][]" id="task-requirement" placeholder="Enter Task Requirement (optional)"></textarea>
+                    <input type="hidden" name="task[status]" value="active">
+                    <input type="submit" name="submit" class="submit-btn" value="Create Task" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -173,7 +173,7 @@ app.get('/home', function(req, res) {
     var user_id = req.cookies.user_id;
     var project = [];
     retrieve_projects = connection.query('SELECT * FROM projects, project_users WHERE project_users.user_id = '+user_id+' AND project_users.project_id = projects.id' , user_id, function (err, result){
-        for (var i = 0; i <= result.length; i++) {
+        for (var i = 0; i < result.length; i++) {
             if (result[i] != undefined) {
                 var tempProject ={
                     project_id: result[i].id,
@@ -220,68 +220,62 @@ app.get('/profile', function(req, res) {
 app.get('/project', function(req, res) {
     var project_id = req.query.id;
     var user_id = req.cookies.user_id;
-    retrieve_project = connection.query('SELECT * FROM projects WHERE projects.id = '+project_id+''  ,project_id, function (err, result){
+    retrieve_project = connection.query('SELECT * FROM projects WHERE projects.id = '+project_id ,project_id, function (err, result){
         //console.log(result);
-           var project ={
-                project_id: result[0].id,
-                project_title: result[0].title,
-                project_colour: result[0].project_colour
+        var project ={
+            project_id: result[0].id,
+            project_title: result[0].title,
+            project_colour: result[0].project_colour
+        };
+        var user = {};
+        retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id, user_id, function (err, userResult){
+            user = {
+                user_id: userResult[0].id,
+                name: userResult[0].name,
+                email: userResult[0].email
             };
-            // another query
-            var task = [];
-            retrieve_tasks = connection.query('SELECT * FROM tasks, tasks_project WHERE tasks_project.project_id = '+project_id+' AND tasks_project.task_id = tasks.id', project_id, function (err, result){
-                //throw err;
-                //console.log(result);
-                for (var i = 0; i <= result.length; i++) {
-                    if (result[i] != undefined) {
-                        var tempTask ={
-                            task_id: result[i].id,
-                            task_title: result[i].title,
-                            description: result[i].description,
-                            start_date: result[i].start_date,
-                            end_date: result[i].end_date,
-                            completed: result[i].completed,
-                            status: result[i].status,
-                            author: result[i].author
-                        }    
-                        task.push(tempTask);
-                    }
-                };
-                console.log(task);
-                var task_id = '38';
-                var requirement = [];
-                retrieve_task_requirements = connection.query ('SELECT * FROM requirement, task_requirements WHERE task_requirements.task_id = '+task_id+' AND task_requirements.requirement_id = requirement.id', task_id, function (err, result){
-//                    //throw err;
-                    for (var i = 0; i <= result.length; i++) {
-                        if (result[i] != undefined) {
-                            var tempRequirement ={
-                                requirement_description: result[0].description,
-                                requirement_status: result[0].status
-                            }    
-                            requirement.push(tempRequirement);
-                        }
-                    };
-                    console.log(requirement);
-                    retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id+'', user_id, function (err, result){
-                        var user = {
-                            user_id: result[0].id,
-                            name: result[0].name,
-                            email: result[0].email,
-                        }
-                        res.render('project', 
-                        { 
-                          title: 'Utasko | ' +project.project_title, 
-                          project_title: project.project_title,
-                          project_id: project.project_id,
-                          project_colour: project.project_colour,
-                          task_data: task,
-                          requirement_data: requirement,
-                          username: user.name
-                        });
-                    }); 
-                });
-            });
         });
+        // another query
+        var task = {};
+        retrieve_tasks = connection.query('SELECT tasks.id, tasks.description, tasks.title, tasks.status, tasks.end_date, requirement.id as req_id, requirement.description as req_desc, requirement.status as req_status FROM tasks, tasks_project, requirement,task_requirements WHERE tasks_project.project_id = '+project_id+' AND tasks_project.task_id = tasks.id AND task_requirements.task_id = tasks.id AND task_requirements.requirement_id = requirement.id', project_id, function (err, result){
+            //throw err;
+            for (var i = 0; i < result.length; i++) {
+                console.log('Loop '+i);
+                console.log(result);
+                if (result[i] != undefined) {
+                    if (task[result[i].id] == undefined) {
+                        task[result[i].id] = {};
+                        task[result[i].id].requirements = {};
+                    }
+                    task[result[i].id].id = result[i].id;
+                    task[result[i].id].title = result[i].title;
+                    task[result[i].id].description = result[i].description;
+                    task[result[i].id].start_date = result[i].start_date;
+                    task[result[i].id].end_date = result[i].end_date;
+                    task[result[i].id].completed = result[i].completed;
+                    task[result[i].id].status = result[i].status;
+                    task[result[i].id].author = result[i].author;
+                    if (task[result[i].id].requirements[result[i].req_id] == undefined) {
+                        task[result[i].id].requirements[result[i].req_id] = {};
+                    }
+                    task[result[i].id].requirements[result[i].req_id].req_desc = result[i].req_desc;
+                    task[result[i].id].requirements[result[i].req_id].req_status = result[i].req_status;
+                }
+                if (i == result.length - 1) {
+                    console.log(task);
+                    res.render('project', 
+                    { 
+                      title: 'Utasko | ' +project.project_title, 
+                      project_title: project.project_title,
+                      project_id: project.project_id,
+                      project_colour: project.project_colour,
+                      task_data: task,
+                      username: user.name
+                    });
+                }
+            };
+        });
+    });
 });
 
 /* GET Add_Project page. */
@@ -370,7 +364,7 @@ app.get('/edit_project', function(req, res) {
     });
 });*/
 
-/* GET add_task page. */
+/* GET add_task page. 
 app.get('/add_task',
   function(req, res){
     res.render('add_task',
@@ -379,7 +373,7 @@ app.get('/add_task',
         project_id: req.query.project_id,
         project_title: req.query.project_title
     });
-});
+});*/
 
 /* GET Add_Task POST data. */
 app.post("/add_task", function (req, res) {
@@ -399,33 +393,103 @@ app.post("/add_task", function (req, res) {
         task_id: '',
         project_id: project.project_id
     };
-    var requirement = { 
-        description: req.body.task.requirement
-    };
     
+    console.log(req.body.task);
     var task_requirement = {
         task_id: '',
         requirement_id: ''
     }
     //insert task data into database
-    add_task = connection.query('INSERT INTO tasks SET ?', task, function (err, result) {
-        task_project.task_id = result.insertId;
+    add_task = connection.query('INSERT INTO tasks SET ?', task, function (err, taskResult) {
+        task_project.task_id = taskResult.insertId;
         //insert task_project_link into database
-        task_project_link = connection.query('INSERT INTO tasks_project SET ?', task_project, function(err, result) {
+        task_project_link = connection.query('INSERT INTO tasks_project SET ?', task_project, function(err, taskLinkResult) {
             //insert requirments into database
-            add_task_requirements = connection.query('INSERT INTO requirement SET ?', requirement, function(err, result) {
-                task_requirement.requirement_id = result.insertId;
-                task_requirement.task_id = task_project.task_id;
-                console.log(task_requirement);
-                //insert task_requirment_link into database
-                add_task_requirements = connection.query('INSERT INTO task_requirements SET ?', task_requirement, function(err, result) {
-                    console.log('task requirment link created');
-                    res.redirect('/project?id='+req.query.project_id);
-                });
-            });
+            
+            for (var i = 0; i < req.body.task.requirement.length; i++) {
+                console.log('Loop '+i+', data '+req.body.task.requirement[i]);
+                if (req.body.task.requirement[i] != '' && req.body.task.requirement[i] != undefined) {
+                    var requirement = {
+                        description: req.body.task.requirement[i]
+                    }
+                    var counter = 1;
+                    add_task_requirements = connection.query('INSERT INTO requirement SET ?', requirement, function(err, requirementResult) {
+                        task_requirement.requirement_id = requirementResult.insertId;
+                        task_requirement.task_id = task_project.task_id;
+                        console.log(task_requirement);
+                        //insert task_requirment_link into database
+                        add_task_requirements = connection.query('INSERT INTO task_requirements SET ?', task_requirement, function(err, requirementLinkResult) {
+                            console.log('task requirment link created, i = '+counter+' vs '+req.body.task.requirement.length);
+                            if (counter == req.body.task.requirement.length) {
+                                console.log('redirecting');
+                                res.redirect('/project?id='+req.query.project_id);
+                            }else{
+                                console.log('not redirecting');
+                                counter++;
+                            }
+                        });
+                    });
+                }
+            }
         });
     });
 });
+
+/* GET Edit_Task POST data */
+app.post("/edit_task", function (req, res) {
+    var project = {
+        project_id: req.query.project_id,
+    }
+    var utc = new Date().toJSON().slice(0,10);
+    var task = {
+        title: req.body.task.title,
+        description: req.body.task.description,
+        status: req.body.task.status,
+        start_date: utc,
+        end_date: req.body.task.end_date
+        
+    };
+    var task_project = {
+        task_id: req.body.task.id,
+        project_id: project.project_id
+    };
+    
+    console.log(req.body.task);
+    // For each loop on req.body.task.requirement. Value is new data, index is the id
+    var task_requirement = {
+        task_id: req.body.task.id,
+        requirement_id: req.body.task.requirement_id
+    }
+    //insert task data into database
+    add_task = connection.query('UPDATE INTO tasks SET ?', task, function (err, taskResult) {
+        task_project_link = connection.query('UPDATE INTO tasks_project SET ?', task_project, function(err, taskLinkResult) {
+            //insert requirments into database
+            
+            for (var i = 0; i < req.body.task.requirement.length; i++) {
+                console.log('Loop '+i+', data '+req.body.task.requirement[i]);
+                if (req.body.task.requirement[i] != '' && req.body.task.requirement[i] != undefined) {
+                    var requirement = {
+                        description: req.body.task.requirement[i]
+                    }
+                    var counter = 1;
+                    add_task_requirements = connection.query('UPDATE INTO requirement SET ?', requirement, function(err, requirementResult) {
+                        add_task_requirements = connection.query('UPDATE INTO task_requirements SET ?', task_requirement, function(err, requirementLinkResult) {
+                            console.log('task requirment link created, i = '+counter+' vs '+req.body.task.requirement.length);
+                            if (counter == req.body.task.requirement.length) {
+                                console.log('redirecting');
+                                res.redirect('/project?id='+req.query.project_id);
+                            }else{
+                                console.log('not redirecting');
+                                counter++;
+                            }
+                        });
+                    });
+                }
+            }
+        });
+    });  
+});
+
 
 /* GET Sign_Up page. */
 app.get('/sign_up',

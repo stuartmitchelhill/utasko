@@ -68,24 +68,18 @@ $(function() {
     
     //* Task Header Dynamic Colour *//
     
-    var pinkA = '#A53695';
-    var pinkB = '#B73D97';
-    var pinkC = '#C34599';
-    var pinkD = '#DD54A1';
-    var purple = '#952B90';
+    var green = '#B8EE66';
+    var blue = '#66AFEE';
+    var pink = '#EE6666';
+    var orange = '#FFA946';
+    var purple = '#9566EE';
+    var turqouise = '#50E3C2';
+    var yellow = '#FFF363';
+    var red = '#F35252';
     
-    if($('.task').attr('data-value') == pinkA){
-        $(this).closest('.task-header').addClass('pinkA');
-    } else if ($('.task').attr('data-value') == pinkB){
-        $(this).closest('.task-header').addClass('pinkA');
-    } else if ($('.task').attr('data-value') == pinkC){
-        $(this).closest('.task-header').addClass('pinkA');
-    } else if ($('.task').attr('data-value') == pinkD) {
-        $(this).closest('.task-header').addClass('pinkA');
-    } else if($('.task').attr('data-value') == purple) {
-        $(this).closest('.task-header').addClass('pinkA');
-    }
-    
+    $('.task').each(function() {
+       $(this).find('.task-header').addClass($(this).attr('data-value')); 
+    });    
     
     //* Task Requirments Complete *//
     
