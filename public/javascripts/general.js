@@ -38,10 +38,25 @@ $(function() {
     $(".fancybox-popup .popup-close").click(function(){
         $.fancybox.close();
     });
+    
+    //* View Logic *//
+    $('.files-trigger').click(function(){
+        $('.conversation ').hide();
+        $('.chat-trigger').show();
+        $('.files').show();
+        $('.files-trigger').hide();
+        
+    });
+    
+     $('.chat-trigger').click(function(){
+        $('.conversation ').show();
+        $('.chat-trigger').hide();
+        $('.files').hide();
+        $('.files-trigger').show();
+    });
 
     
-    //* Task Expand *//
-    
+    //* Task Expand *// 
     $('.task .task-header').click(function(){
 		var $header = $(this),
 			$task = $header.closest('.task'),
@@ -56,8 +71,9 @@ $(function() {
 		$info.slideToggle('disabled');
 	});
     
-    //* Task Options Expand *//
     
+    //* Task Options Expand *//
+
     $('.task .task-options').click(function(){
 		var $toggle = $(this),
 			$options = $toggle.closest('.task'),
@@ -66,23 +82,14 @@ $(function() {
 		$optionsExpand.slideToggle();
 	});
     
+    
     //* Task Header Dynamic Colour *//
-    
-    var green = '#B8EE66';
-    var blue = '#66AFEE';
-    var pink = '#EE6666';
-    var orange = '#FFA946';
-    var purple = '#9566EE';
-    var turqouise = '#50E3C2';
-    var yellow = '#FFF363';
-    var red = '#F35252';
-    
     $('.task').each(function() {
        $(this).find('.task-header').addClass($(this).attr('data-value')); 
     });    
     
-    //* Task Requirments Complete *//
     
+    //* Task Requirments Complete *//
     $('.task-requirment').click(function(){
        $(this).addClass('complete'); 
     });

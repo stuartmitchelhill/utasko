@@ -240,8 +240,8 @@ app.get('/project', function(req, res) {
         retrieve_tasks = connection.query('SELECT tasks.id, tasks.description, tasks.title, tasks.status, tasks.end_date, requirement.id as req_id, requirement.description as req_desc, requirement.status as req_status FROM tasks, tasks_project, requirement,task_requirements WHERE tasks_project.project_id = '+project_id+' AND tasks_project.task_id = tasks.id AND task_requirements.task_id = tasks.id AND task_requirements.requirement_id = requirement.id', project_id, function (err, result){
             //throw err;
             for (var i = 0; i < result.length; i++) {
-                console.log('Loop '+i);
-                console.log(result);
+                //console.log('Loop '+i);
+                //console.log(result);
                 if (result[i] != undefined) {
                     if (task[result[i].id] == undefined) {
                         task[result[i].id] = {};
@@ -262,7 +262,7 @@ app.get('/project', function(req, res) {
                     task[result[i].id].requirements[result[i].req_id].req_status = result[i].req_status;
                 }
                 if (i == result.length - 1) {
-                    console.log(task);
+                    //console.log(task);
                     res.render('project', 
                     { 
                       title: 'Utasko | ' +project.project_title, 
@@ -440,54 +440,26 @@ app.post("/edit_task", function (req, res) {
     var project = {
         project_id: req.query.project_id,
     }
-    var utc = new Date().toJSON().slice(0,10);
     var task = {
+        id: req.body.task.id,
         title: req.body.task.title,
         description: req.body.task.description,
         status: req.body.task.status,
-        start_date: utc,
         end_date: req.body.task.end_date
-        
-    };
-    var task_project = {
-        task_id: req.body.task.id,
-        project_id: project.project_id
     };
     
     console.log(req.body.task);
-    // For each loop on req.body.task.requirement. Value is new data, index is the id
-    var task_requirement = {
-        task_id: req.body.task.id,
-        requirement_id: req.body.task.requirement_id
+    for (var i = 0; i < req.body.task.requirement.length; i++) {
+        console.log('UPDATE requirement SET description = "'+req.body.task.requirement[i]+'" WHERE id = "'+req.body.task.requirement_id[i]+'"');
+        update_task_requirements = connection.query('UPDATE requirement SET description = "'+req.body.task.requirement[i]+'" WHERE id = "'+req.body.task.requirement_id[i]+'"', function(err, requirementResult) {
+        });
     }
     //insert task data into database
-    add_task = connection.query('UPDATE INTO tasks SET ?', task, function (err, taskResult) {
-        task_project_link = connection.query('UPDATE INTO tasks_project SET ?', task_project, function(err, taskLinkResult) {
-            //insert requirments into database
-            
-            for (var i = 0; i < req.body.task.requirement.length; i++) {
-                console.log('Loop '+i+', data '+req.body.task.requirement[i]);
-                if (req.body.task.requirement[i] != '' && req.body.task.requirement[i] != undefined) {
-                    var requirement = {
-                        description: req.body.task.requirement[i]
-                    }
-                    var counter = 1;
-                    add_task_requirements = connection.query('UPDATE INTO requirement SET ?', requirement, function(err, requirementResult) {
-                        add_task_requirements = connection.query('UPDATE INTO task_requirements SET ?', task_requirement, function(err, requirementLinkResult) {
-                            console.log('task requirment link created, i = '+counter+' vs '+req.body.task.requirement.length);
-                            if (counter == req.body.task.requirement.length) {
-                                console.log('redirecting');
-                                res.redirect('/project?id='+req.query.project_id);
-                            }else{
-                                console.log('not redirecting');
-                                counter++;
-                            }
-                        });
-                    });
-                }
-            }
-        });
-    });  
+    console.log('UPDATE tasks SET title = "'+ task.title +'", description = "'+task.description+'", end_date = "'+task.end_date+'" WHERE task_requirments.task_id = "'+task.id+'"');
+    update_task = connection.query('UPDATE tasks SET title = "'+ task.title +'", description = "'+task.description+'", end_date = "'+task.end_date+'" WHERE id = "'+task.id+'"', function (err, taskResult) {
+        //insert requirments into database
+    });
+    res.redirect('/project?id='+req.query.project_id);
 });
 
 

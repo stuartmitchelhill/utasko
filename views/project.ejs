@@ -5,13 +5,17 @@
             </div>
             <div class="top-bar">
                 <div class="project-bar">
-                    <a href="#">
+                    <a href="javascript:void(0)" class="repo-trigger">
                         <h3>View Repo</h3>
                         <i class="ut-github"></i>
                     </a>
-                    <a href="file_view.php">
+                    <a href="javascript:void(0)" class="files-trigger">
                         <h3>View Files</h3>
                         <i class="ut-folder"></i>
+                    </a>
+                    <a href="javascript:void(0)" class="chat-trigger">
+                        <h3>View Chat</h3>
+                        <i class="ut-chat"></i>
                     </a>
                 </div>
             </div>
@@ -20,6 +24,8 @@
                 <% include layouts/task_view %>
 
                 <% include layouts/messages_view %>
+                
+                <% include layouts/files_view %>
             </div>
 		</div> <!-- Close Content Main --> 
 

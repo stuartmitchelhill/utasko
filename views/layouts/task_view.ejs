@@ -71,7 +71,8 @@
                                 </select>
                             </div>
                             <% Object.keys(task_data[prop].requirements).forEach(function(req_prop) {%>
-                                <textarea type="text" name="task[requirement][<%= req_prop %>]" id="task-requirement"><%= task_data[prop].requirements[req_prop].req_desc %></textarea>
+                                <textarea name="task[requirement][]" id="task-requirement"><%= task_data[prop].requirements[req_prop].req_desc %></textarea>
+                                <input type="hidden" name="task[requirement_id][]" id="task-requirement" value="<%= req_prop %>" />
                             <% }); %>
                             <input type="hidden" name="task[status]" value="active">
                             <input type="hidden" name="task[id]" value="<%= task_data[prop].id %>">
