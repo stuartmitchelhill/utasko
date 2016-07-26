@@ -210,7 +210,7 @@
 				font-size: 14px;
 				box-sizing: border-box;
 			}
-            
+
             .custom-select {
                 width: 100%;
                 padding: 0;
@@ -290,6 +290,54 @@
 					transition: 0.4s;
 				}
 			}
+            
+            .form-button {
+                width: 100%;
+                margin: 15px 0;
+                float: left;
+                border: 1px solid @grey9;
+                padding: 15px 20px;
+                text-align: center;
+                text-transform: uppercase;
+                font-size: 14px;
+                background: transparent;
+                border: 1px solid @grey9;
+                transition: 0.4s;
+                cursor: pointer;
+                border-radius: 4px;
+                box-sizing: border-box;
+                
+                &.hidden {
+                    display: none;
+                }
+                
+                &.half {
+                    width: ~"calc(50% - 7.5px)";
+                    margin-right: 15px;
+                }
+                
+                &.remove-button {
+                    margin-right: 0;
+                }
+
+                &:hover {
+                    background: @white;
+                    color: @main_colour;
+                    transition: 0.4s;
+                    
+                    a {
+                        color: @main_colour;
+                    }
+                }
+                
+                a {
+                    border: none;
+                    
+                    &:hover {
+                        background-color: transparent;
+                    }
+                }
+            }
 		}
 	}
 }

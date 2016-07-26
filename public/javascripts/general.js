@@ -86,12 +86,48 @@ $(function() {
     //* Task Header Dynamic Colour *//
     $('.task').each(function() {
        $(this).find('.task-header').addClass($(this).attr('data-value')); 
-    });    
+    });
+    
+    //* Add Task Requirment Field *//
+    $('.add-textarea').click(function(){
+        $(this).closest('.form-button').addClass('half');
+        
+        $('.remove-button').removeClass('hidden');
+        
+        var newTextBoxDiv = $(document.createElement('div')).attr("class", 'requirement-field');
+        
+        newTextBoxDiv.after().html('<textarea type="text" name="task[requirement][]" id="task-requirement" placeholder="Enter Task Requirement (optional)"></textarea>');
+        
+        newTextBoxDiv.appendTo(".requirements"); 
+    });
+    
+    //* Remove Task Requirement Field *//
+    $('.remove-textarea').click(function(){
+        var $requirement = $(this).closest('.requirements');
+        var $removeField = $requirement.find('.requirement-field');
+        
+        $removeField.remove();
+    });
     
     
     //* Task Requirments Complete *//
-    $('.task-requirment').click(function(){
-       $(this).addClass('complete'); 
+    $('.task-requirement').click(function(){
+       $(this).addClass('completed'); 
     });
     
+    //* Task Complete *//
+    $('.task-complete').click(function(){
+        var $task = $(this).closest('.task');
+        $task.addClass('completed');
+        $(this).hide();
+        $task.find('.unmark-task-complete').show();
+    });
+    
+    //* Unmark Task Complete *//
+    $('.unmark-task-complete').click(function(){
+        var $task = $(this).closest('.task');
+        $task.removeClass('completed');
+        $(this).hide();
+        $task.find('.task-complete').show();
+    });
 });

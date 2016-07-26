@@ -27,6 +27,7 @@
     "validator": "^5.4.0"
   },
   "devDependencies": {
+    "dropzone": "^4.3.0",
     "socket.io": "^1.4.8"
   }
 }

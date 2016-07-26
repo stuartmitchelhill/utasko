@@ -115,7 +115,7 @@
 			}
             
             &.green {
-            background-color: @utasko_green;
+                background-color: @utasko_green;
             }
 
             &.blue {
@@ -143,7 +143,7 @@
             }
 
             &.red {
-                background-colour: @utasko_red;
+                background-color: @utasko_red;
             }
 		}
 		&:hover {
@@ -370,6 +370,7 @@
 	.task {
 		padding: 20px 150px;
 		border-bottom: 1px solid @grey9;
+        
 		.task-header {
 			cursor: pointer;
 			.task-title {
@@ -405,6 +406,7 @@
 					display: none;
 				}
 			}
+            
             
             &:hover {
                 .task-toggle {
@@ -561,7 +563,7 @@
 				font-size: 14px;
 				margin-top: 0;
 			}
-			.task-requirments {
+			.task-requirements {
 				display: inline-block;
 				width: 100%;
 				margin-right: 5%;
@@ -570,7 +572,7 @@
 				ul {
 					list-style-type: none;
 					padding-left: 25px;
-					.task-requirment {
+					.task-requirement {
 						cursor: pointer;
 						margin-bottom: 15px;
 
@@ -585,7 +587,7 @@
 							margin-left: -25px;
 						}
 
-						&.complete {
+						&.completed {
 							text-decoration: line-through;
 							color: @grey9;
 
@@ -665,9 +667,86 @@
                         margin-right: 0;
                         float: right;
                     }
+                    
+                    &.unmark-task-complete {
+                        display: none;
+                    }
                 }
             }
 		}
+        
+        &.completed {
+            
+            .task-header {
+                .task-title {
+                    text-decoration: line-through;
+				    color: @grey9; 
+                }
+                
+                &:hover {
+                    .task-title {
+                        color: @grey9;
+                    }
+                    
+                    .task-toggle {
+                        color: @grey9;
+                    }
+                }
+                &.open {
+                    .task-title {
+                        color: @grey9;
+                    }
+                }
+                
+                .task-quick-info {
+                    p{
+                        text-decoration: line-through;
+				        color: @grey9; 
+                    }
+                }
+            }
+                
+            .task-info {
+                .task-info-header {
+                    .due-date {
+                        color: @grey9;
+                    }
+                    .task-body {
+                        color: @grey9;
+                    }
+                }
+                
+                .task-users {
+                    ul {
+                        li {
+                            color: @grey9;
+                        }
+                    }
+                }
+                .task-requirements {
+                    ul {
+                        .task-requirement {
+                            text-decoration: line-through;
+                            color: @grey9;
+
+                            &:before {
+                                content:'\e80c';
+                                font-family: 'utasko';
+                                color: @grey9;
+                            }
+
+                            &:hover {
+                                color: @grey9;
+
+                                &:before {
+                                    color: @grey9;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 	}
 }
 
@@ -750,6 +829,36 @@
 	box-sizing: inherit;
 	height: 100%;
     display: none;
+    position: relative;
+    
+    .files-list {
+        margin-top: 55px;
+        padding-bottom: 55px;
+    }
+    
+    .add-file-bar {
+        background: @main_colour;
+        width: 100%;
+        height: 50px;
+        box-shadow: 0 5px 5px @shadow_colour;
+        position: absolute;
+        border-right: 1px solid @grey9;
+        z-index: 99;
+        i {
+            color: @white;
+            font-size: 24px;
+            display: inline-block;
+            margin: 12px 0 0 25px;
+        }
+
+        p {
+            display: inline-block;
+            margin: 0;
+            margin: 12px 25px 0 0;
+            position: relative;
+            float: right;
+        }
+    }
     
 	.file-block {
 		overflow: auto;

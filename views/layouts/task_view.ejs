@@ -4,7 +4,7 @@
     <!--<a href="/add_task?project_id=<%= project_id %>&project_title=<%= project_title %>">-->
         <div class="add-task-bar">
             <i class="ut-plus"></i>
-            <p>Add Task</p>
+            <p>Create New Task</p>
         </div>
     </a>
 	<div class="wrapper task-list">
@@ -39,18 +39,19 @@
 						  <li><i class="ut-user"></i>User</li>
                         </ul>
 					</div>
-					<div class="task-requirments">
+					<div class="task-requirements">
                         <% Object.keys(task_data[prop].requirements).forEach(function(req_prop) {%>
 						<ul>
-							<li class="task-requirment"><%= task_data[prop].requirements[req_prop].req_desc %></li>
+							<li class="task-requirement"><%= task_data[prop].requirements[req_prop].req_desc %></li>
                         </ul>
                         <% }); %>
 					</div>
                     <a href="javascript:void(0)" class="task-options"><i class="ut-more"></i></a>   
                     <div class="task-options-expanded">
                         <a href="#edit_task_<%= task_data[prop].id %>" class="btn fancybox">Edit Task</a>
-                        <a href="#" class="btn">Archive Task</a>
-                        <a href="#" class="btn danger">Delete Task</a>
+                        <a href="javascript:void(0)" class="btn task-complete">Mark as complete</a>
+                        <a href="javascript:void(0)" class="btn unmark-task-complete">Unmark as complete</a>
+                        <a href="/delete_task?project_id=<%= project_id %>&task_id=<%= task_data[prop].id %>" class="btn danger">Delete Task</a>
                     </div>
 				</div>
 			</div>
@@ -99,6 +100,7 @@
 </div>
 
 
+<!-- Add Task -->
 <div id="add_task" class="fancybox-popup">
     <div class="popup-close">
         <a href="javascript:void(0)"><i class="ut-close"></i></a>
@@ -125,8 +127,17 @@
                             <option>User 3</option>
                         </select>
                     </div>
-                    <textarea type="text" name="task[requirement][]" id="task-requirement" placeholder="Enter Task Requirement (optional)"></textarea>
-                    <textarea type="text" name="task[requirement][]" id="task-requirement" placeholder="Enter Task Requirement (optional)"></textarea>
+                    <div class="requirements">
+                        <div class="requirement-field">
+                            <textarea type="text" name="task[requirement][]" id="task-requirement" placeholder="Enter Task Requirement (optional)"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-button">
+                        <a href="javascript:void(0)" class="btn add-textarea"><i class="ut-plus"></i> Add New Requirement</a>
+                    </div>
+                    <div class="form-button remove-button half hidden">
+                        <a href="javascript:void(0)" class="btn remove-textarea"><i class="ut-minus"></i> Remove Requirement</a>
+                    </div>
                     <input type="hidden" name="task[status]" value="active">
                     <input type="submit" name="submit" class="submit-btn" value="Create Task" />
                 </form>

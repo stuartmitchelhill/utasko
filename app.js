@@ -142,7 +142,6 @@ app.set('view engine', 'ejs');
 /*************************
       App Middleware
 *************************/
-
 app.use(require('cookie-parser')());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('body-parser').urlencoded({ extended: true }));
@@ -211,12 +210,13 @@ app.get('/profile', function(req, res) {
                profile_image: result[0].profile_image,
                password: result[0].password
             };
-        //console.log(user);
+        console.log(user);
             res.render('profile', 
                 { 
                   title: 'Utasko | My Profile', 
                   username: user.username,
                   email: user.email,
+                  password: user.password,
                   profile_image: user.profile_image
                 });
         });
@@ -224,10 +224,12 @@ app.get('/profile', function(req, res) {
 
 /* GET Project page.*/
 app.get('/project', function(req, res) {
+    console.log('checking for project data');
     var project_id = req.query.id;
     var user_id = req.cookies.user_id;
     retrieve_project = connection.query('SELECT * FROM projects WHERE projects.id = '+project_id ,project_id, function (err, result){
         //console.log(result);
+        console.log('getting project');
         var project ={
             project_id: result[0].id,
             project_title: result[0].title,
@@ -235,6 +237,7 @@ app.get('/project', function(req, res) {
         };
         var user = {};
         retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id, user_id, function (err, userResult){
+            console.log('getting user');
             user = {
                 user_id: userResult[0].id,
                 name: userResult[0].name,
@@ -244,9 +247,9 @@ app.get('/project', function(req, res) {
         // another query
         var task = {};
         retrieve_tasks = connection.query('SELECT tasks.id, tasks.description, tasks.title, tasks.status, tasks.end_date, requirement.id as req_id, requirement.description as req_desc, requirement.status as req_status FROM tasks, tasks_project, requirement,task_requirements WHERE tasks_project.project_id = '+project_id+' AND tasks_project.task_id = tasks.id AND task_requirements.task_id = tasks.id AND task_requirements.requirement_id = requirement.id', project_id, function (err, result){
+            console.log('getting tasks');
             //throw err;
             for (var i = 0; i < result.length; i++) {
-                //console.log('Loop '+i);
                 //console.log(result);
                 if (result[i] != undefined) {
                     if (task[result[i].id] == undefined) {
@@ -454,16 +457,27 @@ app.post("/edit_task", function (req, res) {
         end_date: req.body.task.end_date
     };
     
-    console.log(req.body.task);
+    //console.log(req.body.task);
     for (var i = 0; i < req.body.task.requirement.length; i++) {
-        console.log('UPDATE requirement SET description = "'+req.body.task.requirement[i]+'" WHERE id = "'+req.body.task.requirement_id[i]+'"');
+        //console.log('UPDATE requirement SET description = "'+req.body.task.requirement[i]+'" WHERE id = "'+req.body.task.requirement_id[i]+'"');
         update_task_requirements = connection.query('UPDATE requirement SET description = "'+req.body.task.requirement[i]+'" WHERE id = "'+req.body.task.requirement_id[i]+'"', function(err, requirementResult) {
         });
     }
     //insert task data into database
-    console.log('UPDATE tasks SET title = "'+ task.title +'", description = "'+task.description+'", end_date = "'+task.end_date+'" WHERE task_requirments.task_id = "'+task.id+'"');
+    //console.log('UPDATE tasks SET title = "'+ task.title +'", description = "'+task.description+'", end_date = "'+task.end_date+'" WHERE task_requirments.task_id = "'+task.id+'"');
     update_task = connection.query('UPDATE tasks SET title = "'+ task.title +'", description = "'+task.description+'", end_date = "'+task.end_date+'" WHERE id = "'+task.id+'"', function (err, taskResult) {
         //insert requirments into database
+    });
+    res.redirect('/project?id='+req.query.project_id);
+});
+
+/* GET Delete_Task page */
+app.get("/delete_task", function (req, res) {
+    var task_id = req.query.task_id;
+    console.log(req.query.task_id);
+    
+    delete_task = connection.query('DELETE FROM tasks WHERE id ="'+task_id+'"', task_id, function(req, taskDelete) {
+        //delete task 
     });
     res.redirect('/project?id='+req.query.project_id);
 });

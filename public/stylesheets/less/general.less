@@ -257,7 +257,7 @@ body {
 }
 
 .picker__holder {
-    max-width: 700px;
+    max-width: 85%;
 }
 
 
@@ -288,6 +288,7 @@ body {
     }
     
     .popup-header {
+        box-sizing: border-box;
         width: 100%;
         padding: 15px 30px;
         box-shadow: 0 5px 5px @shadow_colour;
@@ -304,7 +305,14 @@ body {
     }
     
     .popup-body {
+        box-sizing: border-box;
         padding: 25px 30px;
+        
+        #upload-widget {
+            span {
+                color: @white;
+            }
+        }
     }
 }
 
