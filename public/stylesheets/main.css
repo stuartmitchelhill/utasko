@@ -336,6 +336,14 @@ span {
   color: #f35252;
   display: none;
 }
+.form .form-inner form label {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 160%;
+  color: #ffffff;
+  text-transform: uppercase;
+}
 .form .form-inner form input {
   width: 100%;
   padding: 15px 25px;
@@ -454,6 +462,13 @@ span {
 }
 .form .form-inner form .form-button a:hover {
   background-color: transparent;
+}
+/***************************
+        Uploads Form 
+***************************/
+form#upload-widget {
+  margin: 35px 0 50px;
+  text-align: center;
 }
 html {
   margin: 0;
@@ -709,7 +724,7 @@ body {
 }
 .fancybox-popup .popup-body {
   box-sizing: border-box;
-  padding: 25px 30px;
+  padding: 0 30px 25px;
 }
 .fancybox-popup .popup-body #upload-widget span {
   color: #ffffff;

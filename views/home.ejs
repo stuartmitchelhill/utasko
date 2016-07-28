@@ -70,8 +70,6 @@
                                     <input type="radio" name="project[colour]" value="yellow">
                                 </div>
                             </div>
-                            <textarea name="project[description]" id="project-description" placeholder="Enter Project Description"></textarea>
-                            <span class="error">Please enter a description for your project</span>
                             <input type="hidden" name="project[status]" value="active">
 							<input type="submit" name="submit" class="submit-btn" value="Add Project" />
 						</form>
@@ -79,9 +77,11 @@
                 </div>
             </div>
         </div>
-        <% if(add_project == 'active') { %>
+        <%if (add_project == 'active') { %>
             <script> 
-                $(".fancybox").click();
+                window.onload = function(e){ 
+                    $(".fancybox").click();
+                }
             </script>
         <% } %>
 	</div>

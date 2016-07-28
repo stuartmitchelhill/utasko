@@ -192,12 +192,20 @@
 		}
 
 		form {
-            
             span {
                 &.error {
                     color: @utasko_red;
                     display: none;
                 }
+            }
+            
+            label {
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-size: 12px;
+                font-weight: 500;
+                line-height: 160%;
+                color: @white;
+                text-transform: uppercase;
             }
             
 			input {
@@ -340,4 +348,15 @@
             }
 		}
 	}
+}
+
+/***************************
+        Uploads Form 
+***************************/
+
+form {
+    &#upload-widget {
+        margin: 35px 0 50px;
+        text-align: center;
+    }
 }

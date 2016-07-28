@@ -63,6 +63,9 @@
             <div class="popup-body">
                 <div class="form popup-form">
 					<div class="form-inner">
+                        <form id="upload-widget" method="post" action="/upload" class="dropzone">
+                            <label>Profile Image</label>
+                        </form>
 						<form action="/edit_profile" method="post" id="edit-profile-form">
                             <input type="text" name="profile[username]" id="profile-username" value="<%= username %>" />
                             <span class="error">Please enter a username</span>

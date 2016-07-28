@@ -177,7 +177,6 @@ app.get('/home', function(req, res) {
                 var tempProject ={
                     project_id: result[i].id,
                     project_title: result[i].title,
-                    description: result[i].description,
                     start_date: result[i].start_date,
                     end_date: result[i].end_date,
                     status: result[i].status,
@@ -187,8 +186,10 @@ app.get('/home', function(req, res) {
             }
         }
         var active = '';
-        if (req.query.project = 'active') {
+        if (req.query.add_project = 'active') {
             active = 'active';
+        } else {
+            active = '';
         }
         res.render('home',
         {    
@@ -196,6 +197,7 @@ app.get('/home', function(req, res) {
             project_data:project,
             add_project: active
         });
+        console.log(active);
     }); 
 });
 
@@ -287,20 +289,19 @@ app.get('/project', function(req, res) {
     });
 });
 
-/* GET Add_Project page. */
+/* GET Add_Project page. 
 app.get('/add_project', function(req, res) {
   res.render('add_project', 
     { 
       title: 'Utasko | New Project' 
     });
-});
+});*/
 
 /* GET Add_Project POST data. */
 app.post("/add_project", function (req, res) {
     var utc = new Date().toJSON().slice(0,10);
     var project = {
         title: req.body.project.title,
-        description: req.body.project.description,
         status: req.body.project.status,
         project_colour: req.body.project.colour,
         start_date: utc,
@@ -323,7 +324,38 @@ app.post("/add_project", function (req, res) {
     res.redirect('/home');
 });
 
-/* GET Edit_Project page. */
+/* GET Manage_Project page */
+app.get('/manage_projects', function(req, res){
+    var user_id = req.cookies.user_id;
+    var project = [];
+    retrieve_projects = connection.query('SELECT * FROM projects, project_users WHERE project_users.user_id = '+user_id+' AND project_users.project_id = projects.id' , user_id, function (err, result){
+        for (var i = 0; i < result.length; i++) {
+            if (result[i] != undefined) {
+                var tempProject ={
+                    project_id: result[i].id,
+                    project_title: result[i].title,
+                    description: result[i].description,
+                    start_date: result[i].start_date,
+                    end_date: result[i].end_date,
+                    status: result[i].status,
+                    project_colour: result[i].project_colour
+                }    
+                project.push(tempProject);
+            }
+        }
+        var active = '';
+        if (req.query.project = 'active') {
+            active = 'active';
+        }
+        res.render('manage_projects',
+        {    
+            title: 'Utasko | Manage Projects',
+            project_data:project
+        });
+    }); 
+});
+
+/* GET Edit_Project page. 
 app.get('/edit_project', function(req, res) {
     var project_id = '8';
     console.log(project_id);
@@ -350,28 +382,23 @@ app.get('/edit_project', function(req, res) {
                   project_colour: project.project_colour
                 });
         });
-});
+});*/
 
 /* GET Edit_Project POST data. */
-/*app.post("/edit_project", function (req, res) {
-    var utc = new Date().toJSON().slice(0,10);
+app.post("/edit_project", function (req, res) {
     var project = {
+        id: req.body.project.id,
         title: req.body.project.title,
-        description: req.body.project.description,
         status: req.body.project.status,
         project_colour: req.body.project.colour,
-        start_date: utc,
         end_date: req.body.project.end_date
     };
     var repo = req.body.project.repository;
-    add_project = connection.query('UPDATE projects SET ? WHERE id = ?, project, function (err, result) {
-        //insert project data into database
+    update_project = connection.query('UPDATE projects SET title = "'+project.title+'", status ="'+project.status+'", project_colour = "'+project.project_colour+'", end_date = "'+project.end_date+'" WHERE id = "'+project.id+'"', function(err, requirementResult) {
+            //update project
     });
-    res.render('project', 
-    { 
-      title: 'Utasko | ' + project.title 
-    });
-});*/
+    res.redirect('/manage_projects');
+});
 
 /* GET add_task page. 
 app.get('/add_task',
@@ -383,6 +410,17 @@ app.get('/add_task',
         project_title: req.query.project_title
     });
 });*/
+
+/* GET Delete Project page */
+app.get("/delete_project", function (req, res) {
+    var project_id = req.query.project_id;
+    
+    delete_project = connection.query('DELETE FROM projects WHERE id ="'+project_id+'"', project_id, function(req, res) {
+        //delete task 
+    });
+    
+    res.redirect('/manage_projects?message=success');
+});
 
 /* GET Add_Task POST data. */
 app.post("/add_task", function (req, res) {
@@ -461,6 +499,7 @@ app.post("/edit_task", function (req, res) {
     for (var i = 0; i < req.body.task.requirement.length; i++) {
         //console.log('UPDATE requirement SET description = "'+req.body.task.requirement[i]+'" WHERE id = "'+req.body.task.requirement_id[i]+'"');
         update_task_requirements = connection.query('UPDATE requirement SET description = "'+req.body.task.requirement[i]+'" WHERE id = "'+req.body.task.requirement_id[i]+'"', function(err, requirementResult) {
+            //update requirements
         });
     }
     //insert task data into database
@@ -476,8 +515,12 @@ app.get("/delete_task", function (req, res) {
     var task_id = req.query.task_id;
     console.log(req.query.task_id);
     
-    delete_task = connection.query('DELETE FROM tasks WHERE id ="'+task_id+'"', task_id, function(req, taskDelete) {
+    delete_task = connection.query('DELETE FROM tasks WHERE id ="'+task_id+'"', task_id, function(req, res) {
         //delete task 
+    });
+    
+    delete_task_requirement = connect.query('DELETE FROM tasks_project WHERE task_id ="'+task_id+'"', task_id, function(req, res) {
+        //delete task_project link 
     });
     res.redirect('/project?id='+req.query.project_id);
 });
@@ -507,7 +550,7 @@ app.get('/login',
         title: 'Utasko | Login' ,
         message: req.query.message
     });
-  });
+});
   
 /* GET Login POST data. */
 app.post('/login', passport.authenticate('login', {failureRedirect: '/login?message=error'}), function(req, res) {
