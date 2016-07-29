@@ -67,7 +67,7 @@ if(!err) {
                 newUserMysql.email    = email;
                 newUserMysql.password = password; // use the generateHash function in our user model
 			
-				var insertQuery = "INSERT INTO user (name, email, password ) values ('" + req.body.name +"','" + email +"','"+ password +"')";
+				var insertQuery = "INSERT INTO user (name, email, password, profile_image ) values ('" + req.body.name +"','" + email +"','"+ password +"','" + req.body.profile_image +"')";
 				connection.query(insertQuery,function(err,rows){
 				newUserMysql.id = rows.insertId;
 				
@@ -199,15 +199,25 @@ app.get('/home', function(req, res) {
                 project.push(tempProject);
             }
         }
-        var active = '';
-        if (req.query.add_project == 'active') {
-            active = 'active';
-        }
-        res.render('home',
-        {    
-            title: 'Utasko | Home',
-            project_data: project,
-            add_project: active
+        retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id+'' ,user_id, function (err, result){
+           //console.log(result);
+           var user ={
+               username: result[0].name,
+               email: result[0].email,
+               profile_image: result[0].profile_image,
+               password: result[0].password
+            };
+            var active = '';
+            if (req.query.add_project == 'active') {
+                active = 'active';
+            }
+            res.render('home',
+            {    
+                title: 'Utasko | Home',
+                project_data: project,
+                add_project: active,
+                profile_image: user.profile_image
+            });
         });
     }); 
 });
@@ -215,14 +225,17 @@ app.get('/home', function(req, res) {
 /* GET Profile page. */
 app.get('/profile', function(req, res) {
     var user_id = req.cookies.user_id;
+    console.log('Loading profile!');
     retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id+'' ,user_id, function (err, result){
-       //console.log(result);
+       console.log(result);
+       console.log(err);
        var user ={
            username: result[0].name,
            email: result[0].email,
            profile_image: result[0].profile_image,
            password: result[0].password
         };
+        console.log(user);
         res.render('profile', 
         { 
           title: 'Utasko | My Profile', 
@@ -233,6 +246,53 @@ app.get('/profile', function(req, res) {
         });
     });
 });
+
+/* GET Edit_Profile POST data */
+app.post("/edit_profile", function (req, res) {
+    var user_id = req.cookies.user_id;
+    var user = {
+        id: user_id,
+        name: req.body.user.name,
+        email: req.body.user.email,
+        password: req.body.user.password
+    };
+    update_profile = connection.query('UPDATE user SET name = "'+user.name+'", email ="'+user.email+'", password = "'+user.password+'" WHERE id = "'+user.id+'"', function(err, userResult) {
+        //update profile
+    });
+    res.redirect('/profile');
+});
+
+
+/* GET File_Uploads POST data */
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/images/profile_images/')
+  },
+  filename: function (req, file, cb) {
+      var extension = file.originalname;
+      var fileExt = extension.split(".");
+    cb(null, Date.now() + "." + fileExt[fileExt.length - 1]); //Appending .ext
+  }
+});
+
+var upload = multer( { storage: storage } );
+
+app.post( '/upload_profile_image', upload.single( 'file' ), function( req, res, next ) {
+    var user_id = req.cookies.user_id;
+    var type = req.file.originalname;
+    var filetype = type.split(".");
+    var location = req.file.path;
+    var upload = location.split("/");
+    var uploadDestination = "images/profile_images/" + upload[upload.length - 1];
+    var link = uploadDestination;
+    console.log(link);
+    var profile_image = link;
+    profile_image_update = connection.query('UPDATE user SET profile_image = "'+profile_image+'" WHERE id = "'+user_id+'"', function (err, result) {
+        // file uploaded
+    });
+    console.log(res.status( 200 ).send( req.file ));
+});
+
 
 /* GET Project page.*/
 app.get('/project', function(req, res) {
@@ -253,7 +313,8 @@ app.get('/project', function(req, res) {
             user = {
                 user_id: userResult[0].id,
                 name: userResult[0].name,
-                email: userResult[0].email
+                email: userResult[0].email,
+                profile_image: userResult[0].profile_image
             };
         });
         var files = [];
@@ -263,8 +324,8 @@ app.get('/project', function(req, res) {
             for (var i = 0; i < fileResult.length; i++) {
                 if (fileResult[i] != undefined) {
                     var tempFile ={
-                        title: fileResult[i].id,
-                        info: fileResult[i].title,
+                        title: fileResult[i].title,
+                        info: fileResult[i].info,
                         location: fileResult[i].location,
                     }    
                     files.push(tempFile);
@@ -307,7 +368,8 @@ app.get('/project', function(req, res) {
                       project_colour: project.project_colour,
                       task_data: task,
                       file_data: files,
-                      username: user.name
+                      username: user.name,
+                      profile_image: user.profile_image
                     });
                 }
             };
@@ -320,6 +382,7 @@ app.get('/project', function(req, res) {
                   project_colour: project.project_colour,
                   task_data: task,
                   username: user.name,
+                  profile_image: user.profile_image,
                   file_data: files,
                 });
             }
@@ -373,14 +436,21 @@ app.get('/manage_projects', function(req, res){
                 project.push(tempProject);
             }
         }
-        var active = '';
-        if (req.query.project = 'active') {
-            active = 'active';
-        }
-        res.render('manage_projects',
-        {    
-            title: 'Utasko | Manage Projects',
-            project_data:project
+         var user = {};
+        retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id, user_id, function (err, userResult){
+            console.log('getting user');
+            user = {
+                user_id: userResult[0].id,
+                name: userResult[0].name,
+                email: userResult[0].email,
+                profile_image: userResult[0].profile_image
+            };
+            res.render('manage_projects',
+            {    
+                title: 'Utasko | Manage Projects',
+                project_data:project,
+                profile_image: user.profile_image
+            });
         });
     }); 
 });
@@ -512,42 +582,122 @@ app.post("/edit_task", function (req, res) {
 /* GET Delete_Task page */
 app.get("/delete_task", function (req, res) {
     var task_id = req.query.task_id;
+    var project_id = req.query.project_id;
+    console.log(req.query);
     console.log(req.query.task_id);
+    console.log(req.query.project_id);
     
     delete_task = connection.query('DELETE FROM tasks WHERE id ="'+task_id+'"', task_id, function(req, res) {
         //delete task 
+        console.log('deleting task');
     });
-    
-    delete_task_requirement = connect.query('DELETE FROM tasks_project WHERE task_id ="'+task_id+'"', task_id, function(req, res) {
+     delete_task_requirement = connection.query('DELETE FROM tasks_project WHERE task_id = "'+task_id+'" AND project_id ="'+project_id+'"', function(req, res) {
         //delete task_project link 
+        console.log('deleting task project link');
     });
     res.redirect('/project?id='+req.query.project_id);
 });
 
 
 /* GET File_Uploads POST data */
-var upload = multer( { dest: './public/uploads/' } );
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/uploads/')
+  },
+  filename: function (req, file, cb) {
+      var extension = file.originalname;
+      var fileExt = extension.split(".");
+    cb(null, Date.now() + "." + fileExt[fileExt.length - 1]); //Appending .ext
+  }
+});
+
+var upload = multer( { storage: storage } );
 
 app.post( '/file_upload', upload.single( 'file' ), function( req, res, next ) {
-  console.log(res.status( 200 ).send( req.file ));
+
     var type = req.file.originalname;
     var filetype = type.split(".");
+    var filetypeExt = filetype[filetype.length - 1];
+    switch (filetypeExt) {
+        case 'jpg':
+            filetypeExt = 'img'
+            break;
+        case 'jpeg':
+            filetypeExt = 'img'
+            break;
+        case 'png':
+            filetypeExt = 'img'
+            break;
+        case 'html':
+            filetypeExt = 'code'
+            break;
+        case 'css':
+            filetypeExt = 'code'
+            break;
+        case 'php':
+            filetypeExt = 'code'
+            break;
+        case 'js':
+            filetypeExt = 'code'
+            break;
+        case 'pdf':
+            filetypeExt = 'pdf'
+            break;
+        case 'doc':
+            filetypeExt = 'doc'
+            break;
+        case 'docx':
+            filetypeExt = 'doc'
+            break;
+        case 'ppt':
+            filetypeExt = 'ppt'
+            break;
+        case 'pptx':
+            filetypeExt = 'ppt'
+            break;
+        case 'xls':
+            filetypeExt = 'xls'
+            break;
+        case 'xlsx':
+            filetypeExt = 'xls'
+            break;
+        case 'zip':
+            filetypeExt = 'zip'
+            break;
+        case 'mp3':
+            filetypeExt = 'mp3'
+            break;
+        case 'mp4':
+            filetypeExt = 'mp4'
+            break;
+        default:
+            filetypeExt = 'txt'
+            break;
+    }
+    
+    /*if(filetypeExt == 'jpg' || filetypeExt == 'jpeg' || filetypeExt == 'png') {
+        filetypeExt = 'img';
+    } else if(filetypeExt == 'html' || filetypeExt == 'css' || filetypeExt == 'php' || filetypeExt == 'js') {
+        filetypeExt = 'code';
+    }*/
+    
     var location = req.file.path;
     var upload = location.split("/");
-    var uploadDestination = upload[upload.length - 1].append("/uploads/");
-    var link = uploadDestination.append(filetype);
-    
+    var uploadDestination = "uploads/" + upload[upload.length - 1];
+    var link = uploadDestination;
     var file = {
         title: req.file.originalname,
-        info: filetype[filetype.length - 1],
+        info: filetypeExt,
         location: link,
         user_id: req.cookies.user_id,
         project_id: req.body.file.project_id
     }
     file_upload = connection.query('INSERT INTO files SET ?', file, function (err, taskResult) {
-        //upload file
+        // file uploaded
     });
+    console.log(res.status( 200 ).send( req.file ));
 });
+
 
 /* GET Sign_Up page. */
 app.get('/sign_up',
@@ -587,8 +737,6 @@ app.get('/logout',
     req.logout();
     res.redirect('/');
 });
-
-
 
 
 /* GET 404 page. */ 

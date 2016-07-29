@@ -1,15 +1,15 @@
 
 .ut-download-cloud:before { content: '\e800'; } /* '' */
 .ut-file-pdf:before { content: '\e801'; } /* '' */
-.ut-file-word:before { content: '\e802'; } /* '' */
-.ut-file-excel:before { content: '\e803'; } /* '' */
-.ut-file-powerpoint:before { content: '\e804'; } /* '' */
-.ut-file-image:before { content: '\e805'; } /* '' */
-.ut-file-archive:before { content: '\e806'; } /* '' */
-.ut-file-audio:before { content: '\e807'; } /* '' */
-.ut-file-video:before { content: '\e808'; } /* '' */
+.ut-file-doc:before { content: '\e802'; } /* '' */
+.ut-file-xls:before { content: '\e803'; } /* '' */
+.ut-file-ppt:before { content: '\e804'; } /* '' */
+.ut-file-img:before { content: '\e805'; } /* '' */
+.ut-file-zip:before { content: '\e806'; } /* '' */
+.ut-file-mp3:before { content: '\e807'; } /* '' */
+.ut-file-mp4:before { content: '\e808'; } /* '' */
 .ut-file-code:before { content: '\e809'; } /* '' */
-.ut-doc-text:before { content: '\e80a'; } /* '' */
+.ut-file-txt:before { content: '\e80a'; } /* '' */
 .ut-clock:before { content: '\e80b'; } /* '' */
 .ut-ok-circled:before { content: '\e80c'; } /* '' */
 .ut-circle-thin:before { content: '\e80d'; } /* '' */

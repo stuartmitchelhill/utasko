@@ -46,8 +46,7 @@ $(function() {
         $('.files-trigger').hide();
         
     });
-    
-     $('.chat-trigger').click(function(){
+    $('.chat-trigger').click(function(){
         $('.conversation ').show();
         $('.chat-trigger').hide();
         $('.files').hide();
@@ -72,11 +71,10 @@ $(function() {
     
     
     //* Task Options Expand *//
-
     $('.task .task-options').click(function(){
 		var $toggle = $(this),
 			$options = $toggle.closest('.task'),
-			$optionsExpand = $options.find('.task-options-expanded')
+			$optionsExpand = $options.find('.task-options-expanded');
         
 		$optionsExpand.slideToggle();
 	});
@@ -116,9 +114,13 @@ $(function() {
     //* Task Complete *//
     $('.task-complete').click(function(){
         var $task = $(this).closest('.task');
+        var $taskExpand = $task.find('.task-info');
+        var $taskInfo = $task.find('.task-quick-info');
         $task.addClass('completed');
         $(this).hide();
         $task.find('.unmark-task-complete').show();
+        $taskExpand.slideToggle();
+        $taskInfo.slideToggle();
     });
     
     //* Unmark Task Complete *//
@@ -132,5 +134,7 @@ $(function() {
     
     
     //* Custom File Icon *//
-    
+    $('.file').each(function(){
+        $(this).find('.file-icon').addClass('ut-file-' + $(this).attr('data-value')); 
+    })
 });

@@ -10,12 +10,12 @@
 		<!-- TO DO: File Link Styles -->
         <% for(var i=0; i<file_data.length; i++) { %>
 		<div class="file-block">
-			<div class="file <%= project_colour %>">
-                <a href="../<%= file_data[i].location %>">
-				<i class="ut-file-pdf"></i>
+			<div class="file <%= project_colour %>" data-value="<%= file_data[i].info %>">
+                <a href="../<%= file_data[i].location %>" download>
+				<i class="file-icon"></i>
                     <div class="file-info">
                         <p class="file-name"><%= file_data[i].title %></p>
-                        <p>Shared by user 1 @ 8:33am 9th April</p>
+                        <p>//@TODO: Author and Time of upload</p>
                     </div>
                     <i class="ut-download-cloud"></i>
                 </a>

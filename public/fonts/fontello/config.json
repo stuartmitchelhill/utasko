@@ -20,43 +20,43 @@
     },
     {
       "uid": "310ffd629da85142bc8669f010556f2d",
-      "css": "file-word",
+      "css": "file-doc",
       "code": 59394,
       "src": "fontawesome"
     },
     {
       "uid": "f761c3bbe16ba2d332914ecb28e7a042",
-      "css": "file-excel",
+      "css": "file-xls",
       "code": 59395,
       "src": "fontawesome"
     },
     {
       "uid": "edcd4022de8d8df266ef7c42d2658ca5",
-      "css": "file-powerpoint",
+      "css": "file-ppt",
       "code": 59396,
       "src": "fontawesome"
     },
     {
       "uid": "3c961c1a8d874815856fc6637dc5a13c",
-      "css": "file-image",
+      "css": "file-img",
       "code": 59397,
       "src": "fontawesome"
     },
     {
       "uid": "e80ae555c1413a4ec18b33fb348b4049",
-      "css": "file-archive",
+      "css": "file-zip",
       "code": 59398,
       "src": "fontawesome"
     },
     {
       "uid": "81db033e704eb7c586a365559d7c0f36",
-      "css": "file-audio",
+      "css": "file-mp3",
       "code": 59399,
       "src": "fontawesome"
     },
     {
       "uid": "dd69d9aa589ea7bc0a82a3fe67039f4b",
-      "css": "file-video",
+      "css": "file-mp4",
       "code": 59400,
       "src": "fontawesome"
     },
@@ -68,7 +68,7 @@
     },
     {
       "uid": "5408be43f7c42bccee419c6be53fdef5",
-      "css": "doc-text",
+      "css": "file-txt",
       "code": 59402,
       "src": "fontawesome"
     },

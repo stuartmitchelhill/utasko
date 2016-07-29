@@ -470,6 +470,9 @@ form#upload-widget {
   margin: 35px 0 50px;
   text-align: center;
 }
+* {
+  box-sizing: border-box;
+}
 html {
   margin: 0;
   padding: 0;
@@ -729,9 +732,17 @@ body {
 .fancybox-popup .popup-body #my-dropzone {
   width: 100%;
   height: 200px;
+  text-align: center;
+  margin-bottom: 75px;
 }
 .fancybox-popup .popup-body #my-dropzone span {
   color: #ffffff;
+}
+.fancybox-popup .popup-body #my-dropzone img {
+  width: 50px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 15px;
 }
 /************************
         Dropzone
@@ -920,6 +931,7 @@ body {
 }
 .list-projects ul li {
   padding: 15px 10px 15px;
+  border-bottom: 1px solid #505050;
 }
 .list-projects ul li:nth-child(even) {
   background-color: #505050;
@@ -1384,6 +1396,7 @@ body {
   overflow: auto;
   border-bottom: 1px solid #979797;
   padding-bottom: 28px;
+  position: relative;
 }
 .files .file-block .file {
   padding: 15px 75px;
@@ -1397,11 +1410,20 @@ body {
 }
 .files .file-block .file i.ut-download-cloud {
   font-size: 16px;
+  position: absolute;
+  top: 15px;
+  right: 5px;
+}
+.files .file-block .file i.file-icon {
+  position: absolute;
+  top: 20px;
+  left: 30px;
 }
 .files .file-block .file .file-info {
   display: block;
   float: left;
   margin-top: 10px;
+  margin-left: 25px;
 }
 .files .file-block .file .file-info p {
   display: block;

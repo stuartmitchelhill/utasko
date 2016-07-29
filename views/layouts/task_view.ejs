@@ -8,7 +8,8 @@
         </div>
     </a>
 	<div class="wrapper task-list">
-        
+        <!-- Reverse Order - Order by latest created -->
+        <%/* Object.keys(task_data).sort().reverse().forEach(function(prop) { */%>
         <% Object.keys(task_data).forEach(function(prop) { %>
 		<div class="task" data-value="<%= project_colour %>">
 			<div class="task-header">

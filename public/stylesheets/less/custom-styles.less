@@ -208,6 +208,7 @@
         list-style-type: none;
         li {
             padding: 15px 10px 15px;
+            border-bottom: 1px solid @grey5;
             
             &:nth-child(even){
                 background-color: @grey5;
@@ -864,6 +865,7 @@
 		overflow: auto;
 		border-bottom: 1px solid @grey9;
 		padding-bottom: 28px;
+        position: relative;
 		.file {
 			padding: 15px 75px;
 
@@ -876,7 +878,16 @@
 
 				&.ut-download-cloud {
 					font-size: 16px;
+                    position: absolute;
+                    top: 15px;
+                    right: 5px;
 				}
+                
+                &.file-icon {
+                    position: absolute;
+                    top: 20px;
+                    left: 30px;
+                }
 
 			}
 
@@ -884,6 +895,7 @@
 				display: block;
 				float: left;
                 margin-top: 10px;
+                margin-left: 25px;
 			
 				p {
 					display: block;
