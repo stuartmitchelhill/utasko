@@ -17,7 +17,6 @@ $(function() {
     //* Date Picker *//
     $('.pickadate').pickadate({
         format: 'dd mmm yyyy',
-        max: 100,
         min: true,
         selectYears: false,
         selectMonths: false,
@@ -102,10 +101,9 @@ $(function() {
     });
     
     //* Remove Task Requirement Field *//
-    $('.remove-textarea').click(function(){
-        var $requirement = $(this).closest('.requirements');
-        var $removeField = $requirement.find('.requirement-field');
-        
+    $(document).on('click touch', '.remove-textarea', function(){
+        console.log('finding field');
+        var $removeField = $('.remove-textarea').parent().parent().find('.requirement-field')[$('.remove-textarea').parent().parent().find('.requirement-field').length - 1];
         $removeField.remove();
     });
     
@@ -130,4 +128,9 @@ $(function() {
         $(this).hide();
         $task.find('.task-complete').show();
     });
+    
+    
+    
+    //* Custom File Icon *//
+    
 });

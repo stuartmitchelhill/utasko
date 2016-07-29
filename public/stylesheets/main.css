@@ -726,8 +726,22 @@ body {
   box-sizing: border-box;
   padding: 0 30px 25px;
 }
-.fancybox-popup .popup-body #upload-widget span {
+.fancybox-popup .popup-body #my-dropzone {
+  width: 100%;
+  height: 200px;
+}
+.fancybox-popup .popup-body #my-dropzone span {
   color: #ffffff;
+}
+/************************
+        Dropzone
+*************************/
+.dropzone {
+  background-color: #333333;
+  border: none;
+}
+.dropzone .dz-preview .dz-image {
+  border-radius: 0;
 }
 /*************************
 	   404 STYLES

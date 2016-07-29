@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var validator = require('validator');
+var multer  = require('multer');
 var path = require('path');
 var mysql = require('mysql');
 var connection = mysql.createConnection({
@@ -128,7 +129,20 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
     console.log('user disconnected');
   });
+    
+    // Socket command for creating 'rooms'
+    
+    // on joining room
+        // Add to list of users in room
+        // Send current chat
+    
+    // on new message from user
+        // send message to all users
+        // Add message to database
+    
 });
+
+
 
 
 /*************************
@@ -186,18 +200,15 @@ app.get('/home', function(req, res) {
             }
         }
         var active = '';
-        if (req.query.add_project = 'active') {
+        if (req.query.add_project == 'active') {
             active = 'active';
-        } else {
-            active = '';
         }
         res.render('home',
         {    
             title: 'Utasko | Home',
-            project_data:project,
+            project_data: project,
             add_project: active
         });
-        console.log(active);
     }); 
 });
 
@@ -205,23 +216,22 @@ app.get('/home', function(req, res) {
 app.get('/profile', function(req, res) {
     var user_id = req.cookies.user_id;
     retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id+'' ,user_id, function (err, result){
-        //console.log(result);
-           var user ={
-               username: result[0].name,
-               email: result[0].email,
-               profile_image: result[0].profile_image,
-               password: result[0].password
-            };
-        console.log(user);
-            res.render('profile', 
-                { 
-                  title: 'Utasko | My Profile', 
-                  username: user.username,
-                  email: user.email,
-                  password: user.password,
-                  profile_image: user.profile_image
-                });
+       //console.log(result);
+       var user ={
+           username: result[0].name,
+           email: result[0].email,
+           profile_image: result[0].profile_image,
+           password: result[0].password
+        };
+        res.render('profile', 
+        { 
+          title: 'Utasko | My Profile', 
+          username: user.username,
+          email: user.email,
+          password: user.password,
+          profile_image: user.profile_image
         });
+    });
 });
 
 /* GET Project page.*/
@@ -245,6 +255,21 @@ app.get('/project', function(req, res) {
                 name: userResult[0].name,
                 email: userResult[0].email
             };
+        });
+        var files = [];
+        retrieve_files = connection.query('SELECT * FROM files WHERE project_id = '+project_id, project_id, function (err, fileResult){
+            console.log('getting files');
+            console.log(fileResult);
+            for (var i = 0; i < fileResult.length; i++) {
+                if (fileResult[i] != undefined) {
+                    var tempFile ={
+                        title: fileResult[i].id,
+                        info: fileResult[i].title,
+                        location: fileResult[i].location,
+                    }    
+                    files.push(tempFile);
+                }
+            }
         });
         // another query
         var task = {};
@@ -281,21 +306,26 @@ app.get('/project', function(req, res) {
                       project_id: project.project_id,
                       project_colour: project.project_colour,
                       task_data: task,
+                      file_data: files,
                       username: user.name
                     });
                 }
             };
+            if (result.length == 0) {
+                res.render('project', 
+                { 
+                  title: 'Utasko | ' +project.project_title, 
+                  project_title: project.project_title,
+                  project_id: project.project_id,
+                  project_colour: project.project_colour,
+                  task_data: task,
+                  username: user.name,
+                  file_data: files,
+                });
+            }
         });
     });
 });
-
-/* GET Add_Project page. 
-app.get('/add_project', function(req, res) {
-  res.render('add_project', 
-    { 
-      title: 'Utasko | New Project' 
-    });
-});*/
 
 /* GET Add_Project POST data. */
 app.post("/add_project", function (req, res) {
@@ -355,34 +385,6 @@ app.get('/manage_projects', function(req, res){
     }); 
 });
 
-/* GET Edit_Project page. 
-app.get('/edit_project', function(req, res) {
-    var project_id = '8';
-    console.log(project_id);
-    retrieve_project = connection.query('SELECT * FROM projects WHERE projects.id = '+project_id+'' ,project_id, function (err, result){
-        //console.log(result);
-           var project ={
-                project_id: result[0].id,
-                project_title: result[0].title,
-                description: result[0].description,
-                start_date: result[0].start_date,
-                end_date: result[0].end_date,
-                status: result[0].status,
-                project_colour: result[0].project_colour
-            };
-            //console.log(project)
-            res.render('edit_project', 
-                { 
-                  title: 'Utasko | '+project.project_title, 
-                  project_title: project.project_title,
-                  project_description: project.description,
-                  project_start_date: project.start_date,
-                  project_end_date: project.end_date,
-                  project_status: project.status,
-                  project_colour: project.project_colour
-                });
-        });
-});*/
 
 /* GET Edit_Project POST data. */
 app.post("/edit_project", function (req, res) {
@@ -400,16 +402,6 @@ app.post("/edit_project", function (req, res) {
     res.redirect('/manage_projects');
 });
 
-/* GET add_task page. 
-app.get('/add_task',
-  function(req, res){
-    res.render('add_task',
-    {
-        title: 'Utasko | Add Task',
-        project_id: req.query.project_id,
-        project_title: req.query.project_title
-    });
-});*/
 
 /* GET Delete Project page */
 app.get("/delete_project", function (req, res) {
@@ -447,12 +439,19 @@ app.post("/add_task", function (req, res) {
         requirement_id: ''
     }
     //insert task data into database
+    console.log('creating task');
     add_task = connection.query('INSERT INTO tasks SET ?', task, function (err, taskResult) {
         task_project.task_id = taskResult.insertId;
+        console.log(err);
+        console.log('INSERT INTO tasks_project (task_id,project_id) VALUES ("'+taskResult.insertId+'","'+project.project_id+'")');
         //insert task_project_link into database
-        task_project_link = connection.query('INSERT INTO tasks_project SET ?', task_project, function(err, taskLinkResult) {
+        console.log('creating task project link');
+        task_project_link = connection.query('INSERT INTO tasks_project (task_id,project_id) VALUES ("'+taskResult.insertId+'","'+project.project_id+'")', function(err, taskLinkResult) {
             //insert requirments into database
-            
+            console.log('Task_project fired');
+            console.log(err);
+            console.log(taskLinkResult);
+            console.log(req.body.task.requirement);
             for (var i = 0; i < req.body.task.requirement.length; i++) {
                 console.log('Loop '+i+', data '+req.body.task.requirement[i]);
                 if (req.body.task.requirement[i] != '' && req.body.task.requirement[i] != undefined) {
@@ -525,6 +524,30 @@ app.get("/delete_task", function (req, res) {
     res.redirect('/project?id='+req.query.project_id);
 });
 
+
+/* GET File_Uploads POST data */
+var upload = multer( { dest: './public/uploads/' } );
+
+app.post( '/file_upload', upload.single( 'file' ), function( req, res, next ) {
+  console.log(res.status( 200 ).send( req.file ));
+    var type = req.file.originalname;
+    var filetype = type.split(".");
+    var location = req.file.path;
+    var upload = location.split("/");
+    var uploadDestination = upload[upload.length - 1].append("/uploads/");
+    var link = uploadDestination.append(filetype);
+    
+    var file = {
+        title: req.file.originalname,
+        info: filetype[filetype.length - 1],
+        location: link,
+        user_id: req.cookies.user_id,
+        project_id: req.body.file.project_id
+    }
+    file_upload = connection.query('INSERT INTO files SET ?', file, function (err, taskResult) {
+        //upload file
+    });
+});
 
 /* GET Sign_Up page. */
 app.get('/sign_up',

@@ -8,112 +8,38 @@
     </a>
 	<div class="wrapper files-list">
 		<!-- TO DO: File Link Styles -->
+        <% for(var i=0; i<file_data.length; i++) { %>
 		<div class="file-block">
 			<div class="file <%= project_colour %>">
-                <a href="#">
+                <a href="../<%= file_data[i].location %>">
 				<i class="ut-file-pdf"></i>
                     <div class="file-info">
-                        <p class="file-name">PDF File</p>
+                        <p class="file-name"><%= file_data[i].title %></p>
                         <p>Shared by user 1 @ 8:33am 9th April</p>
                     </div>
                     <i class="ut-download-cloud"></i>
                 </a>
 			</div>
 		</div>
+        <% } %>
 
-		<div class="file-block">
-			<div class="file">
-				<i class="ut-file-word"></i>
-				<div class="file-info">
-					<p class="file-name">Word Doc</p>
-					<p>Shared by user 1 @ 8:33am 9th April</p>
-				</div>
-				<i class="ut-download-cloud"></i>
-			</div>
-		</div>
-
-		<div class="file-block">
-			<div class="file">
-				<i class="ut-file-excel"></i>
-				<div class="file-info">
-					<p class="file-name">Excel Doc</p>
-					<p>Shared by user 1 @ 8:33am 9th April</p>
-				</div>
-				<i class="ut-download-cloud"></i>
-			</div>
-		</div>
-
-		<div class="file-block">
-			<div class="file">
-				<i class="ut-file-powerpoint"></i>
-				<div class="file-info">
-					<p class="file-name">Powerpoint Doc</p>
-					<p>Shared by user 1 @ 8:33am 9th April</p>
-				</div>
-				<i class="ut-download-cloud"></i>
-			</div>
-		</div>
-
-		<div class="file-block">
-			<div class="file">
-				<i class="ut-file-image"></i>
-				<div class="file-info">
-					<p class="file-name">IMG File</p>
-					<p>Shared by user 1 @ 8:33am 9th April</p>
-				</div>
-				<i class="ut-download-cloud"></i>
-			</div>
-		</div>
-
-		<div class="file-block">
-			<div class="file">
-				<i class="ut-file-archive"></i>
-				<div class="file-info">
-					<p class="file-name">ZIP File</p>
-					<p>Shared by user 1 @ 8:33am 9th April</p>
-				</div>
-				<i class="ut-download-cloud"></i>
-			</div>
-		</div>
-
-		<div class="file-block">
-			<div class="file">
-				<i class="ut-file-audio"></i>
-				<div class="file-info">
-					<p class="file-name">MP3 File</p>
-					<p>Shared by user 1 @ 8:33am 9th April</p>
-				</div>
-				<i class="ut-download-cloud"></i>
-			</div>
-		</div>
-
-		<div class="file-block">
-			<div class="file">
-				<i class="ut-file-code"></i>
-				<div class="file-info">
-					<p class="file-name">HTML File</p>
-					<p>Shared by user 1 @ 8:33am 9th April</p>
-				</div>
-				<i class="ut-download-cloud"></i>
-			</div>
-		</div>
-		
-	</div>
     
-    <!-- Add Task -->
-    <div id="add_file" class="fancybox-popup">
-        <div class="popup-close">
-            <a href="javascript:void(0)"><i class="ut-close"></i></a>
-        </div>
-        <div class="popup-header">
-            <h3>Upload Files</h3>
-        </div>
-        <div class="popup-body">
-            <div class="form popup-form">
-                <div class="form-inner">
-                    <form id="upload-widget" method="post" action="/upload" class="dropzone"></form>
+        <!-- Add File -->
+        <div id="add_file" class="fancybox-popup file_uploads">
+            <div class="popup-close">
+                <a href="javascript:void(0)"><i class="ut-close"></i></a>
+            </div>
+            <div class="popup-header">
+                <h3>Upload Files</h3>
+            </div>
+            <div class="popup-body">
+                <div class="form popup-form">
+                    <div class="form-inner">
+                        <form id="my-dropzone" method="post" action="/file_upload" class="dropzone">
+                            <input type="hidden" name="file[project_id]" value="<%= project_id %>">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
