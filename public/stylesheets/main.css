@@ -178,7 +178,7 @@ span {
 	LOGIN
 ****************/
 .login-form {
-  width: 250px;
+  width: 450px;
   padding: 240px 0;
   margin: 0 auto;
 }
@@ -247,8 +247,8 @@ span {
 	SIGN UP
 *****************/
 .signup-form {
-  width: 250px;
-  padding: 230px;
+  width: 450px;
+  padding: 230px 0;
   margin: 0 auto;
 }
 .signup-form .signup-form-inner {
