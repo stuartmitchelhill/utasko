@@ -25,7 +25,6 @@ if(!err) {
 
 
 
-
 /*********************
     Passport Login 
 *********************/
@@ -773,4 +772,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-//server.listen(3000);
+server.listen(process.env.PORT || 5000);
