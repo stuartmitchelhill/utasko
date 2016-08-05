@@ -9,10 +9,10 @@ var multer  = require('multer');
 var path = require('path');
 var mysql = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'root',
-  database : 'utasko'
+  host     : 'us-cdbr-iron-east-04.cleardb.net',
+  user     : 'bf622f6622caa0',
+  password : 'ec28ccb2e0cf518',
+  database : 'heroku_efb4405c4b34c93'
 });
 
 connection.connect(function(err){

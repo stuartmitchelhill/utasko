@@ -10,7 +10,7 @@
     "url": "https://github.com/stuartmitchelhill/utasko"
   },
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node server.js"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -23,6 +23,7 @@
     "mysql": "^2.11.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "pg": "6.0.3",
     "serve-favicon": "~2.3.0",
     "socket.io": "^1.4.8",
     "validator": "^5.4.0"
@@ -30,8 +31,5 @@
   "devDependencies": {
     "dropzone": "^4.3.0",
     "socket.io": "^1.4.8"
-  },
-  "scripts": {
-    "start": "node server.js"
   }
 }
