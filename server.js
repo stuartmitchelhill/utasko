@@ -8,19 +8,8 @@ var validator = require('validator');
 var multer  = require('multer');
 var path = require('path');
 var mysql = require('mysql');
-/*var connection = mysql.createConnection({
- 
-});
-
-connection.connect(function(err){
-if(!err) {
-    console.log("Database is connected");    
-} else {
-    console.log("Error connecting database");    
-}
-});*/
-
-var db_config = {
+/** Live Environment **/
+/*var db_config = {
     host     : 'us-cdbr-iron-east-04.cleardb.net',
     user     : 'bf622f6622caa0',
     password : 'ec28ccb2e0cf518',
@@ -30,43 +19,61 @@ var db_config = {
 var connection;
 
 function handleDisconnect() {
-  connection = mysql.createConnection(db_config); // Recreate the connection, since
-                                                  // the old one cannot be reused.
+  connection = mysql.createConnection(db_config); 
+                                                  
 
-  connection.connect(function(err) {              // The server is either down
-    if(err) {                                     // or restarting (takes a while sometimes).
+  connection.connect(function(err) {              
+    if(err) {                                     
       console.log('error when connecting to db:', err);
-      setTimeout(handleDisconnect, 2000); // We introduce a delay before attempting to reconnect,
-    }                                     // to avoid a hot loop, and to allow our node script to
-  });                                     // process asynchronous requests in the meantime.
-                                          // If you're also serving http, display a 503 error.
+      setTimeout(handleDisconnect, 2000); 
+    }                                     
+  });                                     
+                                          
   connection.on('error', function(err) {
     console.log('db error', err);
-    if(err.code === 'PROTOCOL_CONNECTION_LOST') { // Connection to the MySQL server is usually
-      handleDisconnect();                         // lost due to either server restart, or a
-    } else {                                      // connnection idle timeout (the wait_timeout
-      throw err;                                  // server variable configures this)
+    if(err.code === 'PROTOCOL_CONNECTION_LOST') { 
+      handleDisconnect();                         
+    } else {                                      
+      throw err;                                  
     }
   });
 }
 
-handleDisconnect();
+handleDisconnect();*/
+/** **/
+
+/** Production Env **/
+
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'root',
+  database : 'utasko'
+});
+
+connection.connect(function(err){
+if(!err) {
+    console.log("Database is connected");    
+} else {
+    console.log("Error connecting database");    
+}
+});
 
 
 
 /*********************
     Passport Login 
 *********************/
-   passport.serializeUser(function(user, done) {
-		done(null, user.id);
-    });
+passport.serializeUser(function(user, done) {
+    done(null, user.id);
+});
 
-    // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
-		connection.query("SELECT * FROM user where id = "+id,function(err,rows){	
-			done(err, rows[0]);
-		});
+// used to deserialize the user
+passport.deserializeUser(function(id, done) {
+    connection.query("SELECT * FROM user where id = "+id,function(err,rows){	
+        done(err, rows[0]);
     });
+});
 	
     /**************
         Sign Up 
@@ -121,13 +128,10 @@ handleDisconnect();
              if (!rows.length) {
                 return done(null, false);
             }
-			
 			// if the user is found but the password is wrong
             if (!( rows[0].password == password)) {
                 return done(null, false);                
             }
-                
-			
             // all is well, return successful user
             return done(null, rows[0]);
 		});
@@ -145,32 +149,48 @@ var app = express();
 /*********************
     Socket.IO
 *********************/
-
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
+var clients = {};
+
 io.on('connection', function(socket){
-    console.log('a user connected');
-    socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
-  });
-    socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
-    
-    // Socket command for creating 'rooms'
-    
-    // on joining room
+    console.log('User connected - '+socket.id);
+    socket.on('joinroom', function(room){
+        socket.join(room);
+        console.log('a user connected to the room');
         // Add to list of users in room
-        // Send current chat
+        socket.emit('requestData', { some: 'data' });
+    });
     
-    // on new message from user
-        // send message to all users
-        // Add message to database
+    socket.on('userdata', function(userdata){
+        console.log(userdata);
+        clients[socket.id] = {};
+        clients[socket.id].id = userdata.id;
+        clients[socket.id].username = userdata.username;
+        clients[socket.id].project_room = userdata.project_room;
+    });
     
+    socket.on('chat message', function(msg){
+        console.log('msg:'+msg);
+        var message = msg;
+        var this_user = clients[socket.id].id;
+        var project_id = clients[socket.id].project_room;
+        var username = clients[socket.id].username;
+        var message_time = new Date();
+        var returnMessage = {};
+        returnMessage.username = username;
+        returnMessage.message = msg;
+        returnMessage.time = message_time.getHours() + ':' + ('0' + message_time.getMinutes()).substr(-2);
+        io.sockets.emit("newMessage", returnMessage);
+        add_chat = connection.query('INSERT INTO messages (message_body, project_id, user_id, username) VALUES ("'+message+'","'+project_id+'","'+this_user+'","'+username+'")', function (err, result){
+        });
+    });
+    
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });   
 });
-
-
 
 
 /*************************
@@ -178,7 +198,6 @@ io.on('connection', function(socket){
 *************************/
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-
 
 
 /*************************
@@ -255,15 +274,15 @@ app.get('/profile', function(req, res) {
     var user_id = req.cookies.user_id;
     console.log('Loading profile!');
     retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id+'' ,user_id, function (err, result){
-       console.log(result);
-       console.log(err);
+       //console.log(result);
+       //console.log(err);
        var user ={
            username: result[0].name,
            email: result[0].email,
            profile_image: result[0].profile_image,
            password: result[0].password
         };
-        console.log(user);
+        //console.log(user);
         res.render('profile', 
         { 
           title: 'Utasko | My Profile', 
@@ -313,7 +332,7 @@ app.post( '/upload_profile_image', upload.single( 'file' ), function( req, res, 
     var upload = location.split("/");
     var uploadDestination = "images/profile_images/" + upload[upload.length - 1];
     var link = uploadDestination;
-    console.log(link);
+    //console.log(link);
     var profile_image = link;
     profile_image_update = connection.query('UPDATE user SET profile_image = "'+profile_image+'" WHERE id = "'+user_id+'"', function (err, result) {
         // file uploaded
@@ -324,70 +343,153 @@ app.post( '/upload_profile_image', upload.single( 'file' ), function( req, res, 
 
 /* GET Project page.*/
 app.get('/project', function(req, res) {
-    console.log('checking for project data');
     var project_id = req.query.id;
     var user_id = req.cookies.user_id;
+    var username = req.cookies.username;
     retrieve_project = connection.query('SELECT * FROM projects WHERE projects.id = '+project_id ,project_id, function (err, result){
         //console.log(result);
-        console.log('getting project');
+        //console.log('getting project');
         var project ={
             project_id: result[0].id,
             project_title: result[0].title,
             project_colour: result[0].project_colour
         };
         var user = {};
-        retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id, user_id, function (err, userResult){
-            console.log('getting user');
-            user = {
-                user_id: userResult[0].id,
-                name: userResult[0].name,
-                email: userResult[0].email,
-                profile_image: userResult[0].profile_image
-            };
-        });
+        function getUsers() {
+            retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id, user_id, function (err, userResult){
+                //console.log('getting user');
+                user = {
+                    user_id: userResult[0].id,
+                    name: userResult[0].name,
+                    email: userResult[0].email,
+                    profile_image: userResult[0].profile_image
+                };
+                getFiles();
+            });
+        }
         var files = [];
-        retrieve_files = connection.query('SELECT * FROM files WHERE project_id = '+project_id, project_id, function (err, fileResult){
-            console.log('getting files');
-            console.log(fileResult);
-            for (var i = 0; i < fileResult.length; i++) {
-                if (fileResult[i] != undefined) {
-                    var tempFile ={
-                        title: fileResult[i].title,
-                        info: fileResult[i].info,
-                        location: fileResult[i].location,
-                    }    
-                    files.push(tempFile);
+        function getFiles() {
+            retrieve_files = connection.query('SELECT * FROM files WHERE project_id = '+project_id, project_id, function (err, fileResult){
+                //console.log('getting files');
+                //console.log(fileResult);
+                for (var i = 0; i < fileResult.length; i++) {
+                    if (fileResult[i] != undefined) {
+                        var tempFile ={
+                            title: fileResult[i].title,
+                            info: fileResult[i].info,
+                            location: fileResult[i].location,
+                        }    
+                        files.push(tempFile);
+                    }
                 }
-            }
-        });
+                getChat();
+            });
+        }
+        var messages = {};
+        var current_day = 0;
+        var weekdays = new Array(7);
+        weekdays[0] = "Sunday";
+        weekdays[1] = "Monday";
+        weekdays[2] = "Tuesday";
+        weekdays[3] = "Wednesday";
+        weekdays[4] = "Thursday";
+        weekdays[5] = "Friday";
+        weekdays[6] = "Saturday";
+        var months = new Array(12);
+        months[0] = "Jan";
+        months[1] = "Feb";
+        months[2] = "Mar";
+        months[3] = "Apr";
+        months[4] = "May";
+        months[5] = "Jun";
+        months[6] = "Jul";
+        months[7] = "Aug";
+        months[8] = "Sept";
+        months[9] = "Oct";
+        months[10] = "Nov";
+        months[11] = "Dec";
+        function getChat() {
+            retrieve_chat = connection.query("SELECT * FROM messages WHERE messages.project_id = '"+project_id+"'", project_id, function (err, msgResult){
+                var counter = 0;
+                for (var i = 0; i < msgResult.length; i++) {
+                    if (msgResult[i] != undefined) {
+                        var message_day = new Date(msgResult[i].sent);
+                        var weekday_value = message_day.getDay();
+                        var month_value = message_day.getMonth();
+                        var month = message_day.getDate()+' '+months[month_value];
+                        var message_time = message_day.getHours() + ':' + ('0' + message_day.getMinutes()).substr(-2);
+                        message_day = message_day.getMonth()+'_'+message_day.getDay();
+                        if (message_day != current_day) {
+                            // Otherwise change current day variable to this new day and add this message to id
+                            var current_day = message_day;
+                            counter++;
+                            // create longString and add it to the array
+                            messages[counter] = {};
+                            messages[counter].longstring = weekdays[weekday_value] +' '+ month;
+                            messages[counter].messagearray = {};
+                        }   
+                        var tempMsg ={
+                            msg_day: message_time,
+                            msg: msgResult[i].message_body,
+                            msg_username: msgResult[i].username,
+                        }    
+                        messages[counter].messagearray[msgResult[i].id] = tempMsg;
+                    }
+                }
+                getTasks();
+            });
+        }
         // another query
         var task = {};
-        retrieve_tasks = connection.query('SELECT tasks.id, tasks.description, tasks.title, tasks.status, tasks.end_date, requirement.id as req_id, requirement.description as req_desc, requirement.status as req_status FROM tasks, tasks_project, requirement,task_requirements WHERE tasks_project.project_id = '+project_id+' AND tasks_project.task_id = tasks.id AND task_requirements.task_id = tasks.id AND task_requirements.requirement_id = requirement.id', project_id, function (err, result){
-            console.log('getting tasks');
-            //throw err;
-            for (var i = 0; i < result.length; i++) {
-                //console.log(result);
-                if (result[i] != undefined) {
-                    if (task[result[i].id] == undefined) {
-                        task[result[i].id] = {};
-                        task[result[i].id].requirements = {};
+        function getTasks() {
+            retrieve_tasks = connection.query('SELECT tasks.id, tasks.description, tasks.title, tasks.status, tasks.end_date, requirement.id as req_id, requirement.description as req_desc, requirement.status as req_status FROM tasks, tasks_project, requirement,task_requirements WHERE tasks_project.project_id = '+project_id+' AND tasks_project.task_id = tasks.id AND task_requirements.task_id = tasks.id AND task_requirements.requirement_id = requirement.id', project_id, function (err, result){
+                //console.log('getting tasks');
+                //throw err;
+                for (var i = 0; i < result.length; i++) {
+                    //console.log(result);
+                    if (result[i] != undefined) {
+                        if (task[result[i].id] == undefined) {
+                            task[result[i].id] = {};
+                            task[result[i].id].requirements = {};
+                        }
+                        task[result[i].id].id = result[i].id;
+                        task[result[i].id].title = result[i].title;
+                        task[result[i].id].description = result[i].description;
+                        task[result[i].id].start_date = result[i].start_date;
+                        task[result[i].id].end_date = result[i].end_date;
+                        task[result[i].id].completed = result[i].completed;
+                        task[result[i].id].status = result[i].status;
+                        task[result[i].id].author = result[i].author;
+                        if (task[result[i].id].requirements[result[i].req_id] == undefined) {
+                            task[result[i].id].requirements[result[i].req_id] = {};
+                        }
+                        task[result[i].id].requirements[result[i].req_id].req_desc = result[i].req_desc;
+                        task[result[i].id].requirements[result[i].req_id].req_status = result[i].req_status;
                     }
-                    task[result[i].id].id = result[i].id;
-                    task[result[i].id].title = result[i].title;
-                    task[result[i].id].description = result[i].description;
-                    task[result[i].id].start_date = result[i].start_date;
-                    task[result[i].id].end_date = result[i].end_date;
-                    task[result[i].id].completed = result[i].completed;
-                    task[result[i].id].status = result[i].status;
-                    task[result[i].id].author = result[i].author;
-                    if (task[result[i].id].requirements[result[i].req_id] == undefined) {
-                        task[result[i].id].requirements[result[i].req_id] = {};
+                    if (i == result.length - 1) {
+                        //console.log(task);
+                        if (user.profile_image != undefined) {
+                            tempImage = user.profile_image;
+                        }
+                        console.log(messages);
+                        console.log(task);
+                        res.render('project', 
+                        { 
+                          title: 'Utasko | ' +project.project_title, 
+                          project_title: project.project_title,
+                          project_id: project.project_id,
+                          project_colour: project.project_colour,
+                          task_data: task,
+                          username: user.name,
+                          user_id: user_id,
+                          profile_image: user.profile_image,
+                          file_data: files,
+                          message_data: messages
+                        });
                     }
-                    task[result[i].id].requirements[result[i].req_id].req_desc = result[i].req_desc;
-                    task[result[i].id].requirements[result[i].req_id].req_status = result[i].req_status;
-                }
-                if (i == result.length - 1) {
-                    //console.log(task);
+                };
+                if (result.length == 0) {
+                    console.log(messages);
                     res.render('project', 
                     { 
                       title: 'Utasko | ' +project.project_title, 
@@ -395,26 +497,16 @@ app.get('/project', function(req, res) {
                       project_id: project.project_id,
                       project_colour: project.project_colour,
                       task_data: task,
-                      file_data: files,
                       username: user.name,
-                      profile_image: user.profile_image
+                      user_id: user_id,
+                      profile_image: user.profile_image,
+                      file_data: files,
+                      message_data: messages
                     });
                 }
-            };
-            if (result.length == 0) {
-                res.render('project', 
-                { 
-                  title: 'Utasko | ' +project.project_title, 
-                  project_title: project.project_title,
-                  project_id: project.project_id,
-                  project_colour: project.project_colour,
-                  task_data: task,
-                  username: user.name,
-                  profile_image: user.profile_image,
-                  file_data: files,
-                });
-            }
-        });
+            });
+        }
+        getUsers();
     });
 });
 
@@ -466,7 +558,7 @@ app.get('/manage_projects', function(req, res){
         }
          var user = {};
         retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id, user_id, function (err, userResult){
-            console.log('getting user');
+            //console.log('getting user');
             user = {
                 user_id: userResult[0].id,
                 name: userResult[0].name,
@@ -537,21 +629,21 @@ app.post("/add_task", function (req, res) {
         requirement_id: ''
     }
     //insert task data into database
-    console.log('creating task');
+    //console.log('creating task');
     add_task = connection.query('INSERT INTO tasks SET ?', task, function (err, taskResult) {
         task_project.task_id = taskResult.insertId;
-        console.log(err);
-        console.log('INSERT INTO tasks_project (task_id,project_id) VALUES ("'+taskResult.insertId+'","'+project.project_id+'")');
+        //console.log(err);
+        //console.log('INSERT INTO tasks_project (task_id,project_id) VALUES ("'+taskResult.insertId+'","'+project.project_id+'")');
         //insert task_project_link into database
-        console.log('creating task project link');
+        //console.log('creating task project link');
         task_project_link = connection.query('INSERT INTO tasks_project (task_id,project_id) VALUES ("'+taskResult.insertId+'","'+project.project_id+'")', function(err, taskLinkResult) {
             //insert requirments into database
-            console.log('Task_project fired');
-            console.log(err);
-            console.log(taskLinkResult);
-            console.log(req.body.task.requirement);
+            //console.log('Task_project fired');
+            //console.log(err);
+            //console.log(taskLinkResult);
+            //console.log(req.body.task.requirement);
             for (var i = 0; i < req.body.task.requirement.length; i++) {
-                console.log('Loop '+i+', data '+req.body.task.requirement[i]);
+                //console.log('Loop '+i+', data '+req.body.task.requirement[i]);
                 if (req.body.task.requirement[i] != '' && req.body.task.requirement[i] != undefined) {
                     var requirement = {
                         description: req.body.task.requirement[i]
@@ -560,15 +652,15 @@ app.post("/add_task", function (req, res) {
                     add_task_requirements = connection.query('INSERT INTO requirement SET ?', requirement, function(err, requirementResult) {
                         task_requirement.requirement_id = requirementResult.insertId;
                         task_requirement.task_id = task_project.task_id;
-                        console.log(task_requirement);
+                        //console.log(task_requirement);
                         //insert task_requirment_link into database
                         add_task_requirements = connection.query('INSERT INTO task_requirements SET ?', task_requirement, function(err, requirementLinkResult) {
-                            console.log('task requirment link created, i = '+counter+' vs '+req.body.task.requirement.length);
+                            //console.log('task requirment link created, i = '+counter+' vs '+req.body.task.requirement.length);
                             if (counter == req.body.task.requirement.length) {
-                                console.log('redirecting');
+                                //console.log('redirecting');
                                 res.redirect('/project?id='+req.query.project_id);
                             }else{
-                                console.log('not redirecting');
+                                //console.log('not redirecting');
                                 counter++;
                             }
                         });
@@ -611,17 +703,17 @@ app.post("/edit_task", function (req, res) {
 app.get("/delete_task", function (req, res) {
     var task_id = req.query.task_id;
     var project_id = req.query.project_id;
-    console.log(req.query);
-    console.log(req.query.task_id);
-    console.log(req.query.project_id);
+    //console.log(req.query);
+    //console.log(req.query.task_id);
+    //console.log(req.query.project_id);
     
     delete_task = connection.query('DELETE FROM tasks WHERE id ="'+task_id+'"', task_id, function(req, res) {
         //delete task 
-        console.log('deleting task');
+        //console.log('deleting task');
     });
      delete_task_requirement = connection.query('DELETE FROM tasks_project WHERE task_id = "'+task_id+'" AND project_id ="'+project_id+'"', function(req, res) {
         //delete task_project link 
-        console.log('deleting task project link');
+        //console.log('deleting task project link');
     });
     res.redirect('/project?id='+req.query.project_id);
 });
@@ -756,6 +848,7 @@ app.get('/login',
 /* GET Login POST data. */
 app.post('/login', passport.authenticate('login', {failureRedirect: '/login?message=error'}), function(req, res) {
     res.cookie('user_id', req.user.id);
+    res.cookie('username', req.user.name);
     res.redirect('/home');
 });
 
@@ -800,5 +893,6 @@ app.use(function(err, req, res, next) {
     title : 'Utasko | Page Not Found'
   });
 });
+
 
 server.listen(process.env.PORT || 5000);

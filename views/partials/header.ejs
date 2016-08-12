@@ -17,10 +17,6 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico" sizes="42x42"/>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="/javascripts/socket.io-1.4.5.js"></script>
-    <script>
-      var socket = io('http://localhost:3000');
-      
-    </script>
 </head>
 	<body>
 
@@ -31,14 +27,6 @@
         </ul>
         <ul class="navbar-menu-right">
             <li class="user-info"><img src="<%= profile_image %>"></li>
-            <!--<li>
-                <div class="search-container">
-                     <div class="search-bar">
-                        <input name="search-box" type="text" id="search-box" class="search-box" value="Search" onfocus="this.value=''">                   
-                    </div>
-                    <a href="javascript:void(0)" class="search-trigger"><i class="ut-search"></i></a>	
-                </div>
-            </li>-->
             <li class="menu-button"><a class="menu-trigger" href="javascript:void(0)"><i class="ut-more-vert"></i></a></li>
         </ul>
     </nav>

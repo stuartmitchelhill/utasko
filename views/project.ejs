@@ -3,12 +3,8 @@
             <div class="project-title <%= project_colour %>">
                 <h2><%= project_title %></h2>
             </div>
-            <div class="top-bar">
+            <div class="top-bar project-controls">
                 <div class="project-bar">
-                    <a href="javascript:void(0)" class="repo-trigger">
-                        <h3>View Repo</h3>
-                        <i class="ut-github"></i>
-                    </a>
                     <a href="javascript:void(0)" class="files-trigger">
                         <h3>View Files</h3>
                         <i class="ut-folder"></i>
@@ -17,8 +13,40 @@
                         <h3>View Chat</h3>
                         <i class="ut-chat"></i>
                     </a>
+                    <a href="javascript:void(0)" class="repo-trigger">
+                        <h3>View Repo</h3>
+                        <i class="ut-github"></i>
+                    </a>
                 </div>
             </div>
+            <div class="top-bar-mobile">
+                <div class="project-bar">
+                    <a href="javascript:void(0)" class="tasks-trigger-mobile">
+                        <i class="ut-list-numbered"></i>
+                    </a>
+                    <a href="javascript:void(0)" class="chat-trigger-mobile">
+                        <i class="ut-chat"></i>
+                    </a>
+                    <a href="javascript:void(0)" class="files-trigger-mobile">
+                        <i class="ut-folder"></i>
+                    </a>
+                    <a href="javascript:void(0)" class="repo-trigger-mobile">
+                        <i class="ut-github"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <script>
+                var socket = io.connect();
+                var username = '<%= username %>';
+                var user_id = '<%= user_id %>';
+                var project_room = <%= project_id %>;
+                socket.on('connect', function () {
+                    console.log('connecting');
+                    socket.emit('userdata',{ id: user_id, username: username, project_room: project_room});
+                });
+                //var socket = io('https://utasko.herokuapp.com:5000');
+            </script>
 
             <div class="container">
                 <% include layouts/task_view %>
@@ -28,5 +56,4 @@
                 <% include layouts/files_view %>
             </div>
 		</div> <!-- Close Content Main --> 
-
 <% include partials/footer %>

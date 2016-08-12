@@ -2,87 +2,26 @@
 <div class="col-1-3 conversation">
 	<div class="wrapper small">
 		<div class="message-stream">
-			<div class="message-date">
-				<h5>Tuesday 28th</h5>
-			</div>
+            
+            <% for( i in message_data) { %>
+                <div class="message-date">
+                    <h5><%= message_data[i].longstring %></h5>
+                </div>
+                <% for (j in message_data[i].messagearray) {  %>
+            
+                <div class="message">
+                    <div class="message-info">
+                        <p class="user-name"><%= message_data[i].messagearray[j].msg_username %></p>
+                        <p class="message-time"><%= message_data[i].messagearray[j].msg_day %></p>
+                    </div>
+                    <div class="message-body">
+                        <p><%= message_data[i].messagearray[j].msg %></p>
+                    </div>
+                </div>
+                <% } %>
+            <% } %>
 
-			<div class="message">
-				<div class="message-info">
-					<p class="user-name">Tasky</p>
-					<p class="message-time">4:30pm</p>
-				</div>
-				<div class="message-body">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et felis dignissim odio vehicula ultricies. Integer aliquet at mauris ac malesuada. Ut aliquet at felis quis ornare.</p>
-				</div>
-			</div>
-
-			<div class="message">
-				<div class="message-info">
-					<p class="user-name">Tasky</p>
-					<p class="message-time">4:30pm</p>
-				</div>
-				<div class="message-body">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et felis dignissim odio vehicula ultricies. Integer aliquet at mauris ac malesuada. Ut aliquet at felis quis ornare.</p>
-				</div>
-			</div>
-
-			<div class="message">
-				<div class="message-info">
-					<p class="user-name">Tasky</p>
-					<p class="message-time">4:30pm</p>
-				</div>
-				<div class="message-body">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et felis dignissim odio vehicula ultricies. Integer aliquet at mauris ac malesuada. Ut aliquet at felis quis ornare.</p>
-				</div>
-			</div>
-
-			<div class="message-date">
-				<h5>Wednesday 29th</h5>
-			</div>
-
-			<div class="message">
-				<div class="message-info">
-					<p class="user-name">Tasky</p>
-					<p class="message-time">4:30pm</p>
-				</div>
-				<div class="message-body">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et felis dignissim odio vehicula ultricies. Integer aliquet at mauris ac malesuada. Ut aliquet at felis quis ornare.</p>
-				</div>
-			</div>
-
-			<div class="message">
-				<div class="message-info">
-					<p class="user-name">Tasky</p>
-					<p class="message-time">4:30pm</p>
-				</div>
-				<div class="message-body">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et felis dignissim odio vehicula ultricies. Integer aliquet at mauris ac malesuada. Ut aliquet at felis quis ornare.</p>
-				</div>
-			</div>
-
-			<div class="message-date">
-				<h5>Today</h5>
-			</div>
-
-			<div class="message">
-				<div class="message-info">
-					<p class="user-name">Tasky</p>
-					<p class="message-time">4:30pm</p>
-				</div>
-				<div class="message-body">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et felis dignissim odio vehicula ultricies. Integer aliquet at mauris ac malesuada. Ut aliquet at felis quis ornare.</p>
-				</div>
-			</div>
-
-			<div class="message">
-				<div class="message-info">
-					<p class="user-name">Tasky</p>
-					<p class="message-time">4:30pm</p>
-				</div>
-				<div class="message-body">
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et felis dignissim odio vehicula ultricies. Integer aliquet at mauris ac malesuada. Ut aliquet at felis quis ornare.</p>
-				</div>
-			</div>
+			
 
 		</div>
         <div class="message-bar">
@@ -93,8 +32,6 @@
         </div>
         <script>
             function sendMessage(value) {
-                // Save current time and add to socket emit
-                // Send user data?
                 socket.emit('chat message', value);
                 $('.message-input').val('');
                 // Append to current chat tab
@@ -104,12 +41,20 @@
             
             $('#message-button').on('touch click', function(){
                 sendMessage($('.message-input').val());
+                
             });
             $(".message-input").keyup(function (e) {
                 if (e.keyCode == 13) {
                     sendMessage($('.message-input').val());
                 }
             });
+            
+            socket.on('newMessage', function(returnMessage){
+                console.log('appending');
+                console.log(returnMessage);
+                $('.message-stream').append('<div class="message"><div class="message-info"><p class="user-name">'+returnMessage.username+'</p><p class="message-time">'+returnMessage.time+'</p></div><div class="message-body"><p>'+returnMessage.message+'</p></div></div>');
+            });
+    
         </script>
 	</div>
 </div>

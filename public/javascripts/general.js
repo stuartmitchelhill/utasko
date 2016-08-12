@@ -1,5 +1,4 @@
 $(function() {
-    
     //* Slide Menu *//
     $( ".menu-trigger" ).click(function() {
   		$( ".slide-menu" ).toggleClass("open");

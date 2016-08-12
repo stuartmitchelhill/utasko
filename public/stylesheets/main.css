@@ -630,7 +630,7 @@ body {
 .content-main {
   box-sizing: border-box;
   box-sizing: inherit;
-  padding: 100px 0 78px;
+  padding: 100px 0 0;
   height: 100%;
   overflow: hidden;
 }
@@ -840,9 +840,8 @@ body {
 }
 .project-list {
   height: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
   padding-top: 93px;
-  margin-right: -15px;
 }
 .project-list .project-link {
   color: #ffffff;
@@ -1022,6 +1021,38 @@ body {
   color: #979797;
   transition: 0.4s;
 }
+.top-bar-mobile {
+  display: none;
+  width: 100%;
+  background-color: #505050;
+  overflow: auto;
+  position: absolute;
+  padding: 32px;
+}
+.top-bar-mobile .chat-trigger {
+  display: static;
+}
+.top-bar-mobile .project-bar {
+  text-align: center;
+  color: #ffffff;
+  padding: 0 35px;
+}
+.top-bar-mobile .project-bar a {
+  text-decoration: none;
+  color: #ffffff;
+  transition: 0.4s;
+  padding-right: 25px;
+}
+.top-bar-mobile .project-bar a:last-child {
+  padding-right: 0;
+}
+.top-bar-mobile .project-bar a i {
+  font-size: 28px;
+}
+.top-bar-mobile .project-bar a:hover {
+  color: #979797;
+  transition: 0.4s;
+}
 /*************
 	TASKS
 **************/
@@ -1059,7 +1090,7 @@ body {
   float: right;
 }
 .tasks .task {
-  padding: 20px 150px;
+  padding: 20px 75px;
   border-bottom: 1px solid #979797;
 }
 .tasks .task .task-header {
@@ -1320,7 +1351,7 @@ body {
 }
 .conversation .message-stream .message .message-info p {
   display: inline-block;
-  color: #505050;
+  color: #979797;
   margin: 0;
 }
 .conversation .message-stream .message .message-info p.user-name {
@@ -1332,7 +1363,7 @@ body {
 }
 .conversation .message-bar {
   width: 100%;
-  height: 40px;
+  height: 71px;
   position: fixed;
   bottom: 0;
   background: #333333;
@@ -1342,18 +1373,19 @@ body {
 .conversation .message-bar .new-message {
   display: block;
   margin: 0 auto;
-  padding: 0 35px;
+  padding: 0 5%;
 }
 .conversation .message-bar input {
   font-size: 14px;
   display: inline-block;
-  width: 375px;
+  width: 20%;
   height: 35px;
   border-radius: 6px;
 }
 .conversation .message-bar .message-btn {
+  font-size: 12px;
   display: inline-block;
-  padding: 10px 25px;
+  padding: 6px 25px;
   margin-left: 10px;
 }
 /**********************
@@ -1376,7 +1408,6 @@ body {
   height: 50px;
   box-shadow: 0 5px 5px #292929;
   position: absolute;
-  border-right: 1px solid #979797;
   z-index: 99;
 }
 .files .add-file-bar i {
@@ -1499,8 +1530,141 @@ body {
 /**************************
     Responsive Styles
 **************************/
+/** Max-Width 1059px **/
+@media screen and (max-width: 1059px) {
+  .conversation .message-bar .new-message {
+    padding: 0 3%;
+  }
+}
+/** Max-Width 979px **/
 @media screen and (max-width: 979px) {
   .project-block {
     width: 100%;
+  }
+}
+/** Max-Width 929px **/
+@media screen and (max-width: 929px) {
+  .col-1-3,
+  .col-2-3 {
+    width: 100%;
+  }
+  .top-bar.project-controls {
+    display: none;
+  }
+  .top-bar-mobile {
+    display: block;
+  }
+  .tasks {
+    border-right: none;
+  }
+  .tasks .add-task-bar {
+    border-right: none;
+  }
+}
+/** Max-Width 769px **/
+@media screen and (max-width: 769px) {
+  .landing-page .info {
+    padding: 0 15%;
+  }
+}
+/** Max-Width 569px **/
+@media screen and (max-width: 569px) {
+  header .navbar {
+    height: 80px;
+  }
+  header .navbar .navbar-menu-left {
+    margin: 12px 0 0;
+  }
+  header .navbar .navbar-menu-left img {
+    width: 50px;
+    height: 50px;
+  }
+  header .navbar.index .navbar-menu-right {
+    top: 12px;
+  }
+  header .navbar.index .navbar-menu-right li a {
+    font-size: 13px;
+    padding: 12px 22px;
+  }
+  header .navbar .navbar-menu-right {
+    top: 8px;
+    right: 8px;
+  }
+  header .slide-menu {
+    width: 335px;
+    margin-top: 65px;
+  }
+  .landing-page .info {
+    margin-top: 200px;
+    padding: 0 10%;
+  }
+  .landing-page .info .intro {
+    font-size: 18px;
+  }
+  .login-form {
+    width: 345px;
+    padding: 85px 0;
+  }
+  .signup-form {
+    width: 345px;
+    padding: 65px 0;
+  }
+  .content-main {
+    padding: 80px 0 0;
+  }
+  .content-main.padded-top {
+    padding-top: 235px;
+  }
+  .top-bar .add-project {
+    padding: 0 20px;
+  }
+  .top-bar .add-project a h3 {
+    font-size: 23px;
+  }
+  .top-bar .add-project a i {
+    font-size: 23px;
+  }
+  .project-list {
+    padding-top: 82px;
+  }
+  .project-title {
+    top: 80px;
+  }
+}
+/** Max-Width 379px **/
+@media screen and (max-width: 379px) {
+  h1 {
+    font-size: 36px;
+  }
+  .login-form,
+  .signup-form {
+    width: 300px;
+  }
+  .login-form .login-form-inner,
+  .signup-form .login-form-inner,
+  .login-form .signup-form-inner,
+  .signup-form .signup-form-inner {
+    padding: 35px 35px;
+  }
+}
+/** Max-Width 329px **/
+@media screen and (max-width: 329px) {
+  h1 {
+    font-size: 30px;
+  }
+  .landing-page .info {
+    margin-top: 150px;
+  }
+  .landing-page .info .intro {
+    font-size: 16px;
+  }
+  .landing-page .info .cta {
+    font-size: 16px;
+  }
+  .login-form {
+    padding: 35px 0;
+  }
+  .signup-form {
+    padding: 15px 0;
   }
 }
