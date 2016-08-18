@@ -6,6 +6,20 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var validator = require('validator');
 var multer  = require('multer');
+var GitHubApi = require("github");
+var github = new GitHubApi({
+    // optional
+    debug: true,
+    protocol: "https",
+    host: "api.github.com", // should be api.github.com for GitHub
+    pathPrefix: "/api/v3", // for some GHEs; none for GitHub
+    headers: {
+        "user-agent": "utasko" // GitHub is happy with a unique user agent
+    },
+    Promise: require('bluebird'),
+    followRedirects: false, // default: true; there's currently an issue with non-get redirects, so allow ability to disable follow-redirects
+    timeout: 5000
+});
 var path = require('path');
 var mysql = require('mysql');
 /** Live Environment **/
@@ -187,10 +201,28 @@ io.on('connection', function(socket){
         });
     });
     
+    socket.on('repo_data', function(repo_data){
+        console.log('emit working');
+        console.log(repo_data);
+        github.repos.getContent({
+            user: repo_data.repo_user,
+            repo: repo_data.repo_name,
+            path: ""
+                                
+        }, function(err, res) {
+            // Shit goes down in here
+            console.log('emmitting');
+            console.log(repo_data);
+            console.log(err, res);
+        });
+    });
+    
     socket.on('disconnect', function(){
         console.log('user disconnected');
     });   
 });
+
+
 
 
 /*************************
@@ -348,7 +380,7 @@ app.get('/project', function(req, res) {
     var username = req.cookies.username;
     retrieve_project = connection.query('SELECT * FROM projects WHERE projects.id = '+project_id ,project_id, function (err, result){
         //console.log(result);
-        //console.log('getting project');
+        console.log('getting project');
         var project ={
             project_id: result[0].id,
             project_title: result[0].title,
@@ -357,7 +389,7 @@ app.get('/project', function(req, res) {
         var user = {};
         function getUsers() {
             retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id, user_id, function (err, userResult){
-                //console.log('getting user');
+                console.log('getting user');
                 user = {
                     user_id: userResult[0].id,
                     name: userResult[0].name,
@@ -370,7 +402,7 @@ app.get('/project', function(req, res) {
         var files = [];
         function getFiles() {
             retrieve_files = connection.query('SELECT * FROM files WHERE project_id = '+project_id, project_id, function (err, fileResult){
-                //console.log('getting files');
+                console.log('getting files');
                 //console.log(fileResult);
                 for (var i = 0; i < fileResult.length; i++) {
                     if (fileResult[i] != undefined) {
@@ -410,6 +442,7 @@ app.get('/project', function(req, res) {
         months[11] = "Dec";
         function getChat() {
             retrieve_chat = connection.query("SELECT * FROM messages WHERE messages.project_id = '"+project_id+"'", project_id, function (err, msgResult){
+                console.log('getting chat');
                 var counter = 0;
                 for (var i = 0; i < msgResult.length; i++) {
                     if (msgResult[i] != undefined) {
@@ -436,14 +469,32 @@ app.get('/project', function(req, res) {
                         messages[counter].messagearray[msgResult[i].id] = tempMsg;
                     }
                 }
-                getTasks();
+                getRepo();
             });
         }
         // another query
+        var repository = {};
+        function getRepo() {
+            retrieve_repo = connection.query('SELECT * FROM repository WHERE repository.project_id = '+project_id, project_id, function (err, repoResult){
+                console.log('getting repo');
+                var repo = repoResult[0].link;
+                var repo_link_split = repo.split(".com/");
+                var repo_link = repo_link_split[repo_link_split.length - 1];
+                var repo_split = repo.split("/");
+                var repo_user = repo_split[repo_split.length -2];
+                var repo_name = repo_split[repo_split.length -1];
+                repository = {
+                    repo_link: repo_link,
+                    repo_user: repo_user,
+                    repo_name: repo_name
+                }
+                getTasks();
+            });
+        }
         var task = {};
         function getTasks() {
             retrieve_tasks = connection.query('SELECT tasks.id, tasks.description, tasks.title, tasks.status, tasks.end_date, requirement.id as req_id, requirement.description as req_desc, requirement.status as req_status FROM tasks, tasks_project, requirement,task_requirements WHERE tasks_project.project_id = '+project_id+' AND tasks_project.task_id = tasks.id AND task_requirements.task_id = tasks.id AND task_requirements.requirement_id = requirement.id', project_id, function (err, result){
-                //console.log('getting tasks');
+                console.log('getting tasks');
                 //throw err;
                 for (var i = 0; i < result.length; i++) {
                     //console.log(result);
@@ -468,11 +519,9 @@ app.get('/project', function(req, res) {
                     }
                     if (i == result.length - 1) {
                         //console.log(task);
-                        if (user.profile_image != undefined) {
-                            tempImage = user.profile_image;
-                        }
-                        console.log(messages);
-                        console.log(task);
+                        //console.log(messages);
+                        //console.log(task);
+                        console.log(user);
                         res.render('project', 
                         { 
                           title: 'Utasko | ' +project.project_title, 
@@ -484,12 +533,14 @@ app.get('/project', function(req, res) {
                           user_id: user_id,
                           profile_image: user.profile_image,
                           file_data: files,
-                          message_data: messages
+                          message_data: messages,
+                          repo_link: repository.repo_link,
+                          repo_user: repository.repo_user,
+                          repo_name: repository.repo_name
                         });
                     }
                 };
                 if (result.length == 0) {
-                    console.log(messages);
                     res.render('project', 
                     { 
                       title: 'Utasko | ' +project.project_title, 
@@ -501,7 +552,10 @@ app.get('/project', function(req, res) {
                       user_id: user_id,
                       profile_image: user.profile_image,
                       file_data: files,
-                      message_data: messages
+                      message_data: messages,
+                      repo_link: repository.repo_link,
+                      repo_user: repository.repo_user,
+                      repo_name: repository.repo_name
                     });
                 }
             });
@@ -524,14 +578,22 @@ app.post("/add_project", function (req, res) {
         project_id: '',
         user_id: req.cookies.user_id
     };
-    var repo = req.body.project.repository;
+    var repo = {
+        link: req.body.project.repository,
+        project_id: '',
+    }
     //insert project data into database
     add_project = connection.query('INSERT INTO projects SET ?', project, function (err, result) {
         //throw err;
         project_user.project_id = result.insertId;
+        repo.project_id = result.insertId;
         
-        //insert project_user link into database
         user_project_link = connection.query('INSERT INTO project_users SET ?', project_user, function(err, result) { 
+            //insert project_user link into database
+        });
+        
+        project_repository = connection.query('INSERT INTO repository SET ?', repo, function(err, result) {
+           //insert repository 
         });
     });
     res.redirect('/home');
@@ -556,7 +618,7 @@ app.get('/manage_projects', function(req, res){
                 project.push(tempProject);
             }
         }
-         var user = {};
+        var user = {};
         retrieve_user = connection.query('SELECT * FROM user WHERE user.id = '+user_id, user_id, function (err, userResult){
             //console.log('getting user');
             user = {
@@ -569,7 +631,8 @@ app.get('/manage_projects', function(req, res){
             {    
                 title: 'Utasko | Manage Projects',
                 project_data:project,
-                profile_image: user.profile_image
+                profile_image: user.profile_image,
+                message:req.query.message
             });
         });
     }); 
@@ -589,19 +652,17 @@ app.post("/edit_project", function (req, res) {
     update_project = connection.query('UPDATE projects SET title = "'+project.title+'", status ="'+project.status+'", project_colour = "'+project.project_colour+'", end_date = "'+project.end_date+'" WHERE id = "'+project.id+'"', function(err, requirementResult) {
             //update project
     });
-    res.redirect('/manage_projects');
+    res.redirect('/manage_projects?message=updated');
 });
 
 
 /* GET Delete Project page */
 app.get("/delete_project", function (req, res) {
     var project_id = req.query.project_id;
-    
     delete_project = connection.query('DELETE FROM projects WHERE id ="'+project_id+'"', project_id, function(req, res) {
         //delete task 
     });
-    
-    res.redirect('/manage_projects?message=success');
+    res.redirect('/manage_projects?message=deleted');
 });
 
 /* GET Add_Task POST data. */
@@ -623,7 +684,7 @@ app.post("/add_task", function (req, res) {
         project_id: project.project_id
     };
     
-    console.log(req.body.task);
+    //console.log(req.body.task);
     var task_requirement = {
         task_id: '',
         requirement_id: ''
@@ -795,12 +856,6 @@ app.post( '/file_upload', upload.single( 'file' ), function( req, res, next ) {
             break;
     }
     
-    /*if(filetypeExt == 'jpg' || filetypeExt == 'jpeg' || filetypeExt == 'png') {
-        filetypeExt = 'img';
-    } else if(filetypeExt == 'html' || filetypeExt == 'css' || filetypeExt == 'php' || filetypeExt == 'js') {
-        filetypeExt = 'code';
-    }*/
-    
     var location = req.file.path;
     var upload = location.split("/");
     var uploadDestination = "uploads/" + upload[upload.length - 1];
@@ -818,15 +873,15 @@ app.post( '/file_upload', upload.single( 'file' ), function( req, res, next ) {
     console.log(res.status( 200 ).send( req.file ));
 });
 
-
 /* GET Sign_Up page. */
 app.get('/sign_up',
   function(req, res){
     res.render('sign_up',
     {
-        title: 'Utasko | Sign Up'   
+        title: 'Utasko | Sign Up',
+        message: req.query.message
     });
-  });
+});
 
 
 /* GET Sign_Up POST data. */

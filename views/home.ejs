@@ -30,12 +30,9 @@
                 <div class="form popup-form">
                     <div class="form-inner">
                         <form action="/add_project" method="post" id="add-project-form">
-							<input type="text" name="project[title]" id="project-title" placeholder="Enter Project Title" />
-                            <span class="error">Please enter a title for your project</span>
-							<input class="pickadate" type="text" name="project[end_date]" id="project-end-date" placeholder="Project End Date" />
-                            <span class="error">Please enter an end date for your project</span>
-                            <input type="text" name="project[repository]" id="preoject-repo" placeholder="Enter Project Repository" />
-                            <span class="error">Please enter a repository for you project</span>
+							<input type="text" name="project[title]" id="project-title" placeholder="Enter Project Title" required/>
+							<input class="pickadate" type="text" name="project[end_date]" id="project-end-date" placeholder="Project End Date" required/>
+                            <input type="text" name="project[repository]" id="preoject-repo" placeholder="Enter Project Repository URL"/>
                             <div class="custom-select">
                                 <select name="project[users]">
                                     <option disabled="disabled" selected="selected">Add Project Users</option>
@@ -45,30 +42,41 @@
                                 </select>
                             </div>
                             <div class="project-colour">
-                                <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="green">
-                                </div>
-                                <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="blue">
-                                </div>
-                                <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="pink">
-                                </div>
-                                <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="orange">
-                                </div>
-                                <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="purple">
-                                </div>
-                                <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="turquoise">
-                                </div>
-                                <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="red">
-                                </div>
-                                <div class="custom-checkbox">
-                                    <input type="radio" name="project[colour]" value="yellow">
-                                </div>
+                                <label>Select a project colour</label>
+                                <ul class="radio-list">
+                                    <li>
+                                        <input type="radio" name="project[colour]" value="green" checked="checked">
+                                        <div class="check green"></div>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="project[colour]" value="blue">
+                                        <div class="check blue"></div>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="project[colour]" value="pink">
+                                        <div class="check pink"></div>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="project[colour]" value="orange">
+                                        <div class="check orange"></div>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="project[colour]" value="purple">
+                                        <div class="check purple"></div>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="project[colour]" value="turquoise">
+                                        <div class="check turquoise"></div>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="project[colour]" value="red">
+                                        <div class="check red"></div>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="project[colour]" value="yellow">
+                                        <div class="check yellow"></div>
+                                    </li>
+                                </ul>
                             </div>
                             <input type="hidden" name="project[status]" value="active">
 							<input type="submit" name="submit" class="submit-btn" value="Add Project" />

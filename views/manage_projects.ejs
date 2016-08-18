@@ -1,10 +1,20 @@
 <% include partials/header %>
 	    
 	    <div class="content-main">
-		    <div class="container">
+		    <div class="container no-padding">
                 <div class="wrapper padded">
                   <h1 class="profile-title">My Projects</h1>  
                     <div class="col-1-1">
+                        <% if (message == "updated") { %>
+                        <div class="alert alert-success">
+                            <span>Your project has been successfully updated</span>    
+                        </div>
+                        <% } %>
+                        <% if (message == "deleted") { %>
+                        <div class="alert alert-success">
+                            <span>Your project has been successfully deleted</span>
+                        </div>
+                        <% } %>
                         <div class="list-projects active-project-list">
                             <h4>Active Projects</h4>
                             <ul>
@@ -30,12 +40,9 @@
                     <div class="form popup-form">
                         <div class="form-inner">
                             <form action="/edit_project" method="post" id="edit-project-form">
-                                <input type="text" name="project[title]" id="project-title" value="<%= project_data[i].project_title %>" />
-                                <span class="error">Please enter a title for your project</span>
-                                <input class="pickadate" type="text" name="project[end_date]" id="project-end-date" value="<%= project_data[i].end_date %>" />
-                                <span class="error">Please enter an end date for your project</span>
-                                <input type="text" name="project[repository]" id="preoject-repo" placeholder="Project Repository" />
-                                <span class="error">Please enter a repository for you project</span>
+                                <input type="text" name="project[title]" id="project-title" value="<%= project_data[i].project_title %>" required/>
+                                <input class="pickadate" type="text" name="project[end_date]" id="project-end-date" value="<%= project_data[i].end_date %>" required/>
+                                <input type="text" name="project[repository]" id="preoject-repo" placeholder="Project Repository"/>
                                 <div class="custom-select">
                                     <select name="project[users]">
                                         <option disabled="disabled" selected="selected">Add Project Users</option>
@@ -45,30 +52,41 @@
                                     </select>
                                 </div>
                                 <div class="project-colour">
-                                    <div class="custom-checkbox">
-                                        <input type="radio" name="project[colour]" value="green" checked="checked">
-                                    </div>
-                                    <div class="custom-checkbox">
-                                        <input type="radio" name="project[colour]" value="blue">
-                                    </div>
-                                    <div class="custom-checkbox">
-                                        <input type="radio" name="project[colour]" value="pink">
-                                    </div>
-                                    <div class="custom-checkbox">
-                                        <input type="radio" name="project[colour]" value="purple">
-                                    </div>
-                                    <div class="custom-checkbox">
-                                        <input type="radio" name="project[colour]" value="orange">
-                                    </div>
-                                    <div class="custom-checkbox">
-                                        <input type="radio" name="project[colour]" value="turquoise">
-                                    </div>
-                                    <div class="custom-checkbox">
-                                        <input type="radio" name="project[colour]" value="yellow">
-                                    </div>
-                                    <div class="custom-checkbox">
-                                        <input type="radio" name="project[colour]" value="red">
-                                    </div>
+                                    <label>Select a project colour</label>
+                                    <ul class="radio-list">
+                                        <li>
+                                            <input type="radio" name="project[colour]" value="green" checked="checked">
+                                            <div class="check green"></div>
+                                        </li>
+                                        <li>
+                                            <input type="radio" name="project[colour]" value="blue">
+                                            <div class="check blue"></div>
+                                        </li>
+                                        <li>
+                                            <input type="radio" name="project[colour]" value="pink">
+                                            <div class="check pink"></div>
+                                        </li>
+                                        <li>
+                                            <input type="radio" name="project[colour]" value="orange">
+                                            <div class="check orange"></div>
+                                        </li>
+                                        <li>
+                                            <input type="radio" name="project[colour]" value="purple">
+                                            <div class="check purple"></div>
+                                        </li>
+                                        <li>
+                                            <input type="radio" name="project[colour]" value="turquoise">
+                                            <div class="check turquoise"></div>
+                                        </li>
+                                        <li>
+                                            <input type="radio" name="project[colour]" value="red">
+                                            <div class="check red"></div>
+                                        </li>
+                                        <li>
+                                            <input type="radio" name="project[colour]" value="yellow">
+                                            <div class="check yellow"></div>
+                                        </li>
+                                    </ul>
                                 </div>
                                 <input type="hidden" name="project[status]" value="active">
                                 <input type="hidden" name="project[id]" value="<%= project_data[i].project_id %>">

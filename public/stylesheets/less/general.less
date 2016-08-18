@@ -210,6 +210,10 @@ body {
 	padding-top: 95px;
 	box-sizing: border-box;
 	box-sizing: inherit;
+    
+    &.no-padding {
+        padding-top: 15px;
+    }
 }
 
 .wrapper {
@@ -273,7 +277,7 @@ body {
 }
 .fancybox-popup {
     background-color: @main_colour;
-    max-width: 800px;
+    max-width: 100%;
     width: 800px;
     position: relative;
     display: none;
@@ -281,8 +285,8 @@ body {
     
     .popup-close {
         position: absolute;
-        right: 30px;
-        top: 26px;
+        right: 15px;
+        top: 25px;
         a {
             color: @grey9;
             &:hover {

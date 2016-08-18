@@ -5,13 +5,13 @@
             </div>
             <div class="top-bar project-controls">
                 <div class="project-bar">
-                    <a href="javascript:void(0)" class="files-trigger">
-                        <h3>View Files</h3>
-                        <i class="ut-folder"></i>
-                    </a>
                     <a href="javascript:void(0)" class="chat-trigger">
                         <h3>View Chat</h3>
                         <i class="ut-chat"></i>
+                    </a>
+                    <a href="javascript:void(0)" class="files-trigger">
+                        <h3>View Files</h3>
+                        <i class="ut-folder"></i>
                     </a>
                     <a href="javascript:void(0)" class="repo-trigger">
                         <h3>View Repo</h3>
@@ -54,6 +54,8 @@
                 <% include layouts/messages_view %>
                 
                 <% include layouts/files_view %>
+                
+                <% include layouts/repository_view %>
             </div>
 		</div> <!-- Close Content Main --> 
 <% include partials/footer %>

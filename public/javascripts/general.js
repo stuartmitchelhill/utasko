@@ -37,22 +37,49 @@ $(function() {
         $.fancybox.close();
     });
     
-    //* View Logic *//
+    //* Sidebar Tabs *//
     $('.files-trigger').click(function(){
-        $('.conversation ').hide();
-        $('.chat-trigger').show();
         $('.files').show();
-        $('.files-trigger').hide();
+        $('.conversation ').hide();
+        $('.repo').hide();
         
     });
     $('.chat-trigger').click(function(){
         $('.conversation ').show();
-        $('.chat-trigger').hide();
         $('.files').hide();
-        $('.files-trigger').show();
+        $('.repo').hide();
     });
-
+    $('.repo-trigger').click(function(){
+        $('.repo').show();
+        $('.files').hide();
+        $('.conversation ').hide();
+    });
     
+    //* Mobile Tabs *//
+    $('.tasks-trigger-mobile').click(function(){
+        $('.tasks').show();
+        $('.files').hide();
+        $('.conversation ').hide();
+        $('.repo').hide();
+    });
+    $('.chat-trigger-mobile').click(function(){
+        $('.conversation ').show();
+        $('.files').hide();
+        $('.repo').hide();
+        $('.tasks').hide();
+    });
+    $('.files-trigger-mobile').click(function(){
+        $('.files').show();
+        $('.conversation ').hide();
+        $('.repo').hide();
+        $('.tasks').hide();
+    });
+    $('.repo-trigger-mobile').click(function(){
+        $('.repo').show();
+        $('.conversation ').hide();
+        $('.files').hide();
+        $('.tasks').hide();
+    });
     //* Task Expand *// 
     $('.task .task-header').click(function(){
 		var $header = $(this),

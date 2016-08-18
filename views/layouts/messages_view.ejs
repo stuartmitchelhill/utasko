@@ -34,7 +34,6 @@
             function sendMessage(value) {
                 socket.emit('chat message', value);
                 $('.message-input').val('');
-                // Append to current chat tab
                 // Set timeout to be reset when you hear from the server
                     // If timeout happens show error
             }
@@ -54,7 +53,7 @@
                 console.log(returnMessage);
                 $('.message-stream').append('<div class="message"><div class="message-info"><p class="user-name">'+returnMessage.username+'</p><p class="message-time">'+returnMessage.time+'</p></div><div class="message-body"><p>'+returnMessage.message+'</p></div></div>');
             });
-    
+             
         </script>
 	</div>
 </div>
