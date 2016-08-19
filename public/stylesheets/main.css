@@ -128,7 +128,7 @@ span {
   color: #ffffff;
 }
 .alert.alert-success {
-  background-color: rgba(156, 237, 33, 0.5);
+  background-color: rgba(184, 238, 102, 0.8);
 }
 .col {
   height: 100%;
@@ -718,7 +718,7 @@ body {
 }
 .fancybox-popup .popup-close {
   position: absolute;
-  right: 15px;
+  right: 25px;
   top: 25px;
 }
 .fancybox-popup .popup-close a {
@@ -1234,6 +1234,12 @@ body {
   padding: 20px 75px;
   border-bottom: 1px solid #979797;
 }
+.tasks .task.complete .task-info .task-options-expanded .btn.task-complete {
+  display: none;
+}
+.tasks .task.complete .task-info .task-options-expanded .btn.unmark-task-complete {
+  display: inline-block;
+}
 .tasks .task .task-header {
   cursor: pointer;
 }
@@ -1427,45 +1433,45 @@ body {
 .tasks .task .task-info .task-options-expanded .btn.unmark-task-complete {
   display: none;
 }
-.tasks .task.completed .task-header .task-title {
+.tasks .task.complete .task-header .task-title {
   text-decoration: line-through;
   color: #979797;
 }
-.tasks .task.completed .task-header:hover .task-title {
+.tasks .task.complete .task-header:hover .task-title {
   color: #979797;
 }
-.tasks .task.completed .task-header:hover .task-toggle {
+.tasks .task.complete .task-header:hover .task-toggle {
   color: #979797;
 }
-.tasks .task.completed .task-header.open .task-title {
+.tasks .task.complete .task-header.open .task-title {
   color: #979797;
 }
-.tasks .task.completed .task-header .task-quick-info p {
+.tasks .task.complete .task-header .task-quick-info p {
   text-decoration: line-through;
   color: #979797;
 }
-.tasks .task.completed .task-info .task-info-header .due-date {
+.tasks .task.complete .task-info .task-info-header .due-date {
   color: #979797;
 }
-.tasks .task.completed .task-info .task-info-header .task-body {
+.tasks .task.complete .task-info .task-info-header .task-body {
   color: #979797;
 }
-.tasks .task.completed .task-info .task-users ul li {
+.tasks .task.complete .task-info .task-users ul li {
   color: #979797;
 }
-.tasks .task.completed .task-info .task-requirements ul .task-requirement {
+.tasks .task.complete .task-info .task-requirements ul .task-requirement {
   text-decoration: line-through;
   color: #979797;
 }
-.tasks .task.completed .task-info .task-requirements ul .task-requirement:before {
+.tasks .task.complete .task-info .task-requirements ul .task-requirement:before {
   content: '\e80c';
   font-family: 'utasko';
   color: #979797;
 }
-.tasks .task.completed .task-info .task-requirements ul .task-requirement:hover {
+.tasks .task.complete .task-info .task-requirements ul .task-requirement:hover {
   color: #979797;
 }
-.tasks .task.completed .task-info .task-requirements ul .task-requirement:hover:before {
+.tasks .task.complete .task-info .task-requirements ul .task-requirement:hover:before {
   color: #979797;
 }
 /****************
@@ -1572,6 +1578,8 @@ body {
 }
 .files .file-block .file {
   padding: 15px 75px;
+  display: block;
+  overflow: auto;
 }
 .files .file-block .file i {
   font-size: 26px;
@@ -1669,12 +1677,29 @@ body {
   color: #f35252;
   transition: 0.4s;
 }
+.files .delete-file-link {
+  position: absolute;
+  text-align: right;
+  right: 30px;
+}
+.files .delete-file-link a {
+  font-size: 12px;
+}
+.files .delete-file-link a:hover {
+  color: #f35252;
+  transition: 0.2s;
+}
 /**********************
       REPOSITROY
 ***********************/
 .repository {
-  padding-top: 50px;
+  padding-top: 25px;
+  padding-bottom: 25px;
   text-align: center;
+  border-bottom: 1px solid #979797;
+}
+.repository h3 {
+  margin-top: 0;
 }
 .repository h3 i {
   color: #ffffff;
@@ -1696,6 +1721,28 @@ body {
 }
 .repository .ghrepo .ghrepo-meta span span {
   padding-right: 5px;
+}
+.repo {
+  height: 100%;
+}
+.repo .commits {
+  padding: 0 25px;
+}
+.repo .commits h5 {
+  color: #ffffff;
+  margin-bottom: 0;
+}
+.repo .commits p {
+  margin-top: 5px;
+  color: #979797;
+}
+.repo .commits p:last-child {
+  font-size: 12px;
+  margin-top: -5px;
+}
+.repo .commits .commit-block {
+  padding: 15px 0;
+  border-bottom: 1px solid #979797;
 }
 /**************************
     Responsive Styles

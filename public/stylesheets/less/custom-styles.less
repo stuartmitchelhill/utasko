@@ -550,6 +550,21 @@
 		padding: 20px 75px;
 		border-bottom: 1px solid @grey9;
         
+        &.complete {
+            .task-info {
+                .task-options-expanded {
+                    .btn{
+                        &.task-complete {
+                            display: none;
+                        }
+                        &.unmark-task-complete {
+                            display: inline-block;
+                        }
+                    }
+                }
+            }
+        }
+        
 		.task-header {
 			cursor: pointer;
 			.task-title {
@@ -854,7 +869,7 @@
             }
 		}
         
-        &.completed {
+        &.complete {
             
             .task-header {
                 .task-title {
@@ -1045,6 +1060,8 @@
         position: relative;
 		.file {
 			padding: 15px 75px;
+            display: block;
+            overflow: auto;
 
 			i {
 				font-size: 26px;
@@ -1207,15 +1224,30 @@
             }
 		}
 	}
+    .delete-file-link {
+        position: absolute;
+        text-align: right;
+        right: 30px;
+        a{
+            font-size: 12px;
+            &:hover {
+                color: @utasko_red;
+                transition: 0.2s;
+            }
+        }
+    }
 }
 
 /**********************
       REPOSITROY
 ***********************/
 .repository {
-    padding-top: 50px;
+    padding-top: 25px;
+    padding-bottom: 25px;
     text-align: center;
+    border-bottom: 1px solid @grey9;
     h3 {
+        margin-top: 0;
         i {
             color: @white;
             font-size: 34px;
@@ -1241,6 +1273,30 @@
                     padding-right: 5px;
                 }
             }
+        }
+    }
+}
+
+.repo {
+    height: 100%;
+    .commits {
+        padding: 0 25px;
+        h5 {
+            color: @white;
+            margin-bottom: 0;
+        }
+        p {
+            margin-top: 5px;
+            color: @grey9;
+            
+            &:last-child {
+                font-size: 12px;
+                margin-top: -5px;
+            }
+        }
+        .commit-block {
+            padding: 15px 0;
+            border-bottom: 1px solid @grey9
         }
     }
 }

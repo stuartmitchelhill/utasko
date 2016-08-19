@@ -42,14 +42,19 @@
                             <form action="/edit_project" method="post" id="edit-project-form">
                                 <input type="text" name="project[title]" id="project-title" value="<%= project_data[i].project_title %>" required/>
                                 <input class="pickadate" type="text" name="project[end_date]" id="project-end-date" value="<%= project_data[i].end_date %>" required/>
-                                <input type="text" name="project[repository]" id="preoject-repo" placeholder="Project Repository"/>
-                                <div class="custom-select">
-                                    <select name="project[users]">
-                                        <option disabled="disabled" selected="selected">Add Project Users</option>
-                                        <option>User 1</option>
-                                        <option>User 2</option>
-                                        <option>User 3</option>
-                                    </select>
+                                <input type="text" name="project[repository]" id="preoject-repo" placeholder="Edit project repository" required/>
+                                <div class="users">
+                                    <div class="custom-select">
+                                        <select name="project[users][]">
+                                            <option disabled="disabled" selected="selected">Add Project Users</option>
+                                            <% for(var j=0; j<project_users_data.length; j++) { %>
+                                                <option value="<%= project_users_data[j].user_id %>"><%= project_users_data[j].name %> (<%= project_users_data[j].email %>)</option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-button add-user-btn">
+                                    <a href="javascript:void(0)" class="btn add-user"><i class="ut-plus"></i> Add Another User</a>
                                 </div>
                                 <div class="project-colour">
                                     <label>Select a project colour</label>

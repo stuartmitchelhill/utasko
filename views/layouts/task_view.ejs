@@ -1,22 +1,16 @@
 <!--Tasks View -->
 <div class="col-2-3 tasks">
     <a href="#add_task" class="fancybox">
-    <!--<a href="/add_task?project_id=<%= project_id %>&project_title=<%= project_title %>">-->
         <div class="add-task-bar">
             <i class="ut-plus"></i>
             <p>Create New Task</p>
         </div>
     </a>
 	<div class="wrapper task-list">
-        <% /* if ( message == "success") { */ %>
-        <!--<div class="alert alert-success>
-                <span class="alert alert-success">Your task has been successfully updated</span>
-        </div>-->    
-        <%/* } */%>
         <!-- Reverse Order - Order by latest created -->
         <% Object.keys(task_data).sort().reverse().forEach(function(prop) { %>
         <%/* Object.keys(task_data).forEach(function(prop) { */%>
-		<div class="task" data-value="<%= project_colour %>">
+		<div class="task <%= task_data[prop].status %>" data-value="<%= project_colour %>">
 			<div class="task-header">
 				<p class="task-title"><%= task_data[prop].title %></p>
 				<a href="javascript:void(0)" class="task-toggle"><i class="ut-plus"></i></a>
@@ -42,21 +36,21 @@
 					<p class="task-body"><%= task_data[prop].description %></p>
                     <div class="task-users">
                         <ul>
-						  <li><i class="ut-user"></i>User</li>
+						  <li><i class="ut-user"></i> <%= task_data[prop].task_user %></li>
                         </ul>
 					</div>
 					<div class="task-requirements">
                         <% Object.keys(task_data[prop].requirements).forEach(function(req_prop) {%>
 						<ul>
-							<li class="task-requirement <%= task_data[prop].requirements[req_prop].req_status %>"><%= task_data[prop].requirements[req_prop].req_desc %></li>
+							<li class="task-requirement <%= task_data[prop].requirements[req_prop].req_status %>" data-reqid="<%= task_data[prop].requirements[req_prop].req_id %>"><%= task_data[prop].requirements[req_prop].req_desc %></li>
                         </ul>
                         <% }); %>
 					</div>
                     <a href="javascript:void(0)" class="task-options"><i class="ut-more"></i></a>   
                     <div class="task-options-expanded">
                         <a href="#edit_task_<%= task_data[prop].id %>" class="btn fancybox">Edit Task</a>
-                        <a href="javascript:void(0)" class="btn task-complete">Mark as complete</a>
-                        <a href="javascript:void(0)" class="btn unmark-task-complete">Unmark as complete</a>
+                        <a href="javascript:void(0)" class="btn task-complete" data-taskid="<%= task_data[prop].id %>">Mark as complete</a>
+                        <a href="javascript:void(0)" class="btn unmark-task-complete" data-taskid="<%= task_data[prop].id %>">Unmark as complete</a>
                         <a href="/delete_task?project_id=<%= project_id %>&task_id=<%= task_data[prop].id %>" class="btn danger">Delete Task</a>
                     </div>
 				</div>
@@ -79,10 +73,12 @@
                             <input type="text" name="task[title]" id="task-title" value="<%= task_data[prop].title %>" required/>
                             <input class="pickadate" type="text" name="task[end_date]" id="task-end-date" value="<%= task_data[prop].end_date %>" required/>
                             <textarea name="task[description]" id="task-description" required><%= task_data[prop].description %></textarea>
-                            <div class="custom-select">
-                                <select name="task[users]">
-                                    <option disabled="disabled" selected="selected">Edit Task Users</option>
-                                    <option>User</option>
+                             <div class="custom-select">
+                                <select name="task[user]">
+                                    <option disabled="disabled" selected="selected">Task Assignee</option>
+                                    <% for(var i=0; i<project_users_data.length; i++) { %>
+                                        <option value="<%= project_users_data[i].user_id %>"><%= project_users_data[i].name %> (<%= project_users_data[i].email %>)</option>
+                                    <% } %>
                                 </select>
                             </div>
                             <% Object.keys(task_data[prop].requirements).forEach(function(req_prop) {%>
@@ -120,15 +116,11 @@
                     <input class="pickadate" type="text" name="task[end_date]" id="task-end-date" placeholder="Task End Date" required/>
                     <textarea name="task[description]" id="task-description" placeholder="Enter Task Description" required></textarea>
                     <div class="custom-select">
-                        <select name="task[users]" multiple>
-                            <option disabled="disabled">Assign Task Users</option>
-                            <option>User 1</option>
-                            <option>User 2</option>
-                            <option>User 3</option>
-                            <option>User 4</option>
-                            <option>User 5</option>
-                            <option>User 6</option>
-                            <option>User 7</option>
+                        <select name="task[user]">
+                            <option disabled="disabled" selected="selected">Task Assignee</option>
+                            <% for(var i=0; i<project_users_data.length; i++) { %>
+                                <option value="<%= project_users_data[i].user_id %>"><%= project_users_data[i].name %> (<%= project_users_data[i].email %>)</option>
+                            <% } %>
                         </select>
                     </div>
                     <div class="requirements">

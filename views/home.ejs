@@ -33,13 +33,18 @@
 							<input type="text" name="project[title]" id="project-title" placeholder="Enter Project Title" required/>
 							<input class="pickadate" type="text" name="project[end_date]" id="project-end-date" placeholder="Project End Date" required/>
                             <input type="text" name="project[repository]" id="preoject-repo" placeholder="Enter Project Repository URL"/>
-                            <div class="custom-select">
-                                <select name="project[users]">
-                                    <option disabled="disabled" selected="selected">Add Project Users</option>
-                                    <option>User 1</option>
-                                    <option>User 2</option>
-                                    <option>User 3</option>
-                                </select>
+                            <div class="users">
+                                <div class="custom-select">
+                                    <select name="project[users][]">
+                                        <option disabled="disabled" selected="selected">Add Project Users</option>
+                                        <% for(var i=0; i<project_users_data.length; i++) { %>
+                                        <option value="<%= project_users_data[i].user_id %>"><%= project_users_data[i].name %> (<%= project_users_data[i].email %>)</option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-button add-user-btn">
+                                <a href="javascript:void(0)" class="btn add-user"><i class="ut-plus"></i> Add Another User</a>
                             </div>
                             <div class="project-colour">
                                 <label>Select a project colour</label>

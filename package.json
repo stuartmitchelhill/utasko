@@ -21,7 +21,6 @@
     "express": "^4.13.4",
     "express-session": "^1.14.0",
     "github": "^2.4.1",
-    "github-commit-stream": "^0.1.0",
     "github-repo-element": "^0.3.1",
     "i": "^0.3.5",
     "multer": "^1.1.0",

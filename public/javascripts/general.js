@@ -6,12 +6,10 @@ $(function() {
         $(".overlay").toggleClass('cover');
   	});
 
-  	/*$('.search-container .search-trigger').click(function() {
-        $(this).closest('active');
-        $('.search-bar').toggleClass('active', function(){
-            $(this).find('input')[0].focus(); 
-        });
-    });*/
+  	 //* Add User Select*//
+    $('.add-user').click(function(){
+        $($( ".users" ).children()[0]).clone().appendTo( ".users" );
+    });
     
     //* Date Picker *//
     $('.pickadate').pickadate({
@@ -21,8 +19,7 @@ $(function() {
         selectMonths: false,
         today: false,
         clear: false,
-        close: false,
-        
+        close: false, 
     });
     
     //* Fancy Box *//
@@ -32,6 +29,7 @@ $(function() {
       'transitionIn'	: 'elastic',
       'transitionOut'	: 'elastic'
     });
+    
     
     $(".fancybox-popup .popup-close").click(function(){
         $.fancybox.close();
@@ -80,6 +78,7 @@ $(function() {
         $('.files').hide();
         $('.tasks').hide();
     });
+    
     //* Task Expand *// 
     $('.task .task-header').click(function(){
 		var $header = $(this),
@@ -94,7 +93,6 @@ $(function() {
         $header.toggleClass('open');
 		$info.slideToggle('disabled');
 	});
-    
     
     //* Task Options Expand *//
     $('.task .task-options').click(function(){
@@ -134,7 +132,8 @@ $(function() {
     
     //* Task Requirments Complete *//
     $('.task-requirement').click(function(){
-       $(this).addClass('completed'); 
+       $(this).addClass('complete');
+        socket.emit('req_complete', {id: $(this).data('reqid')});    
     });
     
     //* Task Complete *//
@@ -142,22 +141,23 @@ $(function() {
         var $task = $(this).closest('.task');
         var $taskExpand = $task.find('.task-info');
         var $taskInfo = $task.find('.task-quick-info');
-        $task.addClass('completed');
+        $task.addClass('complete');
         $(this).hide();
         $task.find('.unmark-task-complete').show();
         $taskExpand.slideToggle();
         $taskInfo.slideToggle();
+        console.log($(this).data('taskid'));
+        socket.emit('task_complete', {id: $(this).data('taskid')}); 
     });
     
     //* Unmark Task Complete *//
     $('.unmark-task-complete').click(function(){
         var $task = $(this).closest('.task');
-        $task.removeClass('completed');
+        $task.removeClass('complete');
         $(this).hide();
         $task.find('.task-complete').show();
+        socket.emit('task_unmark', {id: $(this).data('taskid')}); 
     });
-    
-    
     
     //* Custom File Icon *//
     $('.file').each(function(){

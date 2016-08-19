@@ -2,11 +2,12 @@
 <div class="col-1-3 conversation">
 	<div class="wrapper small">
 		<div class="message-stream">
-            
             <% for( i in message_data) { %>
                 <div class="message-date">
                     <h5><%= message_data[i].longstring %></h5>
                 </div>
+            <% } %>
+            <% for( i in message_data) { %>
                 <% for (j in message_data[i].messagearray) {  %>
             
                 <div class="message">

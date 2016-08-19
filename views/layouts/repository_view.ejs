@@ -5,12 +5,46 @@
             <h3><i class="ut-github"></i></h3>
             <github-repo src="<%= repo_link %>"></github-repo>
         </div>
+        <div class="commits"></div>   
     </div>
 </div>
 <script>
-    socket.emit('repo_data', {repo_name: <%= repo_name%>, repo_user: <%= repo_user %> });
+    socket.emit('repo_data', {repo_name: '<%= repo_name%>', repo_user: '<%= repo_user %>' });
     
-    socket.on('loadRepo', function(returnRepo){
+    socket.on('repo_commits', function(repo_commits){
         //Append repo data to page
+        $.each(JSON.parse(repo_commits),function(index,value) {
+            var weekdays = new Array(7);
+            weekdays[0] = "Sunday";
+            weekdays[1] = "Monday";
+            weekdays[2] = "Tuesday";
+            weekdays[3] = "Wednesday";
+            weekdays[4] = "Thursday";
+            weekdays[5] = "Friday";
+            weekdays[6] = "Saturday";
+            var months = new Array(12);
+            months[0] = "Jan";
+            months[1] = "Feb";
+            months[2] = "Mar";
+            months[3] = "Apr";
+            months[4] = "May";
+            months[5] = "Jun";
+            months[6] = "Jul";
+            months[7] = "Aug";
+            months[8] = "Sept";
+            months[9] = "Oct";
+            months[10] = "Nov";
+            months[11] = "Dec";
+            var date = value.commit.author.date;
+            var commitDate = new Date(date);
+            var commitMonthValue = commitDate.getMonth();
+            var commitMonth = commitDate.getDate()+' '+months[commitMonthValue];                  
+            var commitTime = commitDate.getHours() + ':' + ('0' + commitDate.getMinutes()).substr(-2);                  
+                              console.log(commitDate);
+            var object = '<div class="commit-block"><a href="'+value.html_url+'"><h5>'+value.commit.message+'</h5><p>'+value.author.login+'</p><p>'+commitMonth+' '+commitTime+'</p></a></div>'
+            // append object to commits
+            $('.commits').append(object);
+          console.log(value);                    
+        });
     });
 </script>

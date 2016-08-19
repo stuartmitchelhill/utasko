@@ -1,13 +1,14 @@
 <!-- Files View -->
 <div class="col-1-3 files">
+    
     <a href="#add_file" class="fancybox">
         <div class="add-file-bar">
             <i class="ut-plus"></i>
             <p>Upload File</p>
         </div>
     </a>
+    
 	<div class="wrapper files-list">
-		<!-- TO DO: File Link Styles -->
         <% for(var i=0; i<file_data.length; i++) { %>
 		<div class="file-block">
 			<div class="file <%= project_colour %>" data-value="<%= file_data[i].info %>">
@@ -15,15 +16,16 @@
 				<i class="file-icon"></i>
                     <div class="file-info">
                         <p class="file-name"><%= file_data[i].title %></p>
-                        <!--<p>//@TODO: Author and Time of upload</p>-->
                     </div>
                     <i class="ut-download-cloud"></i>
                 </a>
 			</div>
+            <div class="delete-file-link">
+                <a href="/delete_file?project_id=<%= project_id %>&file_id=<%= file_data[i].id %>">Delete File <i class=ut-trash></i></a>
+            </div>
 		</div>
         <% } %>
-
-    
+        
         <!-- Add File -->
         <div id="add_file" class="fancybox-popup file_uploads">
             <div class="popup-close">
@@ -43,4 +45,75 @@
             </div>
         </div>
     </div>
+    <script src="/javascripts/dropzone.js"></script>
+    <script>
+        Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone('#my-dropzone', {
+                success: function(file,response) {
+                    var fileType = file.type;
+                    console.log('Dropzone first');
+                    var fileSplit = file.type.split('/');
+                    var extension = fileSplit[fileSplit.length - 1];
+                    switch (extension) {
+                        case 'jpg':
+                            extension = 'img'
+                            break;
+                        case 'jpeg':
+                            extension = 'img'
+                            break;
+                        case 'png':
+                            extension = 'img'
+                            break;
+                        case 'html':
+                            extension = 'code'
+                            break;
+                        case 'css':
+                            extension = 'code'
+                            break;
+                        case 'php':
+                            extension = 'code'
+                            break;
+                        case 'js':
+                            extension = 'code'
+                            break;
+                        case 'pdf':
+                            extension = 'pdf'
+                            break;
+                        case 'doc':
+                            extension = 'doc'
+                            break;
+                        case 'docx':
+                            extension = 'doc'
+                            break;
+                        case 'ppt':
+                            extension = 'ppt'
+                            break;
+                        case 'pptx':
+                            extension = 'ppt'
+                            break;
+                        case 'xls':
+                            extension = 'xls'
+                            break;
+                        case 'xlsx':
+                            extension = 'xls'
+                            break;
+                        case 'zip':
+                            extension = 'zip'
+                            break;
+                        case 'mp3':
+                            extension = 'mp3'
+                            break;
+                        case 'mp4':
+                            extension = 'mp4'
+                            break;
+                        default:
+                            extension = 'txt'
+                            break;
+                    }
+                    console.log(response);
+                    $('.files-list').append('<div class="file-block"><div class="file <%= project_colour %>"><a href="../uploads/'+response.filename+'" download><i class="file-icon ut-file-'+extension+'"></i><div class="file-info"><p class="file-name">'+file.name+'</p></div><i class="ut-download-cloud"></i></a></div></div>');
+                }      
+            
+        });
+    </script>
 </div>
