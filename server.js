@@ -28,7 +28,7 @@ var mysql = require('mysql');
 /************************
     Database Connection
 *************************/
-/** Live Environment **/
+/** Live Environment 
 var db_config = {
     host     : 'us-cdbr-iron-east-04.cleardb.net',
     user     : 'bf622f6622caa0',
@@ -57,8 +57,8 @@ function handleDisconnect() {
   });
 }
 handleDisconnect();
-
-/** Production Env 
+**/
+/** Production Env **/
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
@@ -73,7 +73,7 @@ if(!err) {
     console.log("Error connecting database");    
 }
 });
-**/
+
 
 
 /*********************
@@ -198,8 +198,6 @@ io.on('connection', function(socket){
     });
     
     socket.on('repo_data', function(repo_data){
-        console.log('emit working');
-        console.log(repo_data);
         var options = {
             url: 'https://api.github.com/repos/'+repo_data.repo_user+'/'+repo_data.repo_name+'/commits',
             method: 'GET',
