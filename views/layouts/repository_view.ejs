@@ -40,11 +40,9 @@
             var commitMonthValue = commitDate.getMonth();
             var commitMonth = commitDate.getDate()+' '+months[commitMonthValue];                  
             var commitTime = commitDate.getHours() + ':' + ('0' + commitDate.getMinutes()).substr(-2);                  
-                              console.log(commitDate);
             var object = '<div class="commit-block"><a href="'+value.html_url+'"><h5>'+value.commit.message+'</h5><p>'+value.author.login+'</p><p>'+commitMonth+' '+commitTime+'</p></a></div>'
             // append object to commits
-            $('.commits').append(object);
-          console.log(value);                    
+            $('.commits').append(object);                    
         });
     });
 </script>
