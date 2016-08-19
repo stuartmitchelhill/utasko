@@ -42,7 +42,6 @@
                 var user_id = '<%= user_id %>';
                 var project_room = <%= project_id %>;
                 socket.on('connect', function () {
-                    console.log('connecting');
                     socket.emit('userdata',{ id: user_id, username: username, project_room: project_room});
                 });
                 //var socket = io('https://utasko.herokuapp.com:5000');
