@@ -1296,7 +1296,10 @@
         }
         .commit-block {
             padding: 15px 0;
-            border-bottom: 1px solid @grey9
+            border-bottom: 1px solid @grey9;
+            &:last-child {
+                border-bottom: 0;
+            }
         }
     }
 }

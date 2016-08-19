@@ -1744,6 +1744,9 @@ body {
   padding: 15px 0;
   border-bottom: 1px solid #979797;
 }
+.repo .commits .commit-block:last-child {
+  border-bottom: 0;
+}
 /**************************
     Responsive Styles
 **************************/
