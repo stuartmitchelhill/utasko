@@ -543,6 +543,7 @@ body {
 }
 .navbar.shadow {
   box-shadow: 0 5px 5px #292929;
+  background-color: #333333;
 }
 .navbar .navbar-menu-left {
   position: absolute;
@@ -1894,6 +1895,9 @@ body {
   }
   .wrapper.padded {
     padding: 0 25px;
+  }
+  .wrapper.no-scroll {
+    overflow-y: scroll;
   }
   .login-form {
     width: 345px;
