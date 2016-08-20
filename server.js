@@ -28,7 +28,7 @@ var mysql = require('mysql');
 /************************
     Database Connection
 *************************/
-/** Live Environment 
+/** Live Environment **/
 var db_config = {
     host     : 'us-cdbr-iron-east-04.cleardb.net',
     user     : 'bf622f6622caa0',
@@ -57,8 +57,8 @@ function handleDisconnect() {
   });
 }
 handleDisconnect();
-**/
-/** Production Env **/
+
+/** Production Env 
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
@@ -73,7 +73,7 @@ if(!err) {
     console.log("Error connecting database");    
 }
 });
-
+**/
 
 
 /*********************
