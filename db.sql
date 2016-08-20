@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: Aug 19, 2016 at 08:17 AM
+-- Generation Time: Aug 20, 2016 at 02:23 PM
 -- Server version: 5.5.42
 -- PHP Version: 5.6.10
 
@@ -28,7 +28,7 @@ CREATE TABLE `files` (
   `author` varchar(255) NOT NULL,
   `project_id` varchar(255) NOT NULL,
   `user_id` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -44,17 +44,6 @@ CREATE TABLE `messages` (
   `user_id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `messages`
---
-
-INSERT INTO `messages` (`id`, `sent`, `message_body`, `project_id`, `user_id`, `username`) VALUES
-(3, '2016-08-19 03:10:00', 'Hello', 8, 10, 'Stuie'),
-(4, '2016-08-19 03:10:04', 'Hey There', 8, 10, 'Stuie'),
-(5, '2016-08-19 03:10:17', 'This is a cool project', 8, 10, 'Stuie'),
-(6, '2016-08-19 04:32:51', 'hey', 10, 10, 'Stuie'),
-(7, '2016-08-19 04:32:56', 'hey man', 10, 10, 'Stuie');
 
 -- --------------------------------------------------------
 
@@ -96,8 +85,6 @@ CREATE TABLE `project_users` (
 
 INSERT INTO `project_users` (`project_id`, `user_id`) VALUES
 (8, 10),
-(9, 10),
-(9, 11),
 (10, 10),
 (10, 11);
 
@@ -118,9 +105,7 @@ CREATE TABLE `repository` (
 --
 
 INSERT INTO `repository` (`id`, `link`, `project_id`) VALUES
-(1, 'https://github.com/stuartmitchelhill/utasko', 8),
-(2, 'www.github.com', 9),
-(3, 'https://github.com/stuartmitchelhill/allbikes', 10);
+(1, 'https://github.com/stuartmitchelhill/utasko', 8);
 
 -- --------------------------------------------------------
 
@@ -155,14 +140,7 @@ INSERT INTO `requirement` (`id`, `description`, `status`) VALUES
 (74, 'Manage Repository (edit and delete)', 'complete'),
 (75, 'Save state of complete tasks', 'complete'),
 (76, 'Save state of complete requirements', 'complete'),
-(77, 'responsive', 'complete'),
-(79, 'req', ''),
-(80, 'req', 'complete'),
-(81, 'req', 'complete'),
-(82, 'test', ''),
-(83, 'Test Req', ''),
-(84, 'Req 1', 'complete'),
-(85, 'Req 2', 'complete');
+(77, 'responsive', 'complete');
 
 -- --------------------------------------------------------
 
@@ -389,7 +367,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=38;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `messages`
 --
