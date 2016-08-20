@@ -97,7 +97,15 @@ a.btn:hover {
   color: #333333;
   transition: 0.4s;
 }
+a.btn:active {
+  background: #ffffff;
+  color: #333333;
+}
 a.btn.danger:hover {
+  background-color: #f35252;
+  border: 1px solid transparent;
+}
+a.btn.danger:active {
   background-color: #f35252;
   border: 1px solid transparent;
 }
@@ -240,6 +248,10 @@ span {
   color: #333333;
   transition: 0.4s;
 }
+.login-form .login-form-inner form .submit-btn:active {
+  background: #ffffff;
+  color: #333333;
+}
 .login-form .login-form-inner .password-link {
   margin-bottom: 5px;
 }
@@ -307,6 +319,10 @@ span {
   background: #ffffff;
   color: #333333;
   transition: 0.4s;
+}
+.signup-form .signup-form-inner form .submit-btn:active {
+  background: #ffffff;
+  color: #333333;
 }
 .signup-form .signup-form-inner .login-link {
   margin-bottom: 5px;
@@ -437,6 +453,10 @@ span {
   background: #ffffff;
   color: #333333;
   transition: 0.4s;
+}
+.form .form-inner form .submit-btn:active {
+  background: #ffffff;
+  color: #333333;
 }
 .form .form-inner form .form-button {
   width: 100%;
@@ -586,7 +606,7 @@ body {
 .navbar .navbar-menu-right li .search-container .search-bar.active {
   display: inline-block;
   width: 250px;
-  transition: 0.5s;
+  transition: 0.4s;
 }
 .navbar .navbar-menu-right li .search-container .search-bar .search-box {
   height: 42px;
@@ -1690,7 +1710,7 @@ body {
 }
 .files .delete-file-link a:hover {
   color: #f35252;
-  transition: 0.2s;
+  transition: 0.4s;
 }
 /**********************
       REPOSITROY

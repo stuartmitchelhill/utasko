@@ -106,8 +106,18 @@ a {
             transition: 0.4s;
         }
         
+        &:active {
+            background: @white;
+            color: @main_colour;
+        }
+        
         &.danger {
             &:hover {
+                background-color: @utasko_red;
+                border: 1px solid transparent;
+            }
+            
+            &:active {
                 background-color: @utasko_red;
                 border: 1px solid transparent;
             }
