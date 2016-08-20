@@ -14,6 +14,7 @@
     socket.on('repo_commits', function(repo_commits){
         //Append repo data to page
         $.each(JSON.parse(repo_commits),function(index,value) {
+            console.log(value);
             var weekdays = new Array(7);
             weekdays[0] = "Sunday";
             weekdays[1] = "Monday";
